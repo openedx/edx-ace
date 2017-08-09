@@ -47,8 +47,14 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        "Django>=1.8,<1.11"
+        "Django>=1.8,<1.11",
+        "stevedore>1.0,<2.0",
+        "attrs>17.0,<18.0",
+        "six",
     ],
+    extras_require = {
+        'sailthru':  ["sailthru-client>2.2,<2.3"]
+    },
     license="AGPL 3.0",
     zip_safe=False,
     keywords='Django edx',
@@ -64,6 +70,11 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
+    entry_points={
+        'openedx.ace.channel': [
+            'sailthru_email = edx_ace.common.channel.sailthru:SailthruEmailChannel'
+        ]
+    }
 )
