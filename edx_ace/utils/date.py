@@ -1,9 +1,10 @@
 from datetime import datetime
 from dateutil.parser import parse
+from dateutil.tz import tzutc
 
 
 def get_current_time():
-    return datetime.utcnow()
+    return datetime.now(tzutc())
 
 
 def serialize(obj):

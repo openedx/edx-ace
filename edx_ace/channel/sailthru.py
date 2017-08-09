@@ -3,11 +3,12 @@ from __future__ import absolute_import, print_function, division
 from datetime import datetime, timedelta
 import logging
 
-import attr
+from dateutil.tz import tzutc
 from django.conf import settings
 
-from edx_ace.errors import RecoverableChannelDeliveryError, FatalChannelDeliveryError
 from edx_ace.channel import Channel, ChannelTypes
+from edx_ace.errors import RecoverableChannelDeliveryError, FatalChannelDeliveryError
+from edx_ace.utils.date import get_current_time
 
 log = logging.getLogger(__name__)
 
@@ -17,30 +18,6 @@ try:
 except ImportError:
     log.warning('Sailthru client not installed. The Sailthru delivery channel is disabled.')
     CLIENT_LIBRARY_INSTALLED = False
-
-# TODO: where to put something like this?
-try:
-    # Python >= 3.2
-    from datetime import timezone
-    UTC = timezone.utc
-except ImportError:
-    # Python < 3.2
-    from datetime import tzinfo
-
-    TIMEDELTA_ZERO = timedelta(0)
-
-    class UTCInfo(tzinfo):
-
-        def utcoffset(self, dt):
-            return TIMEDELTA_ZERO
-
-        def tzname(self, dt):
-            return "UTC"
-
-        def dst(self, dt):
-            return TIMEDELTA_ZERO
-
-    UTC = UTCInfo()
 
 
 RATE_LIMIT_ERROR_CODE = 43
@@ -90,10 +67,9 @@ class SailthruEmailChannel(Channel):
         self.template_name = settings.ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME
 
     def deliver(self, recipient, rendered_message):
-        rendered_message_dict = attr.asdict(rendered_message)
         template_vars = {}
         for key in rendered_message:
-            value = rendered_message_dict[key]
+            value = rendered_message[key]
             if value is not None:
                 template_vars['ace_template_' + key] = value
 
@@ -122,7 +98,7 @@ class SailthruEmailChannel(Channel):
 
                     if next_attempt_time is None:
                         # Sailthru advises waiting "a moment" and then trying again.
-                        next_attempt_time = datetime.now(UTC) + timedelta(seconds=NEXT_ATTEMPT_DELAY_SECONDS)
+                        next_attempt_time = get_current_time() + timedelta(seconds=NEXT_ATTEMPT_DELAY_SECONDS)
 
                     raise RecoverableChannelDeliveryError(
                         'Recoverable Sailthru error_code={error_code} status_code={http_status_code}: {message}'.format(
@@ -154,6 +130,6 @@ class SailthruEmailChannel(Channel):
             return None
 
         reset_timestamp = int(headers[RESPONSE_HEADER_RATE_LIMIT_RESET])
-        reset_time_datetime = datetime.utcfromtimestamp(reset_timestamp).replace(tzinfo=UTC)
+        reset_time_datetime = datetime.utcfromtimestamp(reset_timestamp).replace(tzinfo=tzutc())
 
         return reset_time_datetime

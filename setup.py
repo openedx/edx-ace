@@ -48,9 +48,9 @@ setup(
     include_package_data=True,
     install_requires=[
         "Django>=1.8,<2.0"
-        "stevedore>1.0,<2.0",
-        "attrs>17.0,<18.0",
-        "six",
+        "stevedore",
+        "attrs",
+        "python-dateutil",
     ],
     extras_require = {
         'sailthru':  ["sailthru-client>2.2,<2.3"]

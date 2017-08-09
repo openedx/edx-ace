@@ -4,11 +4,22 @@
 #
 #    pip-compile --output-file requirements/test.txt requirements/base.in requirements/test.in
 #
+argparse==1.4.0           # via stevedore
+attrs==17.2.0
+certifi==2017.7.27.1      # via requests
+chardet==3.0.4            # via requests
 coverage==4.4.1           # via pytest-cov
+idna==2.5                 # via requests
+pbr==3.1.1                # via stevedore
 py==1.4.34                # via pytest, pytest-catchlog
 pytest-catchlog==1.2.2
 pytest-cov==2.5.1
-pytest==3.2.0             # via pytest-catchlog, pytest-cov, pytest-django
+pytest==3.2.1             # via pytest-catchlog, pytest-cov, pytest-django
 python-dateutil==2.6.1
 pytz==2017.2              # via django
-six==1.10.0               # via python-dateutil
+requests==2.18.3          # via sailthru-client
+sailthru-client==2.2.3
+simplejson==3.11.1        # via sailthru-client
+six==1.10.0               # via python-dateutil, stevedore
+stevedore==1.10.0
+urllib3==1.22             # via requests

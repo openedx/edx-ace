@@ -3,6 +3,8 @@ import attr
 import json
 from uuid import uuid4, UUID
 
+import attr
+
 import edx_ace.utils.date as date
 
 
@@ -72,3 +74,9 @@ class MessageEncoder(json.JSONEncoder):
             return obj._serialize()
         else:
             return super(MessageEncoder, self).default(obj)
+
+
+@attr.s
+class Recipient(object):
+    username = attr.ib()
+    fields = attr.ib(attr.Factory(dict))

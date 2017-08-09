@@ -13,29 +13,16 @@ CHANNEL_EXTENSION_NAMESPACE = 'openedx.ace.channel'
 class Channel(object):
 
     enabled = True
-    channel_type = None
+    channel_type = ChannelTypes.UNSPECIFIED
 
     @abc.abstractmethod
     def deliver(self, recipient, rendered_message):
         raise NotImplementedError()
 
 
-@attr.s
-class ChannelType(object):
-    slug = attr.ib(default='unspecified')
-    rendered_message_class = attr.ib()
-
-
-@attr.s
-class EmailRenderedMessage(object):
-    from_name = attr.ib()
-    subject = attr.ib()
-    body_html = attr.ib()
-    body_text = attr.ib(default=None)
-
-
 class ChannelTypes(object):
-    EMAIL = ChannelType(slug='email', rendered_message_class=EmailRenderedMessage)
+    UNSPECIFIED = 'unspecified'
+    EMAIL = 'email'
 
 
 def load_channels():

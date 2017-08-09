@@ -1,6 +1,5 @@
 from abc import ABCMeta
 
-import attr
 import six
 
 from edx_ace.ace_step import ACEStep
@@ -23,8 +22,3 @@ class Delivery(ACEStep):
                 )
             )
         return channel.deliver(recipient, rendered_message)
-
-
-@attr.s
-class Recipient(object):
-    email_address = attr.ib()

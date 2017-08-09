@@ -4,8 +4,9 @@
 #
 #    pip-compile --output-file requirements/dev.txt requirements/base.in requirements/dev.in requirements/quality.in
 #
-argparse==1.4.0           # via caniusepython3
+argparse==1.4.0           # via caniusepython3, stevedore
 astroid==1.5.2            # via edx-lint, pylint, pylint-celery, pylint-plugin-utils
+attrs==17.2.0
 backports.functools-lru-cache==1.4  # via caniusepython3
 caniusepython3==5.0.0
 certifi==2017.7.27.1      # via requests
@@ -29,6 +30,7 @@ markupsafe==1.0           # via jinja2
 mccabe==0.6.1             # via pylint
 packaging==16.8           # via caniusepython3
 path.py==10.3.1           # via edx-i18n-tools
+pbr==3.1.1                # via stevedore
 pip-tools==1.9.0
 pkginfo==1.4.1            # via twine
 pluggy==0.4.0             # via tox
@@ -46,9 +48,12 @@ python-dateutil==2.6.1
 pytz==2017.2              # via django
 pyyaml==3.12              # via edx-i18n-tools
 requests-toolbelt==0.8.0  # via twine
-requests==2.18.3          # via caniusepython3, requests-toolbelt, twine
-six==1.10.0               # via astroid, diff-cover, edx-i18n-tools, edx-lint, packaging, pip-tools, pydocstyle, pylint, python-dateutil
+requests==2.18.3          # via caniusepython3, requests-toolbelt, sailthru-client, twine
+sailthru-client==2.2.3
+simplejson==3.11.1        # via sailthru-client
+six==1.10.0               # via astroid, diff-cover, edx-i18n-tools, edx-lint, packaging, pip-tools, pydocstyle, pylint, python-dateutil, stevedore
 snowballstemmer==1.2.1    # via pydocstyle
+stevedore==1.10.0
 tox-battery==0.2
 tox==2.7.0
 tqdm==4.15.0              # via twine
