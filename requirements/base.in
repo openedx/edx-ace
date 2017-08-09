@@ -1,4 +1,6 @@
 # Core requirements for using this application
 
-Django                    # Web application framework
+Django==1.10.7
+sailthru-client==2.2.3
+stevedore==1.10.0
 python-dateutil           # Python Date Utilities
