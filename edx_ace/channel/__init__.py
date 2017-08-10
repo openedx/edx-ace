@@ -3,7 +3,8 @@ from django.conf import settings
 from enum import Enum
 import logging
 import six
-from stevedore import named
+
+from edx_ace.utils.plugins import get_plugins
 
 LOG = logging.getLogger(__name__)
 
@@ -33,14 +34,13 @@ def load_channels():
     if len(channel_names) == 0:
         return {}
 
-    extension_manager = named.NamedExtensionManager(
+    plugins = get_plugins(
         namespace=CHANNEL_EXTENSION_NAMESPACE,
         names=channel_names,
-        invoke_on_load=False,
     )
 
     channels = {}
-    for channel_extension in extension_manager:
+    for channel_extension in plugins:
         channel_class = channel_extension.plugin
         if channel_class.enabled:
             if channel_class.channel_type in channels:
