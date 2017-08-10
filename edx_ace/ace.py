@@ -1,7 +1,7 @@
 from edx_ace.message import Message
-from edx.ace.policy import Policy
-from edx.ace.presentation import Presentation
-from edx.ace.delivery import Delivery
+from edx_ace.policy import Policy
+from edx_ace.presentation import Presentation
+from edx_ace.delivery import Delivery
 
 
 def send(msg):
