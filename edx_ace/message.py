@@ -10,13 +10,16 @@ import edx_ace.utils.date as date
 
 @attr.s
 class Message(object):
-    __metaclass__ = ABCMeta
-
+    module = attr.ib()
     name = attr.ib()
-    expiration_time = attr.ib(default=attr.NOTHING)
+    expiration_time = attr.ib(default=None)
 
     context = attr.ib()
     uuid = attr.ib()
+
+    @name.default
+    def default_name(self):
+        return getattr(self.__class__, 'name', attr.NOTHING)
 
     @context.default
     def default_context_value(self):
@@ -62,6 +65,40 @@ class Message(object):
             object_hook=cls._deserialize,
         )
         return Message(**fields)
+
+
+@attr.s
+class MessageType(object):
+    NAME = None
+
+    context = attr.ib()
+    uuid = attr.ib()
+    expiration_time = attr.ib(default=None)
+
+    @context.default
+    def default_context_value(self):
+        return {}
+
+    @uuid.default
+    def generate_uuid(self):
+        return uuid4()
+
+    def name(self):
+        if self.NAME is None:
+            return self.__class__.__name__
+        else:
+            return self.NAME
+
+    def personalize(self, user_context):
+        context = dict(self.context)
+        context.update(user_context)
+        context['template_uuid'] = self.uuid
+        return Message(
+            module=self.__class__.__module__,
+            name=self.name,
+            expiration_time=self.expiration_time,
+            context=context,
+        )
 
 
 class MessageEncoder(json.JSONEncoder):
