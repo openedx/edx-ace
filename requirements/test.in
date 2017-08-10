@@ -4,3 +4,4 @@
 pytest-catchlog           # Show log output for test failures
 pytest-cov                # pytest extension for code coverage statistics
 pytest-django             # pytest extension for better Django support
+ddt                       # data-driven tests

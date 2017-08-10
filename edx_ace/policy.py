@@ -36,7 +36,8 @@ POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 
 class PolicyStep(ACEStep):
     def __init__(self):
-        self.policies = self._load_policies()
+        # self.policies = self._load_policies()
+        self.policies = None
 
     def channels_for(self, message):
         allowed_channels = {channel for channel in ChannelType if channel not in NON_CHANNEL_TYPES}
@@ -44,7 +45,7 @@ class PolicyStep(ACEStep):
         for policy in self.policies:
             deny_value = policy.check(message).deny
             if ChannelType.ALL in deny_value:
-                return []
+                return set()
             elif ChannelType.UNSPECIFIED in deny_value:
                 continue
             else:
@@ -56,6 +57,6 @@ class PolicyStep(ACEStep):
     def _load_policies():
         return get_plugins(
             namespace=POLICY_PLUGIN_NAMESPACE,
-            names= getattr(settings, 'ACE_ENABLED_POLICIES', []),
+            names=getattr(settings, 'ACE_ENABLED_POLICIES', []),
             instantiate=True,
         ).values()

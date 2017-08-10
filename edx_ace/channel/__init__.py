@@ -16,6 +16,7 @@ class ChannelType(Enum):
     ALL = 'all'
     UNSPECIFIED = 'unspecified'
     EMAIL = 'email'
+    PUSH = 'push'
 
 
 NON_CHANNEL_TYPES = (ChannelType.ALL, ChannelType.UNSPECIFIED)
