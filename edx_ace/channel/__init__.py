@@ -1,14 +1,17 @@
 import abc
 from django.conf import settings
 from enum import Enum
+import logging
 import six
 from stevedore import named
+
+LOG = logging.getLogger(__name__)
 
 
 CHANNEL_EXTENSION_NAMESPACE = 'openedx.ace.channel'
 
 
-class ChannelTypes(Enum):
+class ChannelType(Enum):
     ALL = 'all'
     UNSPECIFIED = 'unspecified'
     EMAIL = 'email'
@@ -18,7 +21,7 @@ class ChannelTypes(Enum):
 class Channel(object):
 
     enabled = True
-    channel_type = ChannelTypes.UNSPECIFIED
+    channel_type = ChannelType.UNSPECIFIED
 
     @abc.abstractmethod
     def deliver(self, recipient, rendered_message):
@@ -37,7 +40,8 @@ def load_channels():
     )
 
     channels = {}
-    for channel_class in extension_manager:
+    for channel_extension in extension_manager:
+        channel_class = channel_extension.plugin
         if channel_class.enabled:
             if channel_class.channel_type in channels:
                 raise ValueError(
@@ -48,5 +52,7 @@ def load_channels():
                 )
 
             channels[channel_class.channel_type] = channel_class()
+        else:
+            LOG.info("Channel %s not enabled", channel_class)
 
     return channels

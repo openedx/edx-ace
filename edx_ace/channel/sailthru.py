@@ -6,11 +6,11 @@ import logging
 from dateutil.tz import tzutc
 from django.conf import settings
 
-from edx_ace.channel import Channel, ChannelTypes
+from edx_ace.channel import Channel, ChannelType
 from edx_ace.errors import RecoverableChannelDeliveryError, FatalChannelDeliveryError
 from edx_ace.utils.date import get_current_time
 
-log = logging.getLogger(__name__)
+LOG = logging.getLogger(__name__)
 
 try:
     from sailthru import SailthruClient, SailthruClientError
@@ -23,7 +23,7 @@ except ImportError:
 RATE_LIMIT_ERROR_CODE = 43
 # Reference: https://getstarted.sailthru.com/developers/api-basics/responses/
 RECOVERABLE_ERROR_CODES = frozenset([
-    9,   # Internal error: Something’s gone wrong on Sailthru's end. Your request was probably not saved – try waiting a
+    9,   # Internal error: Something's gone wrong on Sailthru's end. Your request was probably not saved - try waiting a
          # moment and trying again.
     RATE_LIMIT_ERROR_CODE,  # Too many [type] requests this minute to /[endpoint] API: You have exceeded the limit of
                             # requests per minute for the given type (GET or POST) and endpoint. For limit details, see
@@ -51,19 +51,25 @@ RESPONSE_HEADER_RATE_LIMIT_RESET = 'X-Rate-Limit-Reset'
 class SailthruEmailChannel(Channel):
 
     enabled = CLIENT_LIBRARY_INSTALLED
-    channel = ChannelTypes.EMAIL
+    channel_type = ChannelType.EMAIL
 
     def __init__(self):
         if not self.enabled:
             raise ValueError('The Sailthru API client is not installed, so the Sailthru email channel is disabled.')
 
-        self.sailthru_client = SailthruClient(
-            settings.ACE_CHANNEL_SAILTHRU_API_KEY,
-            settings.ACE_CHANNEL_SAILTHRU_API_SECRET,
-        )
+        if (
+            hasattr(settings, 'ACE_CHANNEL_SAILTHRU_API_KEY') and
+            hasattr(settings, 'ACE_CHANNEL_SAILTHRU_API_SECRET')
+        ):
+            self.sailthru_client = SailthruClient(
+                settings.ACE_CHANNEL_SAILTHRU_API_KEY,
+                settings.ACE_CHANNEL_SAILTHRU_API_SECRET,
+            )
+        else:
+            self.sailthru_client = None
 
-        if not settings.ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME:
-            raise ValueError('template_name cannot be empty or None')
+        if not hasattr(settings, 'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME'):
+            raise ValueError('ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME is required')
         self.template_name = settings.ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME
 
     def deliver(self, message, rendered_message):
@@ -72,6 +78,24 @@ class SailthruEmailChannel(Channel):
             value = rendered_message[key]
             if value is not None:
                 template_vars['ace_template_' + key] = value
+
+        if message.recipient.email_address is None:
+            LOG.error(
+                "No email address specified for recipient %s while sending message %s.%s",
+                message.recipient,
+                message.app_label,
+                message.name,
+            )
+            return
+
+        if getattr(settings, 'ACE_CHANNEL_SAILTHRU_DEBUG', False):
+            LOG.info(
+                "Would have emailed using template %s to email %s with variables %s",
+                self.template_name,
+                message.recipient.email_address,
+                template_vars,
+            )
+            return
 
         try:
             response = self.sailthru_client.send(

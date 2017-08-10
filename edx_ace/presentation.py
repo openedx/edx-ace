@@ -1,14 +1,11 @@
-from abc import ABCMeta
-
 from edx_ace import errors, renderers
 from edx_ace.ace_step import ACEStep
+from edx_ace.channel import ChannelType
 
 
 class Presentation(ACEStep):
-    __metaclass__ = ABCMeta
-
     renderers = {
-        'email': renderers.EmailRenderer,
+        ChannelType.EMAIL: renderers.EmailRenderer(),
     }
 
     def render(self, channel, message):
@@ -16,7 +13,7 @@ class Presentation(ACEStep):
         renderer = self.renderers.get(channel)
 
         if not renderer:
-            error_msg = 'No renderer is registered for the channel [%s].'.format(channel)
+            error_msg = 'No renderer is registered for the channel [{}].'.format(channel)
             raise errors.UnsupportedChannelError(error_msg)
 
         return renderer.render(message)

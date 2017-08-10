@@ -21,6 +21,11 @@ class Message(MessageAttributeSerializationMixin):
     app_label = attr.ib()
     name = attr.ib()
 
+    # optional attributes
+    recipient = attr.ib(
+        validator=attr.validators.optional(attr.validators.instance_of(Recipient)),
+    )
+
     expiration_time = attr.ib(
         default=None,
         validator=attr.validators.optional(attr.validators.instance_of(date.datetime)),
@@ -35,16 +40,6 @@ class Message(MessageAttributeSerializationMixin):
         validator=attr.validators.instance_of(UUID),
         default=None
     )
-
-    # optional attributes
-    recipient = attr.ib(
-        default=None,
-        validator=attr.validators.optional(attr.validators.instance_of(Recipient)),
-    )
-
-    @name.default
-    def default_name(self):
-        return getattr(self.__class__, 'name', attr.NOTHING)
 
     @context.default
     def default_context_value(self):
@@ -92,14 +87,14 @@ class MessageType(MessageAttributeSerializationMixin):
         else:
             return self.APP_LABEL
 
-    def personalize(self, user_context):
+    def personalize(self, recipient, user_context):
         context = dict(self.context)
         context.update(user_context)
-        context['template_uuid'] = self.uuid
         return Message(
             app_label=self.app_label,
             name=self.name,
             expiration_time=self.expiration_time,
             context=context,
             send_uuid=self.uuid,
+            recipient=recipient,
         )

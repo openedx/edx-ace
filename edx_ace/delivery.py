@@ -13,7 +13,7 @@ class Delivery(ACEStep):
             raise ValueError(
                 'No implementation for channel {channel_type} registered. Available channels are: {channels}'.format(
                     channel_type=channel_type,
-                    channels=', '.join(self.channels.keys())
+                    channels=', '.join(six.text_type(channel) for channel in self.channels.keys())
                 )
             )
         return channel.deliver(message, rendered_message)

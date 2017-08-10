@@ -2,6 +2,7 @@ from abc import ABCMeta
 
 import six
 from django.template import loader
+from edx_ace.channel import ChannelType
 
 
 class AbstractRenderer(object):
@@ -25,19 +26,27 @@ class AbstractRenderer(object):
         """
         raise NotImplementedError
 
+    def get_template_for_message(self, message, filename):
+        template_path = "{msg.app_label}/edx_ace/{msg.name}/{channel.value}/{filename}".format(
+            msg=message,
+            channel=self.channel,
+            filename=filename,
+        )
+        return loader.get_template(template_path)
+
 
 class EmailRenderer(AbstractRenderer):
+    channel = ChannelType.EMAIL
+
     def render(self, message):
-        # TODO Get templates from message.type
-        message_type = message.type
         templates = {
-            'subject': message_type.get_email_subject_template(),
-            'body_html': message_type.get_email_body_html_template(),
-            'body_text': message_type.get_email_body_text_template(),
+            'subject': self.get_template_for_message(message, 'subject.txt'),
+            'body_html': self.get_template_for_message(message, 'body.html'),
+            'body_text': self.get_template_for_message(message, 'body.txt'),
         }
 
         renderings = {}
         for name, template in six.iteritems(templates):
-            renderings[name] = loader.get_template(template).render(message.context)
+            renderings[name] = template.render(message.context)
 
         return renderings
