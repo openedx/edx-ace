@@ -18,12 +18,8 @@ class MessageAttributeSerializationMixin(object):
         )
         return cls(**fields)
 
-    def _serialize(self):
-        return json.dumps({
-            field_name: json.dumps(field_value, cls=MessageEncoder)
-            for field_name, field_value in attr.asdict(self).iteritems()
-            if field_value is not None
-        })
+    def to_json(self):
+        return attr.asdict(self)
 
     @classmethod
     def _deserialize(cls, json_value):
@@ -37,35 +33,25 @@ class MessageAttributeSerializationMixin(object):
         from edx_ace.recipient import Recipient
         from edx_ace.message import Message
 
-        try:
-            value = json.loads(field_value)
-        except ValueError:
-            # TODO figure out why we're doubly-JSONifying some strings but not others
-            value = field_value
         if field_name == 'expiration_time':
-            return date.deserialize(value)
+            return date.deserialize(field_value)
         elif field_name == 'uuid':
-            return UUID(value)
+            return UUID(field_value)
         elif field_name == 'message':
-            return Message.from_string(unicode(field_value))
+            return Message(**field_value)
         elif field_name == 'recipient':
-            return Recipient.from_string(unicode(field_value))
+            return Recipient(**field_value)
         else:
-            return value
+            return field_value
 
 
 class MessageEncoder(json.JSONEncoder):
     def default(self, obj):
-        from edx_ace.recipient import Recipient
-        from edx_ace.message import Message
-
         if isinstance(obj, UUID):
             return unicode(obj)
         elif isinstance(obj, date.datetime):
             return date.serialize(obj)
-        elif isinstance(obj, Message):
-            return obj._serialize()
-        elif isinstance(obj, Recipient):
-            return obj._serialize()
+        elif hasattr(obj, 'to_json'):
+            return obj.to_json()
         else:
             return super(MessageEncoder, self).default(obj)
