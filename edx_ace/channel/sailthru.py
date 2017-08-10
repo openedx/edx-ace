@@ -59,8 +59,8 @@ class SailthruEmailChannel(Channel):
             raise ValueError('The Sailthru API client is not installed, so the Sailthru email channel is disabled.')
 
         if (
-            hasattr(settings, 'ACE_CHANNEL_SAILTHRU_API_KEY') and
-            hasattr(settings, 'ACE_CHANNEL_SAILTHRU_API_SECRET')
+            getattr(settings, 'ACE_CHANNEL_SAILTHRU_API_KEY', None) and
+            getattr(settings, 'ACE_CHANNEL_SAILTHRU_API_SECRET', None)
         ):
             self.sailthru_client = SailthruClient(
                 settings.ACE_CHANNEL_SAILTHRU_API_KEY,
@@ -70,7 +70,7 @@ class SailthruEmailChannel(Channel):
             LOG.info("Unable to read ACE_CHANNEL_SAILTHRU_API_KEY or ACE_CHANNEL_SAILTHRU_API_SECRET")
             self.sailthru_client = None
 
-        if not hasattr(settings, 'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME'):
+        if not getattr(settings, 'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME', None):
             raise ValueError('ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME is required')
         self.template_name = settings.ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME
 
