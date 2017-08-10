@@ -1,77 +1,74 @@
 from abc import ABCMeta
+import attr
 import json
-from uuid import uuid4
+from uuid import uuid4, UUID
 
 import edx_ace.utils.date as date
 
 
-class MessageBase(object):
+@attr.s
+class Message(object):
     __metaclass__ = ABCMeta
 
-    SERIALIZED_KEYS = ('name', 'expiration_time', 'uuid', 'fields')
-    CLASS_KEY = 'class'
+    name = attr.ib()
+    expiration_time = attr.ib(default=attr.NOTHING)
 
-    def __init__(self, name, expiration_time, uuid, fields=None):
-        self.name = name
-        self.expiration_time = expiration_time
-        self.uuid = uuid
-        self.fields = {} if fields is None else fields
+    context = attr.ib()
+    uuid = attr.ib()
 
-    def __repr__(self):
-        return '{}({})'.format(
-            self.__class__.__name__,
-            ', '.join(repr(getattr(self, key)) for key in self.SERIALIZED_KEYS)
-        )
+    @context.default
+    def default_context_value(self):
+        return {}
+
+    @uuid.default
+    def generate_uuid(self):
+        return uuid4()
 
     def _serialize(self):
         json_value = {
-            key: json.dumps(getattr(self, key))
-            for key in self.SERIALIZED_KEYS
+            field.name: json.dumps(getattr(self, field.name), cls=MessageEncoder)
+            for field in attr.fields(type(self))
         }
-        json_value.update({self.CLASS_KEY: self.__class__})
         return json_value
 
-    # TODO Get serialization/deserialization working
     @classmethod
     def _deserialize(cls, json_value):
-        json_value = json_value.copy()
-        class_value = json_value.pop(cls.CLASS_KEY)
-        return class_value(**json_value)
+        fields = json_value.copy()
+        for field_name, field_value in fields.iteritems():
+            fields[field_name] = cls._deserialize_field(field_name, field_value)
+        return fields
+
+    @classmethod
+    def _deserialize_field(cls, field_name, field_value):
+        value = json.loads(field_value)
+        if field_name in ('name', 'context'):
+            return value
+        elif field_name == 'expiration_time':
+            return date.deserialize(value)
+        elif field_name == 'uuid':
+            return UUID(value)
+        else:
+            raise ValueError()  # TODO raise better error here
 
     def __unicode__(self):
         return json.dumps(self, cls=MessageEncoder)
 
     @classmethod
     def from_string(cls, string_value):
-        return json.loads(
+        fields = json.loads(
             string_value,
-            # object_hook=message_decoder,
+            object_hook=cls._deserialize,
         )
-
-
-class MessageTemplate(MessageBase):
-    @classmethod
-    def create(cls, name, expiration_time=None, fields=None):
-        return MessageTemplate(name, expiration_time, uuid4(), fields)
-
-
-class Message(MessageBase):
-    SERIALIZED_KEYS = MessageBase.SERIALIZED_KEYS + ('recipient',)
-
-    def __init__(self, recipient, *args, **kwargs):
-        super(Message, self).__init__(*args, **kwargs)
-        self.recipient = recipient
-
-    @classmethod
-    def create(cls, recipient, name, expiration_time=None):
-        return Message(recipient, name, expiration_time, uuid4())
+        return Message(**fields)
 
 
 class MessageEncoder(json.JSONEncoder):
     def default(self, obj):
+        if isinstance(obj, UUID):
+            return unicode(obj)
         if isinstance(obj, date.datetime):
             return date.serialize(obj)
-        if isinstance(obj, MessageBase):
+        if isinstance(obj, Message):
             return obj._serialize()
         else:
             return super(MessageEncoder, self).default(obj)
