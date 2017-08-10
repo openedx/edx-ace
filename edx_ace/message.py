@@ -56,7 +56,7 @@ class Message(MessageAttributeSerializationMixin):
 
 
 @attr.s
-class MessageType(object):
+class MessageType(MessageAttributeSerializationMixin):
     NAME = None
     APP_LABEL = None
 

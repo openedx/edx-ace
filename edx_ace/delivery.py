@@ -12,7 +12,7 @@ class Delivery(ACEStep):
     def __init__(self):
         self.channels = load_channels()
 
-    def deliver(self, channel_type, recipient, rendered_message):
+    def deliver(self, channel_type, rendered_message, message):
         channel = self.channels.get(channel_type)
         if not channel:
             raise ValueError(
@@ -21,4 +21,4 @@ class Delivery(ACEStep):
                     channels=', '.join(self.channels.keys())
                 )
             )
-        return channel.deliver(recipient, rendered_message)
+        return channel.deliver(message, rendered_message)

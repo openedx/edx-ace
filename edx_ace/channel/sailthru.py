@@ -66,7 +66,7 @@ class SailthruEmailChannel(Channel):
             raise ValueError('template_name cannot be empty or None')
         self.template_name = settings.ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME
 
-    def deliver(self, recipient, rendered_message):
+    def deliver(self, message, rendered_message):
         template_vars = {}
         for key in rendered_message:
             value = rendered_message[key]
@@ -76,7 +76,7 @@ class SailthruEmailChannel(Channel):
         try:
             response = self.sailthru_client.send(
                 self.template_name,
-                recipient.email_address,
+                message.recipient.email_address,
                 _vars=template_vars,
             )
 
