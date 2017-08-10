@@ -2,6 +2,7 @@ from __future__ import absolute_import, print_function, division
 
 from datetime import datetime, timedelta
 import logging
+import textwrap
 
 from dateutil.tz import tzutc
 from django.conf import settings
@@ -90,7 +91,12 @@ class SailthruEmailChannel(Channel):
 
         if getattr(settings, 'ACE_CHANNEL_SAILTHRU_DEBUG', False):
             LOG.info(
-                "Would have emailed using template %s to email %s with variables %s",
+                textwrap.dedent("""\
+                    Would have emailed using:
+                        template: %s
+                        recipient: %s
+                        variables: %s
+                """),
                 self.template_name,
                 message.recipient.email_address,
                 template_vars,
