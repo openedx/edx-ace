@@ -51,6 +51,7 @@ setup(
         "stevedore",
         "attrs",
         "python-dateutil",
+        "lazy",
     ],
     extras_require = {
         'sailthru':  ["sailthru-client>2.2,<2.3"]

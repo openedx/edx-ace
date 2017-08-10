@@ -2,6 +2,8 @@ from abc import ABCMeta
 import attr
 import json
 from uuid import uuid4, UUID
+from django.apps import apps
+from lazy import lazy
 
 import attr
 
@@ -10,7 +12,7 @@ import edx_ace.utils.date as date
 
 @attr.s
 class Message(object):
-    module = attr.ib()
+    app_label = attr.ib()
     name = attr.ib()
     expiration_time = attr.ib(default=None)
 
@@ -70,6 +72,7 @@ class Message(object):
 @attr.s
 class MessageType(object):
     NAME = None
+    APP_LABEL = None
 
     context = attr.ib()
     uuid = attr.ib()
@@ -83,18 +86,26 @@ class MessageType(object):
     def generate_uuid(self):
         return uuid4()
 
+    @lazy
     def name(self):
         if self.NAME is None:
-            return self.__class__.__name__
+            return self.__class__.__name__.lower()
         else:
             return self.NAME
+
+    @lazy
+    def app_label(self):
+        if self.APP_LABEL is None:
+            return apps.get_containing_app_config(self.__class__.__module__).label
+        else:
+            return self.APP_LABEL
 
     def personalize(self, user_context):
         context = dict(self.context)
         context.update(user_context)
         context['template_uuid'] = self.uuid
         return Message(
-            module=self.__class__.__module__,
+            app_label=self.app_label,
             name=self.name,
             expiration_time=self.expiration_time,
             context=context,
