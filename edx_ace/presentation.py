@@ -1,3 +1,5 @@
+from django.utils import translation
+
 from edx_ace import errors, renderers
 from edx_ace.ace_step import ACEStep
 from edx_ace.channel import ChannelType
@@ -16,4 +18,6 @@ class Presentation(ACEStep):
             error_msg = 'No renderer is registered for the channel [{}].'.format(channel)
             raise errors.UnsupportedChannelError(error_msg)
 
-        return renderer.render(message)
+        message_language = message.language or translation.get_language()
+        with translation.override(message_language):
+            return renderer.render(message)

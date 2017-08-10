@@ -40,6 +40,7 @@ class Message(MessageAttributeSerializationMixin):
         validator=attr.validators.optional(attr.validators.instance_of(UUID)),
         default=None
     )
+    language = attr.ib(default=None)
 
     @context.default
     def default_context_value(self):
@@ -87,7 +88,7 @@ class MessageType(MessageAttributeSerializationMixin):
         else:
             return self.APP_LABEL
 
-    def personalize(self, recipient, user_context):
+    def personalize(self, recipient, language, user_context):
         context = dict(self.context)
         context.update(user_context)
         return Message(
@@ -97,4 +98,5 @@ class MessageType(MessageAttributeSerializationMixin):
             context=context,
             send_uuid=self.uuid,
             recipient=recipient,
+            language=language,
         )
