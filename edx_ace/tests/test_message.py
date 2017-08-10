@@ -30,4 +30,4 @@ class TestMessageTemplate(TestCase):
         msg = Message(**self.msg_kwargs)
         string_value = six.text_type(msg)
         resurrected_msg = Message.from_string(string_value)
-        self.assertEquals(repr(msg), repr(resurrected_msg))
+        self.assertEquals(msg, resurrected_msg)
