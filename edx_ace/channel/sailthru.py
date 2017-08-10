@@ -17,7 +17,7 @@ try:
     from sailthru import SailthruClient, SailthruClientError
     CLIENT_LIBRARY_INSTALLED = True
 except ImportError:
-    log.warning('Sailthru client not installed. The Sailthru delivery channel is disabled.')
+    LOG.warning('Sailthru client not installed. The Sailthru delivery channel is disabled.')
     CLIENT_LIBRARY_INSTALLED = False
 
 
@@ -67,6 +67,7 @@ class SailthruEmailChannel(Channel):
                 settings.ACE_CHANNEL_SAILTHRU_API_SECRET,
             )
         else:
+            LOG.info("Unable to read ACE_CHANNEL_SAILTHRU_API_KEY or ACE_CHANNEL_SAILTHRU_API_SECRET")
             self.sailthru_client = None
 
         if not hasattr(settings, 'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME'):
@@ -103,6 +104,18 @@ class SailthruEmailChannel(Channel):
             )
             return
 
+        if self.sailthru_client is None:
+            LOG.error(
+                textwrap.dedent("""\
+                    No sailthru client available to send:
+                        template: %s
+                        recipient: %s
+                        variables: %s
+                """),
+                self.template_name,
+                message.recipient.email_address,
+                template_vars,
+            )
         try:
             response = self.sailthru_client.send(
                 self.template_name,
@@ -111,7 +124,7 @@ class SailthruEmailChannel(Channel):
             )
 
             if response.is_ok():
-                log.debug('Sailthru message sent')
+                LOG.debug('Sailthru message sent')
                 # TODO: append something to the message history to indicate that it was sent
                 # TODO: emit some sort of analytics event?
                 return True
@@ -147,7 +160,7 @@ class SailthruEmailChannel(Channel):
                         )
                     )
         except SailthruClientError as exc:
-            log.exception('Unable to communicate with the Sailthru API')
+            LOG.exception('Unable to communicate with the Sailthru API')
             raise FatalChannelDeliveryError(str(exc))
 
     @staticmethod
