@@ -116,6 +116,8 @@ class SailthruEmailChannel(Channel):
                 message.recipient.email_address,
                 template_vars,
             )
+            return
+
         try:
             response = self.sailthru_client.send(
                 self.template_name,
@@ -132,7 +134,7 @@ class SailthruEmailChannel(Channel):
                 error = response.get_error()
                 error_code = error.get_error_code()
                 error_message = error.get_message()
-                http_status_code = error.get_status_code()
+                http_status_code = response.get_status_code()
 
                 if error_code in RECOVERABLE_ERROR_CODES:
                     next_attempt_time = None
@@ -144,7 +146,7 @@ class SailthruEmailChannel(Channel):
                         next_attempt_time = get_current_time() + timedelta(seconds=NEXT_ATTEMPT_DELAY_SECONDS)
 
                     raise RecoverableChannelDeliveryError(
-                        'Recoverable Sailthru error_code={error_code} status_code={http_status_code}: {message}'.format(
+                        'Recoverable Sailthru error (error_code={error_code} status_code={http_status_code}): {message}'.format(
                             error_code=error_code,
                             http_status_code=http_status_code,
                             message=error_message
@@ -153,7 +155,7 @@ class SailthruEmailChannel(Channel):
                     )
                 else:
                     raise FatalChannelDeliveryError(
-                        'Fatal Sailthru error_code={error_code} status_code={http_status_code}: {message}'.format(
+                        'Fatal Sailthru error (error_code={error_code} status_code={http_status_code}): {message}'.format(
                             error_code=error_code,
                             http_status_code=http_status_code,
                             message=error_message
