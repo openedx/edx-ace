@@ -6,5 +6,5 @@ class RecipientResolver(ACEStep):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def send(self, msg_template, *args, **kwargs):
+    def send(self, msg_type, *args, **kwargs):
         pass
