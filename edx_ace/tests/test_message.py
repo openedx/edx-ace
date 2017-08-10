@@ -7,6 +7,7 @@ from edx_ace.utils.date import get_current_time
 class TestMessageTemplate(TestCase):
     def setUp(self):
         self.msg_kwargs = {
+            'app_label': u'test_app_label',
             'name': u'test_message',
             'expiration_time': get_current_time(),
             'context': {

@@ -13,7 +13,7 @@ from edx_ace.recipient import Recipient
 class Message(MessageAttributeSerializationMixin):
     __metaclass__ = ABCMeta
 
-    # app_label = attr.ib()
+    app_label = attr.ib()
 
     # mandatory attributes
     # Name is the unique identifier for the message type.
