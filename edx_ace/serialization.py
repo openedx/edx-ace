@@ -1,22 +1,28 @@
 import attr
 import json
 from uuid import UUID
+import six
 
 from edx_ace.utils import date
 
 
+@six.python_2_unicode_compatible
 class MessageAttributeSerializationMixin(object):
 
-    def __unicode__(self):
+    def __str__(self):
         return json.dumps(self, cls=MessageEncoder)
 
     @classmethod
     def from_string(cls, string_value):
+        print(string_value)
         fields = json.loads(
             string_value,
             object_hook=cls._deserialize,
         )
-        return cls(**fields)
+        uuid = fields.pop('uuid')
+        instance = cls(**fields)
+        instance.uuid = uuid
+        return instance
 
     def to_json(self):
         return attr.asdict(self)
@@ -24,7 +30,7 @@ class MessageAttributeSerializationMixin(object):
     @classmethod
     def _deserialize(cls, json_value):
         fields = json_value.copy()
-        for field_name, field_value in fields.iteritems():
+        for field_name, field_value in six.iteritems(fields):
             fields[field_name] = cls._deserialize_field(field_name, field_value)
         return fields
 
@@ -48,7 +54,7 @@ class MessageAttributeSerializationMixin(object):
 class MessageEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, UUID):
-            return unicode(obj)
+            return six.text_type(obj)
         elif isinstance(obj, date.datetime):
             return date.serialize(obj)
         elif hasattr(obj, 'to_json'):

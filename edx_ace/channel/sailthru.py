@@ -119,6 +119,7 @@ class SailthruEmailChannel(Channel):
             return
 
         try:
+            # TODO: Log message send attempt using uuid
             response = self.sailthru_client.send(
                 self.template_name,
                 message.recipient.email_address,

@@ -1,3 +1,4 @@
+import six
 from unittest import TestCase
 from edx_ace.recipient import Recipient
 from edx_ace.message import Message
@@ -16,9 +17,6 @@ class TestMessageTemplate(TestCase):
             },
             'recipient': Recipient(
                 username=u'me',
-                fields={
-                    u'key3': u'value3',
-                }
             )
         }
 
@@ -30,6 +28,6 @@ class TestMessageTemplate(TestCase):
 
     def test_serialization(self):
         msg = Message(**self.msg_kwargs)
-        string_value = unicode(msg)
+        string_value = six.text_type(msg)
         resurrected_msg = Message.from_string(string_value)
         self.assertEquals(repr(msg), repr(resurrected_msg))
