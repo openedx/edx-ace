@@ -13,13 +13,12 @@ from edx_ace.recipient import Recipient
 class Message(MessageAttributeSerializationMixin):
     __metaclass__ = ABCMeta
 
-    app_label = attr.ib()
-
     # mandatory attributes
     # Name is the unique identifier for the message type.
     # Used for:
     #   tracking
     #   discovering message presentation templates
+    app_label = attr.ib()
     name = attr.ib()
 
     expiration_time = attr.ib(
@@ -30,6 +29,11 @@ class Message(MessageAttributeSerializationMixin):
     context = attr.ib()
     uuid = attr.ib(
         validator=attr.validators.instance_of(UUID),
+        init=False,
+    )
+    send_uuid = attr.ib(
+        validator=attr.validators.instance_of(UUID),
+        default=None
     )
 
     # optional attributes
@@ -57,8 +61,14 @@ class MessageType(object):
     APP_LABEL = None
 
     context = attr.ib()
-    uuid = attr.ib()
-    expiration_time = attr.ib(default=None)
+    uuid = attr.ib(
+        init=False,
+        validator=attr.validators.instance_of(UUID),
+    )
+    expiration_time = attr.ib(
+        default=None,
+        validator=attr.validators.optional(attr.validators.instance_of(date.datetime)),
+    )
 
     @context.default
     def default_context_value(self):
@@ -91,4 +101,5 @@ class MessageType(object):
             name=self.name,
             expiration_time=self.expiration_time,
             context=context,
+            send_uuid=self.uuid,
         )
