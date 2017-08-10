@@ -1,12 +1,7 @@
-from abc import ABCMeta
-
-import six
-
 from edx_ace.ace_step import ACEStep
 from edx_ace.channel import load_channels
 
 
-@six.add_metaclass(ABCMeta)
 class Delivery(ACEStep):
 
     def __init__(self):

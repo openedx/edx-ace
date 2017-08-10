@@ -1,16 +1,15 @@
 import abc
-
-import attr
 from django.conf import settings
+from enum import Enum
 import six
 from stevedore import named
-from enum import Enum
 
 
 CHANNEL_EXTENSION_NAMESPACE = 'openedx.ace.channel'
 
 
 class ChannelTypes(Enum):
+    ALL = 'all'
     UNSPECIFIED = 'unspecified'
     EMAIL = 'email'
 
