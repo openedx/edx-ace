@@ -58,4 +58,4 @@ class PolicyStep(ACEStep):
             namespace=POLICY_PLUGIN_NAMESPACE,
             names= getattr(settings, 'ACE_ENABLED_POLICIES', []),
             instantiate=True,
-        ).value()
+        ).values()

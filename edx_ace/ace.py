@@ -1,5 +1,5 @@
 from edx_ace.message import Message
-from edx_ace.policy import Policy
+from edx_ace.policy import PolicyStep
 from edx_ace.presentation import Presentation
 from edx_ace.delivery import Delivery
 
@@ -21,7 +21,7 @@ class PipelineSteps(object):
     @classmethod
     def startup(cls):
         if cls.policy is None:
-            cls.policy = Policy()
+            cls.policy = PolicyStep()
         if cls.presentation is None:
             cls.presentation = Presentation()
         if cls.delivery is None:
