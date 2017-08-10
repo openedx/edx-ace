@@ -9,10 +9,15 @@ from edx_ace.utils.plugins import get_plugins
 
 @attr.s
 class PolicyResult(object):
-    # possible values:
-    #   ChannelType.ALL - message should not be sent to any channel
-    #   ChannelType.UNSPECIFIED -
-    deny = attr.ib(attr.validators.in_(ChannelType))
+    deny = attr.ib(
+        default=attr.Factory(set),
+    )
+
+    @deny.validator
+    def check_set_of_channel_types(self, attribute, set_value):
+        for value in set_value:
+            if value not in ChannelType:
+                raise ValueError(u"PolicyResult for {} has an invalid value {}.".format(attribute, value))
 
 
 class Policy(object):
@@ -34,18 +39,18 @@ class PolicyStep(ACEStep):
         self.policies = self._load_policies()
 
     def channels_for(self, message):
-        pass
-        # allowed_channels = {channel for channel in ChannelType if channel not in NON_CHANNEL_TYPES}
-        #
-        # for policy in self.policies:
-        #     policy_result = policy.check(message)
-        #     if policy_result.deny == ChannelType.ALL:
-        #         return []
-        #     elif policy_result.deny == ChannelType.UNSPECIFIED:
-        #         continue
-        #     else:
-        #         allowed_channels - policy_result.deny
+        allowed_channels = {channel for channel in ChannelType if channel not in NON_CHANNEL_TYPES}
 
+        for policy in self.policies:
+            deny_value = policy.check(message).deny
+            if ChannelType.ALL in deny_value:
+                return []
+            elif ChannelType.UNSPECIFIED in deny_value:
+                continue
+            else:
+                allowed_channels -= deny_value
+
+        return allowed_channels
 
     @staticmethod
     def _load_policies():

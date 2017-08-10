@@ -33,12 +33,12 @@ class Message(MessageAttributeSerializationMixin):
 
     context = attr.ib()
     uuid = attr.ib(
-        validator=attr.validators.instance_of(UUID),
         init=False,
+        validator=attr.validators.instance_of(UUID),
     )
     send_uuid = attr.ib(
+        default=None,
         validator=attr.validators.instance_of(UUID),
-        default=None
     )
 
     @context.default
