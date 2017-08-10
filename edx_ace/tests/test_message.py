@@ -1,5 +1,5 @@
-import json
 from unittest import TestCase
+from edx_ace.recipient import Recipient
 from edx_ace.message import Message
 from edx_ace.utils.date import get_current_time
 
@@ -13,6 +13,12 @@ class TestMessageTemplate(TestCase):
                 u'key1': u'value1',
                 u'key2': u'value2',
             },
+            'recipient': Recipient(
+                username=u'me',
+                fields={
+                    u'key3': u'value3',
+                }
+            )
         }
 
     def test_basic(self):
