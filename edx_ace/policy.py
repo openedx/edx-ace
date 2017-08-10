@@ -3,12 +3,15 @@ import attr
 from django.conf import settings
 
 from edx_ace.ace_step import ACEStep
-from edx_ace.channel import ChannelType
+from edx_ace.channel import ChannelType, NON_CHANNEL_TYPES
 from edx_ace.utils.plugins import get_plugins
 
 
 @attr.s
 class PolicyResult(object):
+    # possible values:
+    #   ChannelType.ALL - message should not be sent to any channel
+    #   ChannelType.UNSPECIFIED -
     deny = attr.ib(attr.validators.in_(ChannelType))
 
 
@@ -32,29 +35,22 @@ class PolicyStep(ACEStep):
 
     def channels_for(self, message):
         pass
+        # allowed_channels = {channel for channel in ChannelType if channel not in NON_CHANNEL_TYPES}
+        #
+        # for policy in self.policies:
+        #     policy_result = policy.check(message)
+        #     if policy_result.deny == ChannelType.ALL:
+        #         return []
+        #     elif policy_result.deny == ChannelType.UNSPECIFIED:
+        #         continue
+        #     else:
+        #         allowed_channels - policy_result.deny
+
 
     @staticmethod
     def _load_policies():
-        policy_names = getattr(settings, 'ACE_ENABLED_POLICIES', [])
-        if len(policy_names) == 0:
-            return []
-
-        plugins = get_plugins(
+        return get_plugins(
             namespace=POLICY_PLUGIN_NAMESPACE,
-            names=policy_names,
-        )
-
-        channels = {}
-        for channel_class in plugins:
-            if channel_class.enabled:
-                if channel_class.channel_type in channels:
-                    raise ValueError(
-                        'Multiple plugins registered for the same channel: {first} and {second}'.format(
-                            first=channels[channel_class.channel_type].__class__.__name__,
-                            second=channel_class.__name__,
-                        )
-                    )
-
-                channels[channel_class.channel_type] = channel_class()
-
-        return channels
+            names= getattr(settings, 'ACE_ENABLED_POLICIES', []),
+            instantiate=True,
+        ).value()
