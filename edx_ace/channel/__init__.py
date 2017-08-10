@@ -4,9 +4,15 @@ import attr
 from django.conf import settings
 import six
 from stevedore import named
+from enum import Enum
 
 
 CHANNEL_EXTENSION_NAMESPACE = 'openedx.ace.channel'
+
+
+class ChannelTypes(Enum):
+    UNSPECIFIED = 'unspecified'
+    EMAIL = 'email'
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -18,11 +24,6 @@ class Channel(object):
     @abc.abstractmethod
     def deliver(self, recipient, rendered_message):
         raise NotImplementedError()
-
-
-class ChannelTypes(object):
-    UNSPECIFIED = 'unspecified'
-    EMAIL = 'email'
 
 
 def load_channels():
