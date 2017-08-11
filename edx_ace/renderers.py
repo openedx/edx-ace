@@ -40,8 +40,10 @@ class EmailRenderer(AbstractRenderer):
 
     def render(self, message):
         templates = {
+            'from_name': self.get_template_for_message(message, 'from_name.txt'),
             'subject': self.get_template_for_message(message, 'subject.txt'),
             'body_html': self.get_template_for_message(message, 'body.html'),
+            'head_html': self.get_template_for_message(message, 'head.html'),
             'body_text': self.get_template_for_message(message, 'body.txt'),
         }
 
