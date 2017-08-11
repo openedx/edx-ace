@@ -14,7 +14,6 @@ class MessageAttributeSerializationMixin(object):
 
     @classmethod
     def from_string(cls, string_value):
-        print(string_value)
         fields = json.loads(
             string_value,
             object_hook=cls._deserialize,
@@ -36,6 +35,7 @@ class MessageAttributeSerializationMixin(object):
 
     @classmethod
     def _deserialize_field(cls, field_name, field_value):
+        # We have to import these here to avoid a circular dependency since these classes use this mixin.
         from edx_ace.recipient import Recipient
         from edx_ace.message import Message
 
@@ -43,6 +43,7 @@ class MessageAttributeSerializationMixin(object):
             return date.deserialize(field_value)
         elif field_name == 'uuid':
             return UUID(field_value)
+        # TODO(later): should this be more dynamic?
         elif field_name == 'message':
             return Message(**field_value)
         elif field_name == 'recipient':

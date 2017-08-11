@@ -18,8 +18,8 @@ def get_plugins(namespace, names=None, instantiate=False):
 
 def check_plugin(extension, namespace, names=None):
     if names is None or extension.name in names:
-        enabled = getattr(extension.plugin, 'enabled', True)
-        if not enabled:
+        plugin_enabled = getattr(extension.plugin, 'enabled', True)
+        if not plugin_enabled:
             LOG.info("Extension with name %s for namespace %s is not enabled", extension.name, namespace)
-        return enabled
+        return plugin_enabled
     return False

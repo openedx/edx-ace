@@ -5,7 +5,7 @@ from edx_ace.ace_step import ACEStep
 from edx_ace.channel import ChannelType
 
 
-class Presentation(ACEStep):
+class PresentationStep(ACEStep):
     renderers = {
         ChannelType.EMAIL: renderers.EmailRenderer(),
     }

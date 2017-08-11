@@ -1,8 +1,11 @@
+
+import six
+
 from edx_ace.ace_step import ACEStep
 from edx_ace.channel import load_channels
 
 
-class Delivery(ACEStep):
+class DeliveryStep(ACEStep):
 
     def __init__(self):
         self.channels = load_channels()

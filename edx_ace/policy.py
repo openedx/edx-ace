@@ -36,6 +36,7 @@ POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 
 class PolicyStep(ACEStep):
     def __init__(self):
+        # TODO(now): enable this?
         # self.policies = self._load_policies()
         self.policies = None
 

@@ -1,12 +1,10 @@
-from edx_ace.message import Message
+
+from edx_ace.delivery import DeliveryStep
 from edx_ace.policy import PolicyStep
-from edx_ace.presentation import Presentation
-from edx_ace.delivery import Delivery
+from edx_ace.presentation import PresentationStep
 
 
 def send(msg):
-    assert isinstance(msg, Message)
-
     channels_for_message = PipelineSteps.policy.channels_for(msg)
     for channel in channels_for_message:
         rendered_message = PipelineSteps.presentation.render(channel, msg)
@@ -23,9 +21,9 @@ class PipelineSteps(object):
         if cls.policy is None:
             cls.policy = PolicyStep()
         if cls.presentation is None:
-            cls.presentation = Presentation()
+            cls.presentation = PresentationStep()
         if cls.delivery is None:
-            cls.delivery = Delivery()
+            cls.delivery = DeliveryStep()
 
 
 PipelineSteps.startup()

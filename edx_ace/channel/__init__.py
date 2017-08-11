@@ -9,6 +9,7 @@ from edx_ace.utils.plugins import get_plugins
 LOG = logging.getLogger(__name__)
 
 
+# TODO(later): encapsulate the shared part of this namespace in the utils.plugin module
 CHANNEL_EXTENSION_NAMESPACE = 'openedx.ace.channel'
 
 
@@ -19,6 +20,7 @@ class ChannelType(Enum):
     PUSH = 'push'
 
 
+# TODO(later): it's counter-intuitive to me that we have channel types that aren't channel types...
 NON_CHANNEL_TYPES = (ChannelType.ALL, ChannelType.UNSPECIFIED)
 
 

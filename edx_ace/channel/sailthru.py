@@ -6,9 +6,10 @@ import textwrap
 
 from dateutil.tz import tzutc
 from django.conf import settings
+import six
 
 from edx_ace.channel import Channel, ChannelType
-from edx_ace.errors import RecoverableChannelDeliveryError, FatalChannelDeliveryError
+from edx_ace.errors import RecoverableChannelDeliveryError, FatalChannelDeliveryError, InvalidMessageError
 from edx_ace.utils.date import get_current_time
 
 LOG = logging.getLogger(__name__)
@@ -32,7 +33,7 @@ RECOVERABLE_ERROR_CODES = frozenset([
 ])
 NEXT_ATTEMPT_DELAY_SECONDS = 10
 
-# TODO: Should we do something different with these responses?
+# TODO(later): Should we do something different with these responses?
 # OPT_OUT_ERROR_CODES = frozenset([
 #     32,  # Email has opted out of delivery from client: This email has opted out of delivery from any emails coming
 #          # from your site and should not be emailed.
@@ -51,6 +52,7 @@ RESPONSE_HEADER_RATE_LIMIT_RESET = 'X-Rate-Limit-Reset'
 
 class SailthruEmailChannel(Channel):
 
+    # TODO(later): should this check if the appropriate django settings are defined?
     enabled = CLIENT_LIBRARY_INSTALLED
     channel_type = ChannelType.EMAIL
 
@@ -82,16 +84,16 @@ class SailthruEmailChannel(Channel):
                 template_vars['ace_template_' + key] = value
 
         if message.recipient.email_address is None:
-            LOG.error(
+            raise InvalidMessageError(
                 "No email address specified for recipient %s while sending message %s.%s",
                 message.recipient,
                 message.app_label,
                 message.name,
             )
-            return
 
         if getattr(settings, 'ACE_CHANNEL_SAILTHRU_DEBUG', False):
             LOG.info(
+                # TODO(later): Do our splunk parsers do the right thing with multi-line log messages like this?
                 textwrap.dedent("""\
                     Would have emailed using:
                         template: %s
@@ -100,12 +102,12 @@ class SailthruEmailChannel(Channel):
                 """),
                 self.template_name,
                 message.recipient.email_address,
-                template_vars,
+                six.text_type(template_vars),
             )
             return
 
         if self.sailthru_client is None:
-            LOG.error(
+            raise FatalChannelDeliveryError(
                 textwrap.dedent("""\
                     No sailthru client available to send:
                         template: %s
@@ -114,12 +116,11 @@ class SailthruEmailChannel(Channel):
                 """),
                 self.template_name,
                 message.recipient.email_address,
-                template_vars,
+                six.text_type(template_vars),
             )
-            return
 
         try:
-            # TODO: Log message send attempt using uuid
+            # TODO(later): Log message send attempt using uuid
             response = self.sailthru_client.send(
                 self.template_name,
                 message.recipient.email_address,
@@ -128,8 +129,7 @@ class SailthruEmailChannel(Channel):
 
             if response.is_ok():
                 LOG.debug('Sailthru message sent')
-                # TODO: append something to the message history to indicate that it was sent
-                # TODO: emit some sort of analytics event?
+                # TODO(later): emit some sort of analytics event?
                 return True
             else:
                 error = response.get_error()
@@ -171,6 +171,7 @@ class SailthruEmailChannel(Channel):
         response = sailthru_response.response
         headers = response.headers
 
+        # TODO(later): what if they don't send us back an int?
         remaining = int(headers[RESPONSE_HEADER_RATE_LIMIT_REMAINING])
         if remaining > 0:
             return None

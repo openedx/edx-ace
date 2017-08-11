@@ -1,10 +1,11 @@
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 
 import six
 from django.template import loader
 from edx_ace.channel import ChannelType
 
 
+@six.add_metaclass(ABCMeta)
 class AbstractRenderer(object):
     """
     Base class for message renderers.
@@ -12,8 +13,8 @@ class AbstractRenderer(object):
     A message renderer is responsible for taking a one, or more, templates, and context, and outputting
     a rendered message for a specific message channel (e.g. email, SMS, push notification).
     """
-    __metaclass__ = ABCMeta
 
+    @abstractmethod
     def render(self, message):
         """
         Renders the given message.
@@ -47,6 +48,7 @@ class EmailRenderer(AbstractRenderer):
             'body_text': self.get_template_for_message(message, 'body.txt'),
         }
 
+        # TODO(later): all renderers will need this, won't they?
         renderings = {}
         for name, template in six.iteritems(templates):
             renderings[name] = template.render(message.context)

@@ -8,8 +8,10 @@ def get_current_time():
 
 
 def serialize(obj):
+    # TODO(later): my understanding is that type checks like this are not pythonic.
     assert isinstance(obj, datetime)
 
+    # TODO(later): what if utcoffset() returns 0?
     if obj.tzinfo is not None and obj.utcoffset() is None:
         return obj.isoformat() + 'Z'
     else:
