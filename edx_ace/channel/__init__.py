@@ -42,7 +42,7 @@ def load_channels():
     )
 
     channels = {}
-    for channel_class in plugins.itervalues():
+    for channel_class in six.itervalues(plugins):
         if channel_class.channel_type in channels:
             raise ValueError(
                 'Multiple plugins registered for the same channel: {first} and {second}'.format(
