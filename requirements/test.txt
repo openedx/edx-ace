@@ -10,15 +10,16 @@ certifi==2017.7.27.1      # via requests
 chardet==3.0.4            # via requests
 coverage==4.4.1           # via pytest-cov
 ddt==1.1.1
-idna==2.5                 # via requests
+idna==2.6                 # via requests
 pbr==3.1.1                # via stevedore
 py==1.4.34                # via pytest, pytest-catchlog
 pytest-catchlog==1.2.2
 pytest-cov==2.5.1
+pytest-django==3.1.2
 pytest==3.2.1             # via pytest-catchlog, pytest-cov, pytest-django
 python-dateutil==2.6.1
 pytz==2017.2              # via django
-requests==2.18.3          # via sailthru-client
+requests==2.18.4          # via sailthru-client
 sailthru-client==2.2.3
 simplejson==3.11.1        # via sailthru-client
 six==1.10.0               # via python-dateutil, stevedore
