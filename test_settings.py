@@ -41,3 +41,5 @@ LOCALE_PATHS = [
 ROOT_URLCONF = 'edx_ace.urls'
 
 SECRET_KEY = 'insecure-secret-key'
+
+ACE_ENABLED_POLICIES = []
