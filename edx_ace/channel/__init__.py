@@ -17,7 +17,7 @@ class ChannelType(Enum):
     ALL = 'all'
     UNSPECIFIED = 'unspecified'
     EMAIL = 'email'
-    # PUSH = 'push'
+    PUSH = 'push'
 
 
 # TODO(later): it's counter-intuitive to me that we have channel types that aren't channel types...
