@@ -51,7 +51,7 @@ class Message(MessageAttributeSerializationMixin):
         return uuid4()
 
 
-@attr.s
+@attr.s(cmp=False)
 class MessageType(MessageAttributeSerializationMixin):
     NAME = None
     APP_LABEL = None
@@ -65,6 +65,8 @@ class MessageType(MessageAttributeSerializationMixin):
         default=None,
         validator=attr.validators.optional(attr.validators.instance_of(date.datetime)),
     )
+    app_label = attr.ib()
+    name = attr.ib()
 
     @context.default
     def default_context_value(self):
@@ -75,15 +77,15 @@ class MessageType(MessageAttributeSerializationMixin):
         return uuid4()
 
     # TODO(now): It seems like these values won't traverse a wire boundary well, maybe move to a default value for attr.ib()?
-    @lazy
-    def name(self):
+    @name.default
+    def default_name(self):
         if self.NAME is None:
             return self.__class__.__name__.lower()
         else:
             return self.NAME
 
-    @lazy
-    def app_label(self):
+    @app_label.default
+    def default_app_label(self):
         if self.APP_LABEL is None:
             return apps.get_containing_app_config(self.__class__.__module__).label
         else:
@@ -101,3 +103,16 @@ class MessageType(MessageAttributeSerializationMixin):
             recipient=recipient,
             language=language,
         )
+
+    def __eq__(self, other):
+        if isinstance(other, MessageType):
+            return attr.astuple(self) == attr.astuple(other)
+        else:
+            return NotImplemented
+
+    def __ne__(self, other):
+        result = self == other
+        if result == NotImplemented:
+            return NotImplemented
+        else:
+            return not result

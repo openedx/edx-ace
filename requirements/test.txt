@@ -10,6 +10,7 @@ certifi==2017.7.27.1      # via requests
 chardet==3.0.4            # via requests
 coverage==4.4.1           # via pytest-cov
 ddt==1.1.1
+hypothesis==3.18.2
 idna==2.6                 # via requests
 pbr==3.1.1                # via stevedore
 pudb==2017.1.3

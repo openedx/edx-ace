@@ -6,3 +6,4 @@ pytest-cov                # pytest extension for code coverage statistics
 pytest-django             # pytest extension for better Django support
 ddt                       # data-driven tests
 pudb                      # For easier test debugging
+hypothesis                # For property-based testing
