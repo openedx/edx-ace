@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from collections import namedtuple
 
 import six
 from django.template import loader
@@ -36,21 +37,36 @@ class AbstractRenderer(object):
         return loader.get_template(template_path)
 
 
+RenderedEmail = namedtuple('RenderedEmail', [
+    'from_name',
+    'subject',
+    'body_html',
+    'head_html',
+    'body_text',
+])
+
+
 class EmailRenderer(AbstractRenderer):
     channel = ChannelType.EMAIL
+    rendered_message_cls = RenderedEmail
+    template_names = RenderedEmail(
+        from_name='from_name.txt',
+        subject='subject.txt',
+        body_html='body.html',
+        head_html='head.html',
+        body_text='body.txt',
+    )
 
     def render(self, message):
-        templates = {
-            'from_name': self.get_template_for_message(message, 'from_name.txt'),
-            'subject': self.get_template_for_message(message, 'subject.txt'),
-            'body_html': self.get_template_for_message(message, 'body.html'),
-            'head_html': self.get_template_for_message(message, 'head.html'),
-            'body_text': self.get_template_for_message(message, 'body.txt'),
-        }
+        templates = self.rendered_message_cls(*(
+            self.get_template_for_message(message, name)
+            for name in self.template_names
+        ))
 
         # TODO(later): all renderers will need this, won't they?
-        renderings = {}
-        for name, template in six.iteritems(templates):
-            renderings[name] = template.render(message.context)
+        renderings = self.rendered_message_cls(*(
+            template.render(message.context)
+            for template in templates
+        ))
 
         return renderings

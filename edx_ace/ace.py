@@ -1,14 +1,23 @@
+import logging
 
 from edx_ace.delivery import DeliveryStep
+from edx_ace.errors import UnsupportedChannelError
 from edx_ace.policy import PolicyStep
 from edx_ace.presentation import PresentationStep
+
+
+LOG = logging.getLogger(__name__)
 
 
 def send(msg):
     channels_for_message = PipelineSteps.policy.channels_for(msg)
     for channel in channels_for_message:
-        rendered_message = PipelineSteps.presentation.render(channel, msg)
-        PipelineSteps.delivery.deliver(channel, rendered_message, msg)
+        try:
+            rendered_message = PipelineSteps.presentation.render(channel, msg)
+        except UnsupportedChannelError:
+            LOG.exception("Unable to render message %s for channel %s", msg, channel)
+        else:
+            PipelineSteps.delivery.deliver(channel, rendered_message, msg)
 
 
 class PipelineSteps(object):

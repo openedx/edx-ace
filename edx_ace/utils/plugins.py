@@ -6,13 +6,17 @@ from stevedore import enabled
 LOG = logging.getLogger(__name__)
 
 
+def get_manager(namespace, names=None):
+    return enabled.EnabledExtensionManager(
+        namespace=namespace,
+        check_func=partial(check_plugin, namespace=namespace, names=names),
+    )
+
+
 def get_plugins(namespace, names=None, instantiate=False):
     return {
         extension.name: extension.plugin() if instantiate else extension.plugin
-        for extension in enabled.EnabledExtensionManager(
-            namespace=namespace,
-            check_func=partial(check_plugin, namespace=namespace, names=names),
-        )
+        for extension in get_manager(namespace, names)
     }
 
 

@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 import attr
 from django.conf import settings
+from lazy import lazy
 
 from edx_ace.ace_step import ACEStep
 from edx_ace.channel import ChannelType, NON_CHANNEL_TYPES
@@ -35,9 +36,6 @@ POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 
 
 class PolicyStep(ACEStep):
-    def __init__(self):
-        self.policies = self._load_policies()
-
     def channels_for(self, message):
         allowed_channels = {channel for channel in ChannelType if channel not in NON_CHANNEL_TYPES}
 
@@ -52,8 +50,8 @@ class PolicyStep(ACEStep):
 
         return allowed_channels
 
-    @staticmethod
-    def _load_policies():
+    @lazy
+    def policies(self):
         return get_plugins(
             namespace=POLICY_PLUGIN_NAMESPACE,
             names=getattr(settings, 'ACE_ENABLED_POLICIES', []),

@@ -12,7 +12,9 @@ coverage==4.4.1           # via pytest-cov
 ddt==1.1.1
 idna==2.6                 # via requests
 pbr==3.1.1                # via stevedore
+pudb==2017.1.3
 py==1.4.34                # via pytest, pytest-catchlog
+pygments==2.2.0           # via pudb
 pytest-catchlog==1.2.2
 pytest-cov==2.5.1
 pytest-django==3.1.2
@@ -25,3 +27,4 @@ simplejson==3.11.1        # via sailthru-client
 six==1.10.0               # via python-dateutil, stevedore
 stevedore==1.10.0
 urllib3==1.22             # via requests
+urwid==1.3.1              # via pudb

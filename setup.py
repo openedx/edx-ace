@@ -53,7 +53,8 @@ setup(
         "attrs",
         "python-dateutil",
         "lazy",
-        "enum34",
+        'enum34;python_version<"3.4"',
+        'mock;python_version<"3.3"',
     ],
     extras_require = {
         'sailthru':  ["sailthru-client>2.2,<2.3"]

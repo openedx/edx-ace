@@ -1,4 +1,5 @@
 
+from lazy import lazy
 import six
 
 from edx_ace.ace_step import ACEStep
@@ -6,10 +7,6 @@ from edx_ace.channel import load_channels
 
 
 class DeliveryStep(ACEStep):
-
-    def __init__(self):
-        self.channels = load_channels()
-
     def deliver(self, channel_type, rendered_message, message):
         channel = self.channels.get(channel_type)
         if not channel:
@@ -20,3 +17,7 @@ class DeliveryStep(ACEStep):
                 )
             )
         return channel.deliver(message, rendered_message)
+
+    @lazy
+    def channels(self):
+        return load_channels()
