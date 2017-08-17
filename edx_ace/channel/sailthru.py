@@ -2,6 +2,7 @@ from __future__ import absolute_import, print_function, division
 
 from datetime import datetime, timedelta
 import logging
+import random
 import textwrap
 
 import attr
@@ -144,7 +145,9 @@ class SailthruEmailChannel(Channel):
 
                     if next_attempt_time is None:
                         # Sailthru advises waiting "a moment" and then trying again.
-                        next_attempt_time = get_current_time() + timedelta(seconds=NEXT_ATTEMPT_DELAY_SECONDS)
+                        next_attempt_time = get_current_time() + timedelta(
+                            seconds=NEXT_ATTEMPT_DELAY_SECONDS + random.uniform(-2, 2)
+                        )
 
                     raise RecoverableChannelDeliveryError(
                         'Recoverable Sailthru error (error_code={error_code} status_code={http_status_code}): {message}'.format(
