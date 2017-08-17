@@ -2,8 +2,14 @@ from collections import namedtuple
 import ddt
 from unittest import TestCase
 
+try:
+    from unittest.mock import patch
+except ImportError:
+    from mock import patch
+
+
 from edx_ace.channel import ChannelType
-import edx_ace.policy as policy
+from edx_ace import policy
 
 
 class StubPolicy(policy.Policy):
@@ -19,9 +25,6 @@ ALL_ALLOWED_CHANNELS = {ChannelType.EMAIL, ChannelType.PUSH}
 
 @ddt.ddt
 class TestPolicy(TestCase):
-
-    def setUp(self):
-        self.policy_step = policy.PolicyStep()
 
     PolicyCase = namedtuple('PolicyCase', 'deny_values, expected_channels')
 
@@ -46,6 +49,6 @@ class TestPolicy(TestCase):
     @ddt.unpack
     def test_policies(self, deny_values, expected_channels):
         policies = [StubPolicy(deny_value) for deny_value in deny_values]
-        self.policy_step.policies = policies
-        channels = self.policy_step.channels_for(message=None)
-        self.assertEquals(channels, expected_channels)
+        with patch.object(policy, 'policies', return_value=policies):
+            channels = policy.channels_for(message=None)
+            self.assertEquals(channels, expected_channels)

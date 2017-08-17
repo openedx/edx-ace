@@ -2,7 +2,6 @@ from abc import ABCMeta
 import attr
 from uuid import uuid4, UUID
 from django.apps import apps
-from lazy import lazy
 
 import edx_ace.utils.date as date
 from edx_ace.serialization import MessageAttributeSerializationMixin

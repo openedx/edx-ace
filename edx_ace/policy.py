@@ -1,10 +1,10 @@
 from abc import ABCMeta, abstractmethod
 import attr
 from django.conf import settings
-from lazy import lazy
 
 from edx_ace.channel import ChannelType
 from edx_ace.utils.plugins import get_plugins
+from edx_ace.utils.once import once
 
 
 @attr.s
@@ -34,21 +34,21 @@ class Policy(object):
 POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 
 
-class PolicyStep(object):
-    def channels_for(self, message):
-        allowed_channels = set(ChannelType)
+def channels_for(message):
+    allowed_channels = set(ChannelType)
 
-        for policy in self.policies:
-            allowed_channels -= policy.check(message).deny
+    for policy in policies():
+        allowed_channels -= policy.check(message).deny
 
-        return allowed_channels
+    return allowed_channels
 
-    @lazy
-    def policies(self):
-        return [
-            extension.obj
-            for extension in get_plugins(
-                namespace=POLICY_PLUGIN_NAMESPACE,
-                names=getattr(settings, 'ACE_ENABLED_POLICIES', []),
-            )
-        ]
+
+@once
+def policies():
+    return [
+        extension.obj
+        for extension in get_plugins(
+            namespace=POLICY_PLUGIN_NAMESPACE,
+            names=getattr(settings, 'ACE_ENABLED_POLICIES', []),
+        )
+    ]

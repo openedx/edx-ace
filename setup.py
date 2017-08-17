@@ -52,7 +52,6 @@ setup(
         "stevedore",
         "attrs",
         "python-dateutil",
-        "lazy",
         'enum34;python_version<"3.4"',
         'mock;python_version<"3.3"',
     ],

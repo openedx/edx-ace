@@ -5,6 +5,7 @@ import logging
 import six
 
 from edx_ace.utils.plugins import get_plugins
+from edx_ace.utils.once import once
 
 LOG = logging.getLogger(__name__)
 
@@ -29,7 +30,8 @@ class Channel(object):
         raise NotImplementedError()
 
 
-def load_channels():
+@once
+def channels():
     plugins = get_plugins(
         namespace=CHANNEL_EXTENSION_NAMESPACE,
         names=getattr(settings, 'ACE_ENABLED_CHANNELS', []),
