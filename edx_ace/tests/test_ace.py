@@ -76,6 +76,6 @@ class TestAce(TestCase):
                 subject=TEMPLATES['testapp/edx_ace/testmessage/email/subject.txt'].render(),
                 body_html=TEMPLATES['testapp/edx_ace/testmessage/email/body.html'].render(),
                 head_html=TEMPLATES['testapp/edx_ace/testmessage/email/head.html'].render(),
-                body_text=TEMPLATES['testapp/edx_ace/testmessage/email/body.txt'].render(),
+                body=TEMPLATES['testapp/edx_ace/testmessage/email/body.txt'].render(),
             ),
         )
