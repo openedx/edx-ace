@@ -19,4 +19,4 @@ def serialize(obj):
 
 
 def deserialize(value):
-    return parse(value)
+    return parse(value, yearfirst=True)

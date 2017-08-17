@@ -1,20 +1,25 @@
+import datetime
 from functools import partial
 import six
+import uuid
 from unittest import TestCase
 from edx_ace.recipient import Recipient
 from edx_ace.message import Message, MessageType
 from edx_ace.utils.date import get_current_time
 from hypothesis import strategies as st
-from hypothesis import given
+from hypothesis import given, example
+from hypothesis.extra.pytz import timezones
+import pytz
 
 
 context_values = st.one_of(st.text(), st.booleans(), st.floats(allow_nan=False))
+dates = st.datetimes(timezones=st.none() | timezones())
 
 msg = st.builds(
     Message,
     app_label=st.text(),
     name=st.text(),
-    expiration_time=st.datetimes(),
+    expiration_time=dates,
     context=st.dictionaries(
         st.text(),
         context_values,
@@ -68,12 +73,12 @@ def mk_message_type(name, app_label):
 
 msg_type = st.builds(
     mk_message_type,
-    st.one_of(st.none(), st.text()),
-    st.one_of(st.none(), st.text()),
+    name=st.one_of(st.none(), st.text()),
+    app_label=st.text(),
 ).flatmap(
     partial(
         st.builds,
-        expiration_time=st.datetimes(),
+        expiration_time=dates,
         context=st.dictionaries(
             st.text(),
             context_values,
