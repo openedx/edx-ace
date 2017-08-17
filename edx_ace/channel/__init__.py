@@ -14,21 +14,15 @@ CHANNEL_EXTENSION_NAMESPACE = 'openedx.ace.channel'
 
 
 class ChannelType(Enum):
-    ALL = 'all'
-    UNSPECIFIED = 'unspecified'
     EMAIL = 'email'
     PUSH = 'push'
-
-
-# TODO(later): it's counter-intuitive to me that we have channel types that aren't channel types...
-NON_CHANNEL_TYPES = (ChannelType.ALL, ChannelType.UNSPECIFIED)
 
 
 @six.add_metaclass(abc.ABCMeta)
 class Channel(object):
 
     enabled = True
-    channel_type = ChannelType.UNSPECIFIED
+    channel_type = None
 
     @abc.abstractmethod
     def deliver(self, recipient, rendered_message):

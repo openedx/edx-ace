@@ -4,7 +4,7 @@ from django.conf import settings
 from lazy import lazy
 
 from edx_ace.ace_step import ACEStep
-from edx_ace.channel import ChannelType, NON_CHANNEL_TYPES
+from edx_ace.channel import ChannelType
 from edx_ace.utils.plugins import get_plugins
 
 
@@ -37,16 +37,10 @@ POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 
 class PolicyStep(ACEStep):
     def channels_for(self, message):
-        allowed_channels = {channel for channel in ChannelType if channel not in NON_CHANNEL_TYPES}
+        allowed_channels = set(ChannelType)
 
         for policy in self.policies:
-            deny_value = policy.check(message).deny
-            if ChannelType.ALL in deny_value:
-                return set()
-            elif ChannelType.UNSPECIFIED in deny_value:
-                continue
-            else:
-                allowed_channels -= deny_value
+            allowed_channels -= policy.check(message).deny
 
         return allowed_channels
 

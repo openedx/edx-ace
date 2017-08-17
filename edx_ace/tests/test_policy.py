@@ -28,10 +28,9 @@ class TestPolicy(TestCase):
     @ddt.data(
         # allow all
         PolicyCase(deny_values=[set()], expected_channels=ALL_ALLOWED_CHANNELS),
-        PolicyCase(deny_values=[{ChannelType.UNSPECIFIED}], expected_channels=ALL_ALLOWED_CHANNELS),
 
         # deny all
-        PolicyCase(deny_values=[{ChannelType.ALL}], expected_channels=set()),
+        PolicyCase(deny_values=[set(ChannelType)], expected_channels=set()),
 
         # deny only email
         PolicyCase(deny_values=[{ChannelType.EMAIL}], expected_channels={ChannelType.PUSH}),         # single policy
@@ -42,7 +41,7 @@ class TestPolicy(TestCase):
         PolicyCase(deny_values=[{ChannelType.EMAIL}, {ChannelType.PUSH}], expected_channels=set()),  # multiple policies
 
         # deny all and email
-        PolicyCase(deny_values=[{ChannelType.EMAIL}, {ChannelType.ALL}], expected_channels=set()),
+        PolicyCase(deny_values=[{ChannelType.EMAIL}, set(ChannelType)], expected_channels=set()),
     )
     @ddt.unpack
     def test_policies(self, deny_values, expected_channels):
