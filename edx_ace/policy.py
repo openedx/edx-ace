@@ -3,7 +3,6 @@ import attr
 from django.conf import settings
 from lazy import lazy
 
-from edx_ace.ace_step import ACEStep
 from edx_ace.channel import ChannelType
 from edx_ace.utils.plugins import get_plugins
 
@@ -35,7 +34,7 @@ class Policy(object):
 POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 
 
-class PolicyStep(ACEStep):
+class PolicyStep(object):
     def channels_for(self, message):
         allowed_channels = set(ChannelType)
 

@@ -1,11 +1,10 @@
 from django.utils import translation
 
 from edx_ace import errors, renderers
-from edx_ace.ace_step import ACEStep
 from edx_ace.channel import ChannelType
 
 
-class PresentationStep(ACEStep):
+class PresentationStep(object):
     renderers = {
         ChannelType.EMAIL: renderers.EmailRenderer(),
     }
