@@ -1,12 +1,9 @@
-from abc import ABCMeta
-
 import attr
 import six
 from django.template import loader
 from edx_ace.channel import ChannelType
 
 
-@six.add_metaclass(ABCMeta)
 class AbstractRenderer(object):
     """
     Base class for message renderers.
@@ -14,6 +11,7 @@ class AbstractRenderer(object):
     A message renderer is responsible for taking a one, or more, templates, and context, and outputting
     a rendered message for a specific message channel (e.g. email, SMS, push notification).
     """
+    channel = None
     rendered_message_cls = None
 
     def render(self, message):

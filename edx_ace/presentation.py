@@ -4,13 +4,13 @@ from edx_ace import errors, renderers
 from edx_ace.channel import ChannelType
 
 
-renderers = {
+RENDERERS = {
     ChannelType.EMAIL: renderers.EmailRenderer(),
 }
 
 def render(channel, message):
     """ Returns the rendered content for the given channel and message. """
-    renderer = renderers.get(channel)
+    renderer = RENDERERS.get(channel)
 
     if not renderer:
         error_msg = 'No renderer is registered for the channel [{}].'.format(channel)
