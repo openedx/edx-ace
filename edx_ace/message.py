@@ -76,7 +76,6 @@ class MessageType(MessageAttributeSerializationMixin):
     def generate_uuid(self):
         return uuid4()
 
-    # TODO(now): It seems like these values won't traverse a wire boundary well, maybe move to a default value for attr.ib()?
     @name.default
     def default_name(self):
         if self.NAME is None:

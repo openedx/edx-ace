@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import logging
 import textwrap
 
+import attr
 from dateutil.tz import tzutc
 from django.conf import settings
 import six
@@ -78,8 +79,7 @@ class SailthruEmailChannel(Channel):
 
     def deliver(self, message, rendered_message):
         template_vars = {}
-        for key in rendered_message:
-            value = rendered_message[key]
+        for key, value in six.iteritems(attr.asdict(rendered_message)):
             if value is not None:
                 template_vars['ace_template_' + key] = value
 

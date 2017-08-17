@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from collections import namedtuple
 
+import attr
 import six
 from django.template import loader
 from edx_ace.channel import ChannelType
@@ -37,36 +38,28 @@ class AbstractRenderer(object):
         return loader.get_template(template_path)
 
 
-RenderedEmail = namedtuple('RenderedEmail', [
-    'from_name',
-    'subject',
-    'body_html',
-    'head_html',
-    'body_text',
-])
+@attr.s
+class RenderedEmail(object):
+    from_name = attr.ib()
+    subject = attr.ib()
+    body_html = attr.ib()
+    head_html = attr.ib()
+    body = attr.ib()
 
 
 class EmailRenderer(AbstractRenderer):
     channel = ChannelType.EMAIL
     rendered_message_cls = RenderedEmail
-    template_names = RenderedEmail(
-        from_name='from_name.txt',
-        subject='subject.txt',
-        body_html='body.html',
-        head_html='head.html',
-        body_text='body.txt',
-    )
 
     def render(self, message):
-        templates = self.rendered_message_cls(*(
-            self.get_template_for_message(message, name)
-            for name in self.template_names
-        ))
+        rendered = {}
+        for attribute in attr.fields(self.rendered_message_cls):
+            field = attribute.name
+            if field.endswith('_html'):
+                filename = field.replace('_html', '.html')
+            else:
+                filename = field + '.txt'
+            template = self.get_template_for_message(message, filename)
+            rendered[field] = template.render(message.context)
 
-        # TODO(later): all renderers will need this, won't they?
-        renderings = self.rendered_message_cls(*(
-            template.render(message.context)
-            for template in templates
-        ))
-
-        return renderings
+        return self.rendered_message_cls(**rendered)
