@@ -12,8 +12,8 @@ from edx_ace.message import Message
 from edx_ace.policy import POLICY_PLUGIN_NAMESPACE
 from edx_ace.recipient import Recipient
 from edx_ace.renderers import RenderedEmail
-from edx_ace.tests.test_policy import StubPolicy
 from edx_ace.utils.plugins import get_manager
+from test_policy import StubPolicy
 
 
 TEMPLATES = {}
