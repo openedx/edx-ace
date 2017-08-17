@@ -54,15 +54,30 @@ RESPONSE_HEADER_RATE_LIMIT_RESET = 'X-Rate-Limit-Reset'
 
 class SailthruEmailChannel(Channel):
 
-    # TODO(later): should this check if the appropriate django settings are defined?
-    enabled = CLIENT_LIBRARY_INSTALLED
     channel_type = ChannelType.EMAIL
+
+    @classmethod
+    def enabled(cls):
+        required_settings = (
+            'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME',
+            'ACE_CHANNEL_SAILTHRU_API_KEY',
+            'ACE_CHANNEL_SAILTHRU_API_SECRET',
+        )
+
+        for setting in required_settings:
+            if not hasattr(settings, required_settings):
+                LOG.warning("%s is not set, Sailthru email channel is disabled.", setting)
+
+        return CLIENT_LIBRARY_INSTALLED and all(
+            hasattr(settings, required_setting)
+            for required_setting in required_settings
+        )
 
     def __init__(self):
         if not self.enabled:
-            raise ValueError('The Sailthru API client is not installed, so the Sailthru email channel is disabled.')
-
-        if (
+            self.sailthru_client = None
+            LOG.warning('The Sailthru API client is not installed, so the Sailthru email channel is disabled.')
+        elif (
             getattr(settings, 'ACE_CHANNEL_SAILTHRU_API_KEY', None) and
             getattr(settings, 'ACE_CHANNEL_SAILTHRU_API_SECRET', None)
         ):
@@ -74,9 +89,9 @@ class SailthruEmailChannel(Channel):
             LOG.info("Unable to read ACE_CHANNEL_SAILTHRU_API_KEY or ACE_CHANNEL_SAILTHRU_API_SECRET")
             self.sailthru_client = None
 
-        if not getattr(settings, 'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME', None):
-            raise ValueError('ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME is required')
-        self.template_name = settings.ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME
+        self.template_name = getattr(settings, 'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME', None)
+        if self.template_name is None:
+            LOG.warning('ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME is unset, the Sailthru email channel is disabled')
 
     def deliver(self, message, rendered_message):
         template_vars = {}
@@ -116,6 +131,17 @@ class SailthruEmailChannel(Channel):
                         variables: %s
                 """),
                 self.template_name,
+                message.recipient.email_address,
+                six.text_type(template_vars),
+            )
+
+        if self.template_name is None:
+            raise FatalChannelDeliveryError(
+                textwrap.dedent("""\
+                    No template set when sending to:
+                        recipient: %s
+                        variables: %s
+                """),
                 message.recipient.email_address,
                 six.text_type(template_vars),
             )

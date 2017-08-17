@@ -10,14 +10,12 @@ def get_manager(namespace, names=None):
     return enabled.EnabledExtensionManager(
         namespace=namespace,
         check_func=partial(check_plugin, namespace=namespace, names=names),
+        invoke_on_load=True,
     )
 
 
-def get_plugins(namespace, names=None, instantiate=False):
-    return {
-        extension.name: extension.plugin() if instantiate else extension.plugin
-        for extension in get_manager(namespace, names)
-    }
+def get_plugins(namespace, names=None):
+    return list(get_manager(namespace, names))
 
 
 def check_plugin(extension, namespace, names=None):

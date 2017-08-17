@@ -31,7 +31,7 @@ class TestAce(TestCase):
             POLICY_PLUGIN_NAMESPACE,
             'test_policy'
         ).make_test_instance([
-            Extension('test_policy', None, lambda: StubPolicy({ChannelType.PUSH}), None)
+            Extension('test_policy', None, None, StubPolicy({ChannelType.PUSH}))
         ])
 
         self.channel_manager = get_manager(
@@ -41,8 +41,8 @@ class TestAce(TestCase):
             Extension(
                 'test_channel',
                 None,
-                self.mock_email_channel,
                 None,
+                self.mock_email_channel,
             )
         ])
 
@@ -69,7 +69,7 @@ class TestAce(TestCase):
             recipient=recipient,
         )
         ace.send(msg)
-        self.mock_email_channel().deliver.assert_called_once_with(
+        self.mock_email_channel.deliver.assert_called_once_with(
             msg,
             RenderedEmail(
                 from_name=TEMPLATES['testapp/edx_ace/testmessage/email/from_name.txt'].render(),

@@ -46,8 +46,10 @@ class PolicyStep(ACEStep):
 
     @lazy
     def policies(self):
-        return get_plugins(
-            namespace=POLICY_PLUGIN_NAMESPACE,
-            names=getattr(settings, 'ACE_ENABLED_POLICIES', []),
-            instantiate=True,
-        ).values()
+        return [
+            extension.obj
+            for extension in get_plugins(
+                namespace=POLICY_PLUGIN_NAMESPACE,
+                names=getattr(settings, 'ACE_ENABLED_POLICIES', []),
+            )
+        ]
