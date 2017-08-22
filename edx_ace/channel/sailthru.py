@@ -104,10 +104,9 @@ class SailthruEmailChannel(Channel):
     def deliver(self, message, rendered_message):
         if message.recipient.email_address is None:
             raise InvalidMessageError(
-                "No email address specified for recipient %s while sending message %s.%s",
+                "No email address specified for recipient %s while sending message %s",
                 message.recipient,
-                message.app_label,
-                message.name,
+                message.log_id
             )
 
         template_vars = {}
@@ -115,8 +114,10 @@ class SailthruEmailChannel(Channel):
             if value is not None:
                 template_vars['ace_template_' + key] = value
 
+        logger = message.get_message_specific_logger(LOG)
+
         if getattr(settings, 'ACE_CHANNEL_SAILTHRU_DEBUG', False):
-            LOG.info(
+            logger.info(
                 # TODO(later): Do our splunk parsers do the right thing with multi-line log messages like this?
                 textwrap.dedent("""\
                     Would have emailed using:
@@ -157,7 +158,7 @@ class SailthruEmailChannel(Channel):
             )
 
         try:
-            # TODO(later): Log message send attempt using uuid
+            logger.debug('Sending to Sailthru')
             response = self.sailthru_client.send(
                 self.template_name,
                 message.recipient.email_address,
@@ -165,7 +166,7 @@ class SailthruEmailChannel(Channel):
             )
 
             if response.is_ok():
-                LOG.debug('Sailthru message sent')
+                logger.debug('Successfully send to Sailthru')
                 # TODO(later): emit some sort of analytics event?
                 return True
             else:
@@ -203,7 +204,7 @@ class SailthruEmailChannel(Channel):
                         )
                     )
         except SailthruClientError as exc:
-            LOG.exception('Unable to communicate with the Sailthru API')
+            logger.exception('Unable to communicate with the Sailthru API')
             raise FatalChannelDeliveryError(str(exc))
 
     @staticmethod

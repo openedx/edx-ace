@@ -73,6 +73,10 @@ validate: quality test ## run tests and quality checks
 selfcheck: ## check that the Makefile is well-formed
 	@echo "The Makefile is well-formed."
 
+write-pylintrc:
+	pip install edx-lint
+	edx_lint write pylintrc
+
 ## Localization targets
 
 extract_translations: ## extract strings to be translated, outputting .mo files

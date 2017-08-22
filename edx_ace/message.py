@@ -1,7 +1,10 @@
 from abc import ABCMeta
-import attr
+import logging
 from uuid import uuid4, UUID
+
+import attr
 from django.apps import apps
+import six
 
 import edx_ace.utils.date as date
 from edx_ace.serialization import MessageAttributeSerializationMixin
@@ -50,6 +53,24 @@ class Message(MessageAttributeSerializationMixin):
     @uuid.default
     def generate_uuid(self):
         return uuid4()
+
+    @property
+    def log_id(self):
+        return '.'.join([
+            self.app_label,
+            self.name,
+            six.text_type(self.send_uuid) if self.send_uuid else 'no_send_uuid',
+            six.text_type(self.uuid)
+        ])
+
+    def get_message_specific_logger(self, logger):
+        return MessageLoggingAdapter(logger, {'message': self})
+
+
+class MessageLoggingAdapter(logging.LoggerAdapter):
+
+    def process(self, msg, kwargs):
+        return '[%s] %s' % (self.extra['message'].log_id, msg), kwargs
 
 
 @attr.s(cmp=False)

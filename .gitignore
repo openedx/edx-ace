@@ -67,11 +67,10 @@ docs/edx_ace.*.rst
 requirements/private.in
 requirements/private.txt
 
-# Requirements artifacts
-requirements/*.txt
-
 # tox environment temporary artifacts
 tests/__init__.py
 
 # Development task artifacts
 default.db
+
+.hypothesis

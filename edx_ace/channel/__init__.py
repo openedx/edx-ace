@@ -1,13 +1,10 @@
 import abc
 from django.conf import settings
 from enum import Enum
-import logging
 import six
 
 from edx_ace.utils.plugins import get_plugins
 from edx_ace.utils.once import once
-
-LOG = logging.getLogger(__name__)
 
 
 # TODO(later): encapsulate the shared part of this namespace in the utils.plugin module

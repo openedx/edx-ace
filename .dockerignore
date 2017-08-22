@@ -50,3 +50,5 @@ tests/__init__.py
 default.db
 
 .git/
+
+.hypothesis
