@@ -25,13 +25,14 @@ pygments==2.2.0           # via readme-renderer, sphinx
 python-dateutil==2.6.1
 pytz==2017.2              # via babel, django
 readme-renderer==17.2
-requests==2.18.4          # via sailthru-client
+requests==2.18.4          # via sailthru-client, sphinx
 restructuredtext-lint==1.1.1  # via doc8
 sailthru-client==2.2.3
 simplejson==3.11.1        # via sailthru-client
 six==1.10.0               # via bleach, doc8, edx-sphinx-theme, html5lib, python-dateutil, readme-renderer, sphinx, stevedore
 snowballstemmer==1.2.1    # via sphinx
-sphinx==1.4.9             # via edx-sphinx-theme
+sphinx==1.6.3             # via edx-sphinx-theme
+sphinxcontrib-websupport==1.0.1  # via sphinx
 stevedore==1.10.0
 urllib3==1.22             # via requests
 webencodings==0.5.1       # via html5lib
