@@ -9,6 +9,9 @@ import edx_ace.presentation
 LOG = logging.getLogger(__name__)
 
 
+# TODO(now): Have this top-level function handle errors and log statements
+#   If channels_for returns no channels
+#   If delivery fails
 def send(msg):
     channels_for_message = edx_ace.policy.channels_for(msg)
     for channel in channels_for_message:

@@ -8,6 +8,7 @@ RENDERERS = {
     ChannelType.EMAIL: renderers.EmailRenderer(),
 }
 
+
 def render(channel, message):
     """ Returns the rendered content for the given channel and message. """
     renderer = RENDERERS.get(channel)

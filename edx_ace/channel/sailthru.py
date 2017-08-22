@@ -24,6 +24,7 @@ except ImportError:
     CLIENT_LIBRARY_INSTALLED = False
 
 
+# TODO(later): For better readability, change RECOVERABLE_ERROR_CODES to an Enum class instead
 RATE_LIMIT_ERROR_CODE = 43
 # Reference: https://getstarted.sailthru.com/developers/api-basics/responses/
 RECOVERABLE_ERROR_CODES = frozenset([
@@ -66,6 +67,9 @@ class SailthruEmailChannel(Channel):
 
         for setting in required_settings:
             if not hasattr(settings, required_settings):
+                # TODO(now): Create a common logging utility function for the ACE
+                #   library - so all our log statements can be commonly prefixed
+                #   and discoverable.
                 LOG.warning("%s is not set, Sailthru email channel is disabled.", setting)
 
         return CLIENT_LIBRARY_INSTALLED and all(
@@ -77,6 +81,8 @@ class SailthruEmailChannel(Channel):
         if not self.enabled:
             self.sailthru_client = None
             LOG.warning('The Sailthru API client is not installed, so the Sailthru email channel is disabled.')
+        # TODO(later): No need to check for these settings again since they were already
+        #   checked in the enabled method.
         elif (
             getattr(settings, 'ACE_CHANNEL_SAILTHRU_API_KEY', None) and
             getattr(settings, 'ACE_CHANNEL_SAILTHRU_API_SECRET', None)
@@ -90,15 +96,12 @@ class SailthruEmailChannel(Channel):
             self.sailthru_client = None
 
         self.template_name = getattr(settings, 'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME', None)
+        # TODO(later): No need to check this again since it was already checked in the enabled method,
+        #   which is called within this method.
         if self.template_name is None:
             LOG.warning('ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME is unset, the Sailthru email channel is disabled')
 
     def deliver(self, message, rendered_message):
-        template_vars = {}
-        for key, value in six.iteritems(attr.asdict(rendered_message)):
-            if value is not None:
-                template_vars['ace_template_' + key] = value
-
         if message.recipient.email_address is None:
             raise InvalidMessageError(
                 "No email address specified for recipient %s while sending message %s.%s",
@@ -106,6 +109,11 @@ class SailthruEmailChannel(Channel):
                 message.app_label,
                 message.name,
             )
+
+        template_vars = {}
+        for key, value in six.iteritems(attr.asdict(rendered_message)):
+            if value is not None:
+                template_vars['ace_template_' + key] = value
 
         if getattr(settings, 'ACE_CHANNEL_SAILTHRU_DEBUG', False):
             LOG.info(
@@ -122,6 +130,8 @@ class SailthruEmailChannel(Channel):
             )
             return
 
+        # TODO(later): Why is it necessary to check this again here
+        # when it was already checked in the __init__ method?
         if self.sailthru_client is None:
             raise FatalChannelDeliveryError(
                 textwrap.dedent("""\
@@ -175,6 +185,7 @@ class SailthruEmailChannel(Channel):
                             seconds=NEXT_ATTEMPT_DELAY_SECONDS + random.uniform(-2, 2)
                         )
 
+                    # TODO(later): Retry delivery when this is raised?
                     raise RecoverableChannelDeliveryError(
                         'Recoverable Sailthru error (error_code={error_code} status_code={http_status_code}): {message}'.format(
                             error_code=error_code,

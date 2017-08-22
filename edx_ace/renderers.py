@@ -1,5 +1,4 @@
 import attr
-import six
 from django.template import loader
 from edx_ace.channel import ChannelType
 
@@ -8,8 +7,9 @@ class AbstractRenderer(object):
     """
     Base class for message renderers.
 
-    A message renderer is responsible for taking a one, or more, templates, and context, and outputting
-    a rendered message for a specific message channel (e.g. email, SMS, push notification).
+    A message renderer is responsible for taking one, or more, templates,
+    and context, and outputting a rendered message for a specific message
+    channel (e.g. email, SMS, push notification).
     """
     channel = None
     rendered_message_cls = None
@@ -26,6 +26,8 @@ class AbstractRenderer(object):
         """
         rendered = {}
         for attribute in attr.fields(self.rendered_message_cls):
+            # TODO(later): Add comments to explain this difference in
+            # behavior between html and txt files, or make it consistent.
             field = attribute.name
             if field.endswith('_html'):
                 filename = field.replace('_html', '.html')

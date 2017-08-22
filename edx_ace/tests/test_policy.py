@@ -20,9 +20,6 @@ class StubPolicy(policy.Policy):
         return policy.PolicyResult(deny=self.deny_value)
 
 
-ALL_ALLOWED_CHANNELS = {ChannelType.EMAIL, ChannelType.PUSH}
-
-
 @ddt.ddt
 class TestPolicy(TestCase):
 
@@ -30,7 +27,7 @@ class TestPolicy(TestCase):
 
     @ddt.data(
         # allow all
-        PolicyCase(deny_values=[set()], expected_channels=ALL_ALLOWED_CHANNELS),
+        PolicyCase(deny_values=[set()], expected_channels=set(ChannelType)),
 
         # deny all
         PolicyCase(deny_values=[set(ChannelType)], expected_channels=set()),

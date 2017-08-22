@@ -31,6 +31,8 @@ class Message(MessageAttributeSerializationMixin):
     )
 
     context = attr.ib()
+
+    # TODO(later): better naming to distinguish between these 2 UUIDs
     uuid = attr.ib(
         init=False,
         validator=attr.validators.instance_of(UUID),
@@ -102,6 +104,8 @@ class MessageType(MessageAttributeSerializationMixin):
             language=language,
         )
 
+    # TODO(later): Why is it necessary to override attr's
+    # implementation of these?
     def __eq__(self, other):
         if isinstance(other, MessageType):
             return attr.astuple(self) == attr.astuple(other)

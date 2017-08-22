@@ -34,6 +34,16 @@ class Policy(object):
 POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 
 
+# TODO(later): Need to support Denying ALL channels for a message
+#   For example, a user (or course) policy denies sending all messages
+#   of a particular type.
+
+# TODO(later): We may also want to consider adding a separate
+#   policy method for checking MessageType objects. For example,
+#   the RecipientResolver could also check platform-wide (and
+#   course-wide?) policies with a MessageType object.
+
+
 def channels_for(message):
     allowed_channels = set(ChannelType)
 

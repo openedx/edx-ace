@@ -1,7 +1,5 @@
-import datetime
 from functools import partial
 import six
-import uuid
 from unittest import TestCase
 from edx_ace.recipient import Recipient
 from edx_ace.message import Message, MessageType
@@ -9,7 +7,6 @@ from edx_ace.utils.date import get_current_time
 from hypothesis import strategies as st
 from hypothesis import given, example
 from hypothesis.extra.pytz import timezones
-import pytz
 
 
 context_values = st.one_of(st.text(), st.booleans(), st.floats(allow_nan=False))
@@ -58,7 +55,7 @@ class TestMessage(TestCase):
         self.assertEquals(msg, resurrected_msg)
 
     @given(msg)
-    def test_serialization_roundtrip(self, message):
+    def test_serialization_round_trip(self, message):
         serialized = six.text_type(message)
         parsed = Message.from_string(serialized)
         self.assertEquals(message, parsed)
