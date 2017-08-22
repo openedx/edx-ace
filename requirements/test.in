@@ -8,3 +8,4 @@ ddt                       # data-driven tests
 pudb                      # For easier test debugging
 hypothesis[pytz]          # For property-based testing
 hypothesis-pytest
+freezegun

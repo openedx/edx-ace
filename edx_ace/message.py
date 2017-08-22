@@ -56,7 +56,12 @@ class Message(MessageAttributeSerializationMixin):
 
     @property
     def log_id(self):
-        return '.'.join([self.app_label, self.name, six.text_type(self.send_uuid), six.text_type(self.uuid)])
+        return '.'.join([
+            self.app_label,
+            self.name,
+            six.text_type(self.send_uuid) if self.send_uuid else 'no_send_uuid',
+            six.text_type(self.uuid)
+        ])
 
     def get_message_specific_logger(self, logger):
         return MessageLoggingAdapter(logger, {'message': self})

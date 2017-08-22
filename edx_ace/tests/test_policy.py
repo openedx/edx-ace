@@ -1,6 +1,9 @@
 from collections import namedtuple
-import ddt
 from unittest import TestCase
+
+import ddt
+
+from edx_ace.test_utils import StubPolicy
 
 try:
     from unittest.mock import patch
@@ -10,14 +13,6 @@ except ImportError:
 
 from edx_ace.channel import ChannelType
 from edx_ace import policy
-
-
-class StubPolicy(policy.Policy):
-    def __init__(self, deny_value):
-        self.deny_value = deny_value
-
-    def check(self, message):
-        return policy.PolicyResult(deny=self.deny_value)
 
 
 @ddt.ddt
