@@ -66,7 +66,7 @@ class SailthruEmailChannel(Channel):
         )
 
         for setting in required_settings:
-            if not hasattr(settings, required_settings):
+            if not hasattr(settings, setting):
                 # TODO(now): Create a common logging utility function for the ACE
                 #   library - so all our log statements can be commonly prefixed
                 #   and discoverable.
