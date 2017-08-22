@@ -65,7 +65,7 @@ class SailthruEmailChannel(Channel):
         )
 
         for setting in required_settings:
-            if not hasattr(settings, required_settings):
+            if not hasattr(settings, setting):
                 LOG.warning("%s is not set, Sailthru email channel is disabled.", setting)
 
         return CLIENT_LIBRARY_INSTALLED and all(
