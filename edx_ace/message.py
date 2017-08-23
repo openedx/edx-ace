@@ -1,3 +1,4 @@
+# lint-amnesty, pylint: disable=missing-docstring
 from abc import ABCMeta
 import logging
 from uuid import uuid4, UUID
@@ -11,7 +12,7 @@ from edx_ace.serialization import MessageAttributeSerializationMixin
 from edx_ace.recipient import Recipient
 
 
-@attr.s
+@attr.s  # lint-amnesty, pylint: disable=missing-docstring
 class Message(MessageAttributeSerializationMixin):
     __metaclass__ = ABCMeta
 
@@ -73,7 +74,7 @@ class MessageLoggingAdapter(logging.LoggerAdapter):
         return '[%s] %s' % (self.extra['message'].log_id, msg), kwargs
 
 
-@attr.s(cmp=False)
+@attr.s(cmp=False)  # lint-amnesty, pylint: disable=missing-docstring
 class MessageType(MessageAttributeSerializationMixin):
     NAME = None
     APP_LABEL = None

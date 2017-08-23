@@ -12,7 +12,7 @@ try:
 except ImportError:
     from mock import patch, Mock, sentinel
 
-from edx_ace import policy
+from edx_ace import policy  # lint-amnesty, pylint: disable=ungrouped-imports
 
 
 class StubPolicy(policy.Policy):
@@ -23,7 +23,7 @@ class StubPolicy(policy.Policy):
         return policy.PolicyResult(deny=self.deny_value)
 
 
-def patch_policies(test_case, policies):
+def patch_policies(test_case, policies):  # lint-amnesty, pylint: disable=missing-docstring
     patcher = patch(
         'edx_ace.policy.policies',
         return_value=policies
@@ -32,7 +32,7 @@ def patch_policies(test_case, policies):
     test_case.addCleanup(patcher.stop)
 
 
-def patch_channels(test_case, channels):
+def patch_channels(test_case, channels):  # lint-amnesty, pylint: disable=missing-docstring
     patcher = patch(
         'edx_ace.delivery.channels',
         return_value={

@@ -1,3 +1,4 @@
+# lint-amnesty, pylint: disable=missing-docstring
 from datetime import datetime
 from dateutil.parser import parse
 from dateutil.tz import tzutc

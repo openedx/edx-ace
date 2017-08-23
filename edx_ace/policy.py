@@ -1,3 +1,4 @@
+# lint-amnesty, pylint: disable=missing-docstring
 from abc import ABCMeta, abstractmethod
 import attr
 from django.conf import settings
@@ -7,7 +8,7 @@ from edx_ace.utils.plugins import get_plugins
 from edx_ace.utils.once import once
 
 
-@attr.s
+@attr.s  # lint-amnesty, pylint: disable=missing-docstring
 class PolicyResult(object):
     deny = attr.ib(
         default=attr.Factory(set),
@@ -44,7 +45,7 @@ POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 #   course-wide?) policies with a MessageType object.
 
 
-def channels_for(message):
+def channels_for(message):  # lint-amnesty, pylint: disable=missing-docstring
     allowed_channels = set(ChannelType)
 
     for policy in policies():

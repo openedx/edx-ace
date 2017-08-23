@@ -1,3 +1,4 @@
+# lint-amnesty, pylint: disable=missing-docstring
 from django.utils import translation
 
 from edx_ace import errors, renderers

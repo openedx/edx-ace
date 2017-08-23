@@ -1,19 +1,20 @@
+# lint-amnesty, pylint: disable=missing-docstring
 import attr
-import json
-from uuid import UUID
+import json  # lint-amnesty, pylint: disable=wrong-import-order
+from uuid import UUID  # lint-amnesty, pylint: disable=wrong-import-order
 import six
 
 from edx_ace.utils import date
 
 
-@six.python_2_unicode_compatible
+@six.python_2_unicode_compatible  # lint-amnesty, pylint: disable=missing-docstring
 class MessageAttributeSerializationMixin(object):
 
     def __str__(self):
         return json.dumps(self, cls=MessageEncoder)
 
     @classmethod
-    def from_string(cls, string_value):
+    def from_string(cls, string_value):  # lint-amnesty, pylint: disable=missing-docstring
         fields = json.loads(
             string_value,
             object_hook=cls._deserialize,
@@ -34,7 +35,7 @@ class MessageAttributeSerializationMixin(object):
         return fields
 
     @classmethod
-    def _deserialize_field(cls, field_name, field_value):
+    def _deserialize_field(cls, field_name, field_value):  # pylint: disable=cyclic-import
         # We have to import these here to avoid a circular dependency since these classes use this mixin.
         from edx_ace.recipient import Recipient
         from edx_ace.message import Message
@@ -53,7 +54,7 @@ class MessageAttributeSerializationMixin(object):
 
 
 class MessageEncoder(json.JSONEncoder):
-    def default(self, obj):
+    def default(self, obj):  # lint-amnesty, pylint: disable=arguments-differ, method-hidden
         if isinstance(obj, UUID):
             return six.text_type(obj)
         elif isinstance(obj, date.datetime):

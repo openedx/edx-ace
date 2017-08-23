@@ -1,3 +1,4 @@
+# lint-amnesty, pylint: disable=missing-docstring
 from functools import partial
 import logging
 from stevedore import enabled
@@ -18,7 +19,7 @@ def get_plugins(namespace, names=None):
     return list(get_manager(namespace, names))
 
 
-def check_plugin(extension, namespace, names=None):
+def check_plugin(extension, namespace, names=None):  # lint-amnesty, pylint: disable=missing-docstring
     if names is None or extension.name in names:
         plugin_enabled = getattr(extension.plugin, 'enabled', True)
         if not plugin_enabled:

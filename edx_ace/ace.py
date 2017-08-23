@@ -1,3 +1,4 @@
+# lint-amnesty, pylint: disable=missing-docstring
 import logging
 
 import edx_ace.delivery
@@ -12,7 +13,7 @@ LOG = logging.getLogger(__name__)
 # TODO(now): Have this top-level function handle errors and log statements
 #   If channels_for returns no channels
 #   If delivery fails
-def send(msg):
+def send(msg):  # lint-amnesty, pylint: disable=missing-docstring
     logger = msg.get_message_specific_logger(LOG)
     logger.info('Sending message: %s', msg)
 

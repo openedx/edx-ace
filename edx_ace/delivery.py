@@ -1,3 +1,4 @@
+# lint-amnesty, pylint: disable=missing-docstring
 import datetime
 import logging
 import time
@@ -13,14 +14,14 @@ from edx_ace.utils.date import get_current_time
 LOG = logging.getLogger(__name__)
 
 
-def deliver(channel_type, rendered_message, message):
+def deliver(channel_type, rendered_message, message):  # lint-amnesty, pylint: disable=missing-docstring
     channel = channels().get(channel_type)
     if not channel:
         # TODO(now): There is no 'self' variable, although it's used below.
         raise ValueError(
             'No implementation for channel {channel_type} registered. Available channels are: {channels}'.format(
                 channel_type=channel_type,
-                channels=', '.join(six.text_type(channel) for channel in channels().keys())
+                channels=', '.join(six.text_type(channel) for channel in channels().keys())  # lint-amnesty, pylint: disable=consider-iterating-dictionary
             )
         )
     logger = message.get_message_specific_logger(LOG)
