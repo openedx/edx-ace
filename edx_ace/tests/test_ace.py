@@ -1,3 +1,4 @@
+# lint-amnesty, pylint: disable=missing-docstring
 from django.test import TestCase
 
 from edx_ace.channel import ChannelType
@@ -8,9 +9,9 @@ try:
 except ImportError:
     from mock import patch, Mock
 
-from django.test import override_settings
+from django.test import override_settings  # lint-amnesty, pylint: disable=unused-import
 
-from edx_ace import ace
+from edx_ace import ace  # lint-amnesty, pylint: disable=ungrouped-imports
 from edx_ace.message import Message
 from edx_ace.recipient import Recipient
 from edx_ace.renderers import RenderedEmail

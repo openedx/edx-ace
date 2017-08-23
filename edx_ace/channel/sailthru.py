@@ -215,7 +215,7 @@ class SailthruEmailChannel(Channel):
             logger.exception('Unable to communicate with the Sailthru API')
             raise FatalChannelDeliveryError(str(exc))
 
-    def _handle_error_response(self, response):
+    def _handle_error_response(self, response):  # lint-amnesty, pylint: disable=missing-docstring
         error = response.get_error()
         error_code = error.get_error_code()
         error_message = error.get_message()

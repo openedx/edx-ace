@@ -1,3 +1,4 @@
+# lint-amnesty, pylint: disable=missing-docstring
 from datetime import datetime
 from unittest import TestCase
 from hypothesis import strategies as st

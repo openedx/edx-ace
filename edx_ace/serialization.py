@@ -35,7 +35,7 @@ class MessageAttributeSerializationMixin(object):
         return fields
 
     @classmethod
-    def _deserialize_field(cls, field_name, field_value):  # pylint: disable=cyclic-import
+    def _deserialize_field(cls, field_name, field_value):
         # We have to import these here to avoid a circular dependency since these classes use this mixin.
         from edx_ace.recipient import Recipient
         from edx_ace.message import Message

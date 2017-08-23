@@ -1,8 +1,9 @@
+# lint-amnesty, pylint: disable=missing-docstring
 from django.test import TestCase
 from edx_ace.message import Message
-from freezegun import freeze_time
+from freezegun import freeze_time  # lint-amnesty, pylint: disable=unused-import
 
-from edx_ace.channel import ChannelType
+from edx_ace.channel import ChannelType  # lint-amnesty, pylint: disable=ungrouped-imports
 from edx_ace.delivery import deliver
 from edx_ace.recipient import Recipient
 from edx_ace.test_utils import patch_channels, sentinel, Mock

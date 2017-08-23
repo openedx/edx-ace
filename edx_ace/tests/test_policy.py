@@ -1,3 +1,4 @@
+# lint-amnesty, pylint: disable=missing-docstring
 from collections import namedtuple
 from unittest import TestCase
 
@@ -11,7 +12,7 @@ except ImportError:
     from mock import patch
 
 
-from edx_ace.channel import ChannelType
+from edx_ace.channel import ChannelType  # lint-amnesty, pylint: disable=ungrouped-imports
 from edx_ace import policy
 
 
@@ -43,4 +44,4 @@ class TestPolicy(TestCase):
         policies = [StubPolicy(deny_value) for deny_value in deny_values]
         with patch.object(policy, 'policies', return_value=policies):
             channels = policy.channels_for(message=None)
-            self.assertEquals(channels, expected_channels)
+            self.assertEquals(channels, expected_channels)  # lint-amnesty, pylint: disable=deprecated-method
