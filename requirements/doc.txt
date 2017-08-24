@@ -34,5 +34,6 @@ snowballstemmer==1.2.1    # via sphinx
 sphinx==1.6.3             # via edx-sphinx-theme
 sphinxcontrib-websupport==1.0.1  # via sphinx
 stevedore==1.10.0
+typing==3.6.2             # via sphinx
 urllib3==1.22             # via requests
 webencodings==0.5.1       # via html5lib
