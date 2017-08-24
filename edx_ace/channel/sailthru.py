@@ -206,7 +206,7 @@ class SailthruEmailChannel(Channel):
             if response.is_ok():
                 logger.debug('Successfully send to Sailthru')
                 # TODO(later): emit some sort of analytics event?
-                return True
+                return
             else:
                 logger.debug('Failed to send to Sailthru')
                 self._handle_error_response(response)

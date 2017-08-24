@@ -8,9 +8,9 @@ in multiple test modules (i.e. factoryboy factories, base test classes). So this
 from edx_ace.channel import ChannelType
 
 try:
-    from unittest.mock import patch, Mock, sentinel
+    from unittest.mock import patch, Mock, sentinel, call
 except ImportError:
-    from mock import patch, Mock, sentinel
+    from mock import patch, Mock, sentinel, call
 
 from edx_ace import policy  # lint-amnesty, pylint: disable=ungrouped-imports
 

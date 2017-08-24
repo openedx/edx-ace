@@ -45,9 +45,6 @@ class Channel(object):
             message (Message): The message to transmit.
             rendered_message (dict): The rendered content of the message that has been personalized for this particular
                 recipient.
-
-        Returns:
-            bool: True if and only if the message was delivered successfully.
         """
         raise NotImplementedError()
 
