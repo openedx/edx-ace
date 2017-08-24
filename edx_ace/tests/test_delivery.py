@@ -6,7 +6,7 @@ from django.test import TestCase
 
 from edx_ace.channel import ChannelType
 from edx_ace.delivery import deliver
-from edx_ace.errors import FatalChannelDeliveryError, RecoverableChannelDeliveryError
+from edx_ace.errors import FatalChannelDeliveryError, RecoverableChannelDeliveryError, UnsupportedChannelError
 from edx_ace.message import Message
 from edx_ace.recipient import Recipient
 from edx_ace.test_utils import patch_channels, sentinel, Mock, patch, call
@@ -42,7 +42,7 @@ class TestDelivery(TestCase):
             deliver(ChannelType.EMAIL, sentinel.rendered_email, self.message)
 
     def test_invalid_channel(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(UnsupportedChannelError):
             deliver(ChannelType.PUSH, sentinel.rendered_email, self.message)
 
     @patch('edx_ace.delivery.get_current_time')
@@ -57,6 +57,7 @@ class TestDelivery(TestCase):
     def test_single_retry(self, mock_get_current_time, mock_time):
         mock_get_current_time.side_effect = [
             self.current_time,  # First call to figure out the expiration time
+            self.current_time,  # Figure out max expiration time
             self.current_time,  # Check to see if the message has expired
             self.current_time,  # Time after attempting the send
             self.current_time + datetime.timedelta(seconds=1.1),
@@ -86,6 +87,7 @@ class TestDelivery(TestCase):
     def test_multiple_retries(self, mock_get_current_time, mock_time):
         mock_get_current_time.side_effect = [
             self.current_time,  # First call to figure out the expiration time
+            self.current_time,  # Figure out max expiration time
             self.current_time,  # Check to see if the message has expired
             self.current_time,  # Time after attempting the send
             # This attempt fails and the app is instructed to wait for a second
