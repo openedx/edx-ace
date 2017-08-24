@@ -1,4 +1,3 @@
-# pylint: disable=missing-docstring
 import datetime
 import logging
 import time

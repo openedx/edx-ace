@@ -106,5 +106,8 @@ validate_translations: build_dummy_translations detect_changed_source_translatio
 docker.build:
 	docker build --tag $(DOCKER_IMAGE) .
 
+docker.shell:
+	docker run --interactive --tty --volume $(PWD):/app --entrypoint /bin/bash $(DOCKER_IMAGE)
+
 docker.make.%:
 	docker run --volume $(PWD):/app --entrypoint /bin/bash python:3.6 -c "cd /app && make $*"

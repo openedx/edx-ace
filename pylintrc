@@ -305,6 +305,7 @@ disable =
 	long-suffix,
 	map-builtin-not-iterating,
 	metaclass-assignment,
+	missing-docstring,
 	next-method-called,
 	no-absolute-import,
 	no-init,
@@ -440,4 +441,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 6221f5507b1554d42ba7e841083736b0e7ebed77
+# 069b8b8c9d0c9dc93cedaa5a9fedbd96226f9f2b
