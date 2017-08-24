@@ -14,3 +14,9 @@ class EdxAceConfig(AppConfig):
     """
 
     name = 'edx_ace'
+
+    def ready(self):
+        """
+        Connect handlers to recalculate grades.
+        """
+        import edx_ace.signals

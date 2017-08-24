@@ -57,7 +57,6 @@ class TestDelivery(TestCase):
     def test_single_retry(self, mock_get_current_time, mock_time):
         mock_get_current_time.side_effect = [
             self.current_time,  # First call to figure out the expiration time
-            self.current_time,  # Figure out max expiration time
             self.current_time,  # Check to see if the message has expired
             self.current_time,  # Time after attempting the send
             self.current_time + datetime.timedelta(seconds=1.1),
@@ -87,7 +86,6 @@ class TestDelivery(TestCase):
     def test_multiple_retries(self, mock_get_current_time, mock_time):
         mock_get_current_time.side_effect = [
             self.current_time,  # First call to figure out the expiration time
-            self.current_time,  # Figure out max expiration time
             self.current_time,  # Check to see if the message has expired
             self.current_time,  # Time after attempting the send
             # This attempt fails and the app is instructed to wait for a second

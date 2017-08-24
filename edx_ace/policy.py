@@ -51,6 +51,7 @@ def channels_for(message):  # lint-amnesty, pylint: disable=missing-docstring
     for policy in policies():
         allowed_channels -= policy.check(message).deny
 
+    message.report(u'policy_allowed_channels', ','.join(c.value for c in allowed_channels))
     return allowed_channels
 
 

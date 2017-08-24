@@ -7,9 +7,9 @@ import ddt
 from edx_ace.test_utils import StubPolicy
 
 try:
-    from unittest.mock import patch
+    from unittest.mock import patch, mock
 except ImportError:
-    from mock import patch
+    from mock import patch, mock
 
 
 from edx_ace.channel import ChannelType  # lint-amnesty, pylint: disable=ungrouped-imports
@@ -43,5 +43,5 @@ class TestPolicy(TestCase):
     def test_policies(self, deny_values, expected_channels):
         policies = [StubPolicy(deny_value) for deny_value in deny_values]
         with patch.object(policy, 'policies', return_value=policies):
-            channels = policy.channels_for(message=None)
+            channels = policy.channels_for(message=mock.Mock())
             self.assertEquals(channels, expected_channels)  # lint-amnesty, pylint: disable=deprecated-method

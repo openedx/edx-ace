@@ -8,6 +8,7 @@ from django.apps import apps
 import six
 
 import edx_ace.utils.date as date
+from edx_ace.monitoring import report as monitoring_report
 from edx_ace.serialization import MessageAttributeSerializationMixin
 from edx_ace.recipient import Recipient
 
@@ -56,16 +57,26 @@ class Message(MessageAttributeSerializationMixin):
         return uuid4()
 
     @property
+    def unique_name(self):
+        return '.'.join([self.app_label, self.name])
+
+    @property
     def log_id(self):
         return '.'.join([
-            self.app_label,
-            self.name,
+            self.unique_name,
             six.text_type(self.send_uuid) if self.send_uuid else 'no_send_uuid',
             six.text_type(self.uuid)
         ])
 
     def get_message_specific_logger(self, logger):
         return MessageLoggingAdapter(logger, {'message': self})
+
+    def report_basics(self):
+        monitoring_report(u'message_name', self.unique_name)
+        monitoring_report(u'language', self.language)
+
+    def report(self, key, value):
+        monitoring_report(key, value)
 
 
 class MessageLoggingAdapter(logging.LoggerAdapter):

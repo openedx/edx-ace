@@ -45,14 +45,15 @@ def deliver(channel_type, rendered_message, message):
     logger = message.get_message_specific_logger(LOG)
 
     timeout_seconds = getattr(settings, 'ACE_DEFAULT_EXPIRATION_DELAY', 120)
-    default_expiration_time = get_current_time() + datetime.timedelta(seconds=timeout_seconds)
-    max_expiration_time = get_current_time() + datetime.timedelta(seconds=MAX_EXPIRATION_DELAY)
+    start_time = get_current_time()
+    default_expiration_time = start_time + datetime.timedelta(seconds=timeout_seconds)
+    max_expiration_time = start_time + datetime.timedelta(seconds=MAX_EXPIRATION_DELAY)
     expiration_time = min(max_expiration_time, message.expiration_time or default_expiration_time)
 
     while get_current_time() < expiration_time:
         logger.debug('Attempting delivery of message')
         try:
-            return channel.deliver(message, rendered_message)
+            channel.deliver(message, rendered_message)
         except RecoverableChannelDeliveryError as delivery_error:
             num_seconds = (delivery_error.next_attempt_time - get_current_time()).total_seconds()
             logger.debug('Encountered a recoverable delivery error.')
@@ -62,5 +63,9 @@ def deliver(channel_type, rendered_message, message):
             elif num_seconds > 0:
                 logger.debug('Sleeping for %d seconds.', num_seconds)
                 time.sleep(num_seconds)
+                message.report(u'delivery_retried', num_seconds)
+        else:
+            message.report(u'delivery_succeeded', True)
+            return
 
-    logger.warning('Message expired before it could be successfully delivered.')
+    message.report(u'delivery_expired', get_current_time() - start_time)
