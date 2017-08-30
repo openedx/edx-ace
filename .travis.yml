@@ -34,12 +34,12 @@ script:
 after_success:
   - codecov
 
-# Set password via "travis encrypt --add deploy.password"; for details, see
-# https://docs.travis-ci.com/user/deployment/pypi
 deploy:
   provider: pypi
   user: edx
+  password:
+    secure: id93VgcDPrQ9WcRX1KkAt7LvdyPZzK9pVq59ljWkZxHElsDUdP9gl1Usa7MD/f2rEum/kZdOx/PCcd4SIzy3mWdLO9L1P2wWrylahBG5kwlpgchJmyTDUr5ZAXth1lU8oCNLISKvWoir1T93aLTr47jGSLfco3zRsM+3RU/dS4WwdFlhN03NpY+KHL/ItoDXhV0sGKbvKlFKZgjotPOu69Uv5VUYRASOTzyoZa3vhv+vq+IY55smGXhfMq6yxrRYfIqrK/Hty+yOZ2cuaxkKqNWZ7DsUunj9UBHb/H/UdEDKUwMUklK6mzoXBupqPpCqwEQKTKz/DsluyHhghJoUpNJM5S7t6L+Vz+qchDzlZm9ZqtA5LYGIxlWNIyVvJLMS4MD7WG+B7gnM5OE3CZEFKzl9KczfniudYpU03XIQHld/J5nXG91JxBmZIox7pLwb6Nzx6wYE7nbeR4k/HP915w8/MODk29ZmOAcGlOvqGr0mQA3PkRceDlnhRYvchmQVA9ExSuqwmvLxV1fzdweOAORQHv2RppszjC/8muYqmcg1CSC3MUdO8Bd67SvMjDEWkrwtm8JJypbQ7X0S1j0c/x0AYoGSpczGcMv6NQ2M9+StIKpWsr6pZCiARbQSydTA0o0zL2zzC26eU99tkhxk0PivM07Yt+PRvr8bX6Y8RwU=
   distributions: sdist bdist_wheel
   on:
     tags: true
-    condition: '$TOXENV = quality'
+    python: 3.5
