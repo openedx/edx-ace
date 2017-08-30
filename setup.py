@@ -37,7 +37,7 @@ CHANGELOG = open(os.path.join(os.path.dirname(__file__), 'CHANGELOG.rst')).read(
 setup(
     name='edx-ace',
     version=VERSION,
-    description="""Framework for Messaging""",
+    description='Framework for Messaging',
     long_description=README + '\n\n' + CHANGELOG,
     author='edX',
     author_email='oscm@edx.org',
