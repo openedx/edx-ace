@@ -40,6 +40,9 @@ class MessageAttributeSerializationMixin(object):
         from edx_ace.recipient import Recipient
         from edx_ace.message import Message
 
+        if field_value is None:
+            return None
+
         if field_name == 'expiration_time':
             return date.deserialize(field_value)
         elif field_name in ('uuid', 'send_uuid'):

@@ -11,7 +11,7 @@ from hypothesis.extra.pytz import timezones
 
 
 context_values = st.one_of(st.text(), st.booleans(), st.floats(allow_nan=False))
-dates = st.datetimes(timezones=st.none() | timezones())
+dates = st.datetimes(timezones=st.none() | timezones() | st.none())
 
 msg = st.builds(
     Message,
@@ -26,7 +26,9 @@ msg = st.builds(
         Recipient,
         username=st.text(),
     ),
+    send_uuid=st.one_of(st.uuids(), st.none()),
 )
+
 
 class TestMessage(TestCase):  # lint-amnesty, pylint: disable=missing-docstring
     def setUp(self):
@@ -89,6 +91,5 @@ class TestMessageTypes(TestCase):
     @given(msg_type)
     def test_serialization_roundtrip(self, msg_type):  # lint-amnesty, pylint: disable=redefined-outer-name
         serialized = six.text_type(msg_type)
-        print(serialized)
         parsed = MessageType.from_string(serialized)
         self.assertEquals(msg_type, parsed)  # lint-amnesty, pylint: disable=deprecated-method, missing-final-newline
