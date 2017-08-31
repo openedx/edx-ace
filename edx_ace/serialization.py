@@ -19,7 +19,9 @@ class MessageAttributeSerializationMixin(object):
             string_value,
             object_hook=cls._deserialize,
         )
+        uuid = fields.pop('uuid')
         instance = cls(**fields)
+        instance.uuid = uuid
         return instance
 
     def to_json(self):
