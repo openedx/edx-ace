@@ -1,5 +1,6 @@
 from django.dispatch import receiver
-from edx_ace.monitoring import report_metric
+
+from .monitoring import report_metric
 
 try:
     import newrelic.agent
@@ -8,6 +9,6 @@ except ImportError:
 
 
 @receiver(report_metric)
-def report_to_newrelic(sender, key, value, **kwargs):
+def report_to_newrelic(sender, key, value, **kwargs):  # pylint: disable=unused-argument
     if newrelic:
         newrelic.agent.add_custom_parameter(key, value)

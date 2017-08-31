@@ -1,11 +1,12 @@
-# lint-amnesty, pylint: disable=missing-docstring
+
 from datetime import datetime
 from unittest import TestCase
+
 from hypothesis import strategies as st
-from hypothesis import given, example
+from hypothesis import example, given
 from hypothesis.extra.pytz import timezones
 
-from edx_ace.utils.date import serialize, deserialize
+from edx_ace.utils.date import deserialize, serialize
 
 
 class TestDateSerialization(TestCase):

@@ -1,19 +1,20 @@
-# lint-amnesty, pylint: disable=missing-docstring
-from abc import ABCMeta
+
 import logging
-from uuid import uuid4, UUID
+from abc import ABCMeta
+from uuid import UUID, uuid4
 
 import attr
-from django.apps import apps
 import six
+
+from django.apps import apps
 
 import edx_ace.utils.date as date
 from edx_ace.monitoring import report as monitoring_report
-from edx_ace.serialization import MessageAttributeSerializationMixin
 from edx_ace.recipient import Recipient
+from edx_ace.serialization import MessageAttributeSerializationMixin
 
 
-@attr.s  # lint-amnesty, pylint: disable=missing-docstring
+@attr.s
 class Message(MessageAttributeSerializationMixin):
     __metaclass__ = ABCMeta
 
@@ -80,12 +81,11 @@ class Message(MessageAttributeSerializationMixin):
 
 
 class MessageLoggingAdapter(logging.LoggerAdapter):
-
     def process(self, msg, kwargs):
         return '[%s] %s' % (self.extra['message'].log_id, msg), kwargs
 
 
-@attr.s(cmp=False)  # lint-amnesty, pylint: disable=missing-docstring
+@attr.s(cmp=False)
 class MessageType(MessageAttributeSerializationMixin):
     NAME = None
     APP_LABEL = None

@@ -1,9 +1,8 @@
-# lint-amnesty, pylint: disable=missing-docstring
 from edx_ace import delivery, policy, presentation
 from edx_ace.errors import ChannelError
 
 
-def send(msg):  # lint-amnesty, pylint: disable=missing-docstring
+def send(msg):
     msg.report_basics()
 
     channels_for_message = policy.channels_for(msg)

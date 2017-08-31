@@ -5,14 +5,10 @@ Since py.test discourages putting __init__.py into test directory (i.e. making t
 one cannot import from anywhere under tests folder. However, some utility classes/methods might be useful
 in multiple test modules (i.e. factoryboy factories, base test classes). So this package is the place to put them.
 """
-from edx_ace.channel import ChannelType
 
-try:
-    from unittest.mock import patch, Mock, sentinel, call
-except ImportError:
-    from mock import patch, Mock, sentinel, call
+from mock import patch
 
-from edx_ace import policy  # lint-amnesty, pylint: disable=ungrouped-imports
+from edx_ace import policy
 
 
 class StubPolicy(policy.Policy):
@@ -23,7 +19,7 @@ class StubPolicy(policy.Policy):
         return policy.PolicyResult(deny=self.deny_value)
 
 
-def patch_policies(test_case, policies):  # lint-amnesty, pylint: disable=missing-docstring
+def patch_policies(test_case, policies):
     patcher = patch(
         'edx_ace.policy.policies',
         return_value=policies
@@ -32,7 +28,7 @@ def patch_policies(test_case, policies):  # lint-amnesty, pylint: disable=missin
     test_case.addCleanup(patcher.stop)
 
 
-def patch_channels(test_case, channels):  # lint-amnesty, pylint: disable=missing-docstring
+def patch_channels(test_case, channels):
     patcher = patch(
         'edx_ace.delivery.channels',
         return_value={

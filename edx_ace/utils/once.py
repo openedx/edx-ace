@@ -1,8 +1,8 @@
-# lint-amnesty, pylint: disable=missing-docstring
+
 import functools
 
 
-def once(fn):  # lint-amnesty, pylint: disable=missing-docstring
+def once(fn):
     @functools.wraps(fn)
     def wrapper():
         if not hasattr(fn, '__once_result'):

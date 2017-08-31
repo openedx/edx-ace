@@ -3,6 +3,7 @@ import logging
 import time
 
 import six
+
 from django.conf import settings
 
 from edx_ace.channel import channels
@@ -10,7 +11,6 @@ from edx_ace.errors import RecoverableChannelDeliveryError, UnsupportedChannelEr
 from edx_ace.utils.date import get_current_time
 
 LOG = logging.getLogger(__name__)
-
 
 # Set a maximum expiration delay, for now, since we're currently
 # not using celery to re-enqueue retries and so we could be

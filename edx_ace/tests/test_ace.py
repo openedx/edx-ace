@@ -1,26 +1,19 @@
-# lint-amnesty, pylint: disable=missing-docstring
+
+from mock import Mock, patch
+
 from django.test import TestCase
 
+from edx_ace import ace
 from edx_ace.channel import ChannelType
-from edx_ace.test_utils import StubPolicy, patch_policies, patch_channels
-
-try:
-    from unittest.mock import patch, Mock
-except ImportError:
-    from mock import patch, Mock
-
-from django.test import override_settings  # lint-amnesty, pylint: disable=unused-import
-
-from edx_ace import ace  # lint-amnesty, pylint: disable=ungrouped-imports
 from edx_ace.message import Message
 from edx_ace.recipient import Recipient
 from edx_ace.renderers import RenderedEmail
+from edx_ace.test_utils import StubPolicy, patch_channels, patch_policies
 
 TEMPLATES = {}
 
 
 class TestAce(TestCase):
-
     @patch(
         'edx_ace.renderers.loader.get_template',
         side_effect=lambda t: TEMPLATES.setdefault(t, Mock(name='template {}'.format(t)))
