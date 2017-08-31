@@ -20,4 +20,6 @@ def serialize(obj):
 
 
 def deserialize(value):
+    if value is None:
+        return None
     return parse(value, yearfirst=True)

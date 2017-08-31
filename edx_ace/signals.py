@@ -1,5 +1,5 @@
 from django.dispatch import receiver
-from monitoring import report_metric
+from edx_ace.monitoring import report_metric
 
 try:
     import newrelic.agent

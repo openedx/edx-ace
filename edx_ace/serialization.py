@@ -19,9 +19,7 @@ class MessageAttributeSerializationMixin(object):
             string_value,
             object_hook=cls._deserialize,
         )
-        uuid = fields.pop('uuid')
         instance = cls(**fields)
-        instance.uuid = uuid
         return instance
 
     def to_json(self):
@@ -42,7 +40,7 @@ class MessageAttributeSerializationMixin(object):
 
         if field_name == 'expiration_time':
             return date.deserialize(field_value)
-        elif field_name == 'uuid':
+        elif field_name in ('uuid', 'send_uuid'):
             return UUID(field_value)
         # TODO(later): should this be more dynamic?
         elif field_name == 'message':
