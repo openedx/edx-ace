@@ -1,5 +1,6 @@
-# lint-amnesty, pylint: disable=missing-docstring
+
 import attr
+
 from edx_ace.serialization import MessageAttributeSerializationMixin
 
 

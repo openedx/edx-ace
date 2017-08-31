@@ -1,7 +1,7 @@
 """
 An email channel for delivering messages to users via Sailthru.
 """
-from __future__ import absolute_import, print_function, division
+from __future__ import absolute_import, division, print_function
 
 import logging
 import random
@@ -12,10 +12,11 @@ from enum import Enum
 import attr
 import six
 from dateutil.tz import tzutc
+
 from django.conf import settings
 
 from edx_ace.channel import Channel, ChannelType
-from edx_ace.errors import RecoverableChannelDeliveryError, FatalChannelDeliveryError, InvalidMessageError
+from edx_ace.errors import FatalChannelDeliveryError, InvalidMessageError, RecoverableChannelDeliveryError
 from edx_ace.utils.date import get_current_time
 
 LOG = logging.getLogger(__name__)
@@ -214,7 +215,7 @@ class SailthruEmailChannel(Channel):
         except SailthruClientError as exc:
             raise FatalChannelDeliveryError('Unable to communicate with the Sailthru API: ' + str(exc))
 
-    def _handle_error_response(self, response):  # lint-amnesty, pylint: disable=missing-docstring
+    def _handle_error_response(self, response):
         error = response.get_error()
         error_code = error.get_error_code()
         error_message = error.get_message()

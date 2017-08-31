@@ -16,7 +16,5 @@ class EdxAceConfig(AppConfig):
     name = 'edx_ace'
 
     def ready(self):
-        """
-        Connect handlers to recalculate grades.
-        """
-        import edx_ace.signals
+        # noinspection PyUnresolvedReferences
+        import edx_ace.signals  # pylint: disable=unused-variable

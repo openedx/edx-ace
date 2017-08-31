@@ -2,6 +2,8 @@
 import datetime
 
 from dateutil.tz import tzutc
+from mock import Mock, call, patch, sentinel
+
 from django.test import TestCase
 
 from edx_ace.channel import ChannelType
@@ -9,11 +11,10 @@ from edx_ace.delivery import deliver
 from edx_ace.errors import FatalChannelDeliveryError, RecoverableChannelDeliveryError, UnsupportedChannelError
 from edx_ace.message import Message
 from edx_ace.recipient import Recipient
-from edx_ace.test_utils import patch_channels, sentinel, Mock, patch, call
+from edx_ace.test_utils import patch_channels
 
 
 class TestDelivery(TestCase):
-
     def setUp(self):
         super(TestDelivery, self).setUp()
 

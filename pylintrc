@@ -342,6 +342,8 @@ disable =
 	using-cmp-argument,
 	xrange-builtin,
 	zip-builtin-not-iterating,
+	
+	cyclic-import,
 
 [REPORTS]
 output-format = text
@@ -441,4 +443,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 069b8b8c9d0c9dc93cedaa5a9fedbd96226f9f2b
+# 393887a0621f558345ec6b02aae0c09628961f95

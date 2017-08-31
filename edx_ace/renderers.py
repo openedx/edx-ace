@@ -1,6 +1,8 @@
-# lint-amnesty, pylint: disable=missing-docstring
+
 import attr
+
 from django.template import loader
+
 from edx_ace.channel import ChannelType
 
 
@@ -39,16 +41,17 @@ class AbstractRenderer(object):
 
         return self.rendered_message_cls(**rendered)  # lint-amnesty, pylint: disable=not-callable
 
-    def get_template_for_message(self, message, filename):  # lint-amnesty, pylint: disable=missing-docstring
-        template_path = "{msg.app_label}/edx_ace/{msg.name}/{channel.value}/{filename}".format(  # lint-amnesty, pylint: disable=missing-format-attribute
-            msg=message,
-            channel=self.channel,
+    def get_template_for_message(self, message, filename):
+        template_path = '{app_label}/edx_ace/{name}/{channel}/{filename}'.format(
+            app_label=message.app_label,
+            name=message.name,
+            channel=self.channel.value,
             filename=filename,
         )
         return loader.get_template(template_path)
 
 
-@attr.s  # lint-amnesty, pylint: disable=missing-docstring
+@attr.s
 class RenderedEmail(object):
     from_name = attr.ib()
     subject = attr.ib()

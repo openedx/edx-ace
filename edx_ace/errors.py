@@ -1,4 +1,4 @@
-# lint-amnesty, pylint: disable=missing-docstring
+
 # TODO(later): To prevent a monolith of exception classes here,
 #   we may want to declare Channel-related errors in the
 #   channel subdirectory.

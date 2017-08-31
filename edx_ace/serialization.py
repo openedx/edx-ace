@@ -1,20 +1,19 @@
-# lint-amnesty, pylint: disable=missing-docstring
+import json
+from uuid import UUID
+
 import attr
-import json  # lint-amnesty, pylint: disable=wrong-import-order
-from uuid import UUID  # lint-amnesty, pylint: disable=wrong-import-order
 import six
 
 from edx_ace.utils import date
 
 
-@six.python_2_unicode_compatible  # lint-amnesty, pylint: disable=missing-docstring
+@six.python_2_unicode_compatible
 class MessageAttributeSerializationMixin(object):
-
     def __str__(self):
         return json.dumps(self, cls=MessageEncoder)
 
     @classmethod
-    def from_string(cls, string_value):  # lint-amnesty, pylint: disable=missing-docstring
+    def from_string(cls, string_value):
         fields = json.loads(
             string_value,
             object_hook=cls._deserialize,

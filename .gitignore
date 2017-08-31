@@ -68,7 +68,7 @@ requirements/private.in
 requirements/private.txt
 
 # tox environment temporary artifacts
-tests/__init__.py
+edx_ace/tests/__init__.py
 
 # Development task artifacts
 default.db

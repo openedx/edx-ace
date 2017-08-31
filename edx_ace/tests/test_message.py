@@ -1,14 +1,14 @@
-# lint-amnesty, pylint: disable=missing-docstring
 from functools import partial
+from unittest import TestCase
+
 import six
-from unittest import TestCase  # lint-amnesty, pylint: disable=wrong-import-order
-from edx_ace.recipient import Recipient
-from edx_ace.message import Message, MessageType
-from edx_ace.utils.date import get_current_time
 from hypothesis import strategies as st
-from hypothesis import given, example  # lint-amnesty, pylint: disable=unused-import
+from hypothesis import given
 from hypothesis.extra.pytz import timezones
 
+from edx_ace.message import Message, MessageType
+from edx_ace.recipient import Recipient
+from edx_ace.utils.date import get_current_time
 
 context_values = st.one_of(st.text(), st.booleans(), st.floats(allow_nan=False))
 dates = st.datetimes(timezones=st.none() | timezones() | st.none())
@@ -30,7 +30,7 @@ msg = st.builds(
 )
 
 
-class TestMessage(TestCase):  # lint-amnesty, pylint: disable=missing-docstring
+class TestMessage(TestCase):
     def setUp(self):
         self.msg_kwargs = {
             'app_label': u'test_app_label',
@@ -48,26 +48,27 @@ class TestMessage(TestCase):  # lint-amnesty, pylint: disable=missing-docstring
     def test_basic(self):
         msg = Message(**self.msg_kwargs)  # lint-amnesty, pylint: disable=redefined-outer-name
         for key in self.msg_kwargs:
-            self.assertEquals(getattr(msg, key), self.msg_kwargs.get(key))  # lint-amnesty, pylint: disable=deprecated-method
+            self.assertEqual(getattr(msg, key), self.msg_kwargs.get(key))
         self.assertIsNotNone(msg.uuid)
 
     def test_serialization(self):
         msg = Message(**self.msg_kwargs)  # lint-amnesty, pylint: disable=redefined-outer-name
         string_value = six.text_type(msg)
         resurrected_msg = Message.from_string(string_value)
-        self.assertEquals(msg, resurrected_msg)  # lint-amnesty, pylint: disable=deprecated-method
+        self.assertEqual(msg, resurrected_msg)
 
     @given(msg)
     def test_serialization_round_trip(self, message):
         serialized = six.text_type(message)
         parsed = Message.from_string(serialized)
-        self.assertEquals(message, parsed)  # lint-amnesty, pylint: disable=deprecated-method
+        self.assertEqual(message, parsed)
 
 
 def mk_message_type(name, app_label):
     class CustomType(MessageType):
         NAME = name
         APP_LABEL = app_label
+
     return CustomType
 
 
@@ -89,7 +90,7 @@ msg_type = st.builds(
 
 class TestMessageTypes(TestCase):
     @given(msg_type)
-    def test_serialization_roundtrip(self, msg_type):  # lint-amnesty, pylint: disable=redefined-outer-name
-        serialized = six.text_type(msg_type)
+    def test_serialization_roundtrip(self, message_type):
+        serialized = six.text_type(message_type)
         parsed = MessageType.from_string(serialized)
-        self.assertEquals(msg_type, parsed)  # lint-amnesty, pylint: disable=deprecated-method, missing-final-newline
+        self.assertEqual(message_type, parsed)
