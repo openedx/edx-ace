@@ -50,7 +50,7 @@ setup(
         "Django>=1.8,<2.0"
         "six",
         "stevedore",
-        "attrs",
+        "attrs>=17.2.0,<18.0.0",
         "python-dateutil",
         'enum34;python_version<"3.4"',
         'mock;python_version<"3.3"',
