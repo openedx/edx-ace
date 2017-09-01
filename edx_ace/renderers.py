@@ -37,7 +37,11 @@ class AbstractRenderer(object):
             else:
                 filename = field + '.txt'
             template = self.get_template_for_message(message, filename)
-            rendered[field] = template.render(message.context)
+            render_context = {
+                'message': message,
+            }
+            render_context.update(message.context)
+            rendered[field] = template.render(render_context)
 
         return self.rendered_message_cls(**rendered)  # lint-amnesty, pylint: disable=not-callable
 
