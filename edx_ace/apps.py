@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
-"""
-edx_ace Django application initialization.
-"""
-
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import, division, print_function
 
 from django.apps import AppConfig
 
 
 class EdxAceConfig(AppConfig):
-    """
+    u"""
     Configuration for the edx_ace Django application.
     """
 
-    name = 'edx_ace'
+    name = u'edx_ace'
 
     def ready(self):
         # noinspection PyUnresolvedReferences

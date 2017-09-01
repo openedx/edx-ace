@@ -1,6 +1,4 @@
-"""
-Channels deliver messages to users that have already passed through the presentation and policy steps.
-"""
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import, print_function, division
 
 import abc
@@ -13,20 +11,20 @@ from edx_ace.utils.once import once
 from edx_ace.utils.plugins import get_plugins
 
 # TODO(later): encapsulate the shared part of this namespace in the utils.plugin module
-CHANNEL_EXTENSION_NAMESPACE = 'openedx.ace.channel'
+CHANNEL_EXTENSION_NAMESPACE = u'openedx.ace.channel'
 
 
 class ChannelType(Enum):
-    """
+    u"""
     All supported communication channels.
     """
-    EMAIL = 'email'
-    PUSH = 'push'
+    EMAIL = u'email'
+    PUSH = u'push'
 
 
 @six.add_metaclass(abc.ABCMeta)
 class Channel(object):
-    """
+    u"""
     Channels deliver messages to users that have already passed through the presentation and policy steps.
 
     Examples include email messages, push notifications, or in-browser messages. Implementations of this abstract class
@@ -38,7 +36,7 @@ class Channel(object):
 
     @abc.abstractmethod
     def deliver(self, message, rendered_message):
-        """
+        u"""
         Transmit a rendered message to a recipient.
 
         Args:
@@ -51,7 +49,7 @@ class Channel(object):
 
 @once
 def channels():
-    """
+    u"""
     Gathers all available channels.
 
     Note that this function loads all available channels from entry points. It expects the Django setting
@@ -66,7 +64,7 @@ def channels():
     """
     plugins = get_plugins(
         namespace=CHANNEL_EXTENSION_NAMESPACE,
-        names=getattr(settings, 'ACE_ENABLED_CHANNELS', []),
+        names=getattr(settings, u'ACE_ENABLED_CHANNELS', []),
     )
 
     channel_map = {}
@@ -74,7 +72,7 @@ def channels():
         channel = extension.obj
         if channel.channel_type in channel_map:
             raise ValueError(
-                'Multiple plugins registered for the same channel: {first} and {second}'.format(
+                u'Multiple plugins registered for the same channel: {first} and {second}'.format(
                     first=channel_map[channel.channel_type].__class__.__name__,
                     second=channel.__class__.__name__,
                 )

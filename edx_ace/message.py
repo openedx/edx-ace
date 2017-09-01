@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
 
 import logging
 from abc import ABCMeta
@@ -15,8 +17,8 @@ from edx_ace.serialization import MessageAttributeSerializationMixin
 
 
 @attr.s
+@six.add_metaclass(ABCMeta)
 class Message(MessageAttributeSerializationMixin):
-    __metaclass__ = ABCMeta
 
     # mandatory attributes
     # Name is the unique identifier for the message type.
@@ -59,18 +61,18 @@ class Message(MessageAttributeSerializationMixin):
 
     @property
     def unique_name(self):
-        return '.'.join([self.app_label, self.name])
+        return u'.'.join([self.app_label, self.name])
 
     @property
     def log_id(self):
-        return '.'.join([
+        return u'.'.join([
             self.unique_name,
-            six.text_type(self.send_uuid) if self.send_uuid else 'no_send_uuid',
+            six.text_type(self.send_uuid) if self.send_uuid else u'no_send_uuid',
             six.text_type(self.uuid)
         ])
 
     def get_message_specific_logger(self, logger):
-        return MessageLoggingAdapter(logger, {'message': self})
+        return MessageLoggingAdapter(logger, {u'message': self})
 
     def report_basics(self):
         monitoring_report(u'message_name', self.unique_name)
@@ -82,7 +84,7 @@ class Message(MessageAttributeSerializationMixin):
 
 class MessageLoggingAdapter(logging.LoggerAdapter):
     def process(self, msg, kwargs):
-        return '[%s] %s' % (self.extra['message'].log_id, msg), kwargs
+        return u'[%s] %s' % (self.extra[u'message'].log_id, msg), kwargs
 
 
 @attr.s(cmp=False)
