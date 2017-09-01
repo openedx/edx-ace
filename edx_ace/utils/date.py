@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
 
 from datetime import datetime
 
@@ -6,21 +8,40 @@ from dateutil.tz import tzutc
 
 
 def get_current_time():
+    u"""The current time in the UTC timezone as a timezone-aware datetime object."""
     return datetime.now(tzutc())
 
 
-def serialize(obj):
+def serialize(timestamp_obj):
+    u"""
+    Serialize a datetime object to an ISO8601 formatted string.
+
+    Args:
+        timestamp_obj (datetime): The timestamp to serialize.
+
+    Returns:
+        basestring: A string representation of the timestamp in ISO8601 format.
+    """
     # TODO(later): my understanding is that type checks like this are not pythonic.
-    assert isinstance(obj, datetime)
+    assert isinstance(timestamp_obj, datetime)
 
     # TODO(later): what if utcoffset() returns 0?
-    if obj.tzinfo is not None and obj.utcoffset() is None:
-        return obj.isoformat() + 'Z'
+    if timestamp_obj.tzinfo is not None and timestamp_obj.utcoffset() is None:
+        return timestamp_obj.isoformat() + u'Z'
     else:
-        return obj.isoformat()
+        return timestamp_obj.isoformat()
 
 
-def deserialize(value):
-    if value is None:
+def deserialize(timestamp_iso8601_str):
+    u"""
+    Deserialize a datetime object from an ISO8601 formatted string.
+
+    Args:
+        timestamp_iso8601_str (basestring): A timestamp as an ISO8601 formatted string.
+
+    Returns:
+        datetime: A timezone-aware python datetime object.
+    """
+    if timestamp_iso8601_str is None:
         return None
-    return parse(value, yearfirst=True)
+    return parse(timestamp_iso8601_str, yearfirst=True)

@@ -1,6 +1,4 @@
-"""
-An email channel for delivering messages to users via Sailthru.
-"""
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
 import logging
@@ -26,25 +24,25 @@ try:
 
     CLIENT_LIBRARY_INSTALLED = True
 except ImportError:
-    LOG.warning('Sailthru client not installed. The Sailthru delivery channel is disabled.')
+    LOG.warning(u'Sailthru client not installed. The Sailthru delivery channel is disabled.')
     CLIENT_LIBRARY_INSTALLED = False
 
 
 class RecoverableErrorCodes(Enum):
-    """
+    u"""
     These `error codes`_ are present in responses to requests that can (and should) be retried after waiting for a bit.
 
     .. _error codes:
         https://getstarted.sailthru.com/developers/api-basics/responses/
     """
     INTERNAL_ERROR = 9
-    """
+    u"""
     Something's gone wrong on Sailthru's end. Your request was probably not saved - try waiting a moment and trying
     again.
     """
 
     RATE_LIMIT = 43
-    """
+    u"""
     Too many [type] requests this minute to /[endpoint] API: You have exceeded the limit of requests per minute for the
     given type (GET or POST) and endpoint. For limit details, see the Rate Limiting section on the API Technical Details
     page.
@@ -68,19 +66,19 @@ NEXT_ATTEMPT_DELAY_SECONDS = 10
 
 
 class ResponseHeaders(Enum):
-    """
+    u"""
     These are `special headers`_ returned in responses from the Sailthru REST API.
 
     .. _special headers:
         https://getstarted.sailthru.com/developers/api-basics/technical/#HTTP_Response_Headers
     """
 
-    RATE_LIMIT_REMAINING = 'X-Rate-Limit-Remaining'
-    RATE_LIMIT_RESET = 'X-Rate-Limit-Reset'
+    RATE_LIMIT_REMAINING = u'X-Rate-Limit-Remaining'
+    RATE_LIMIT_RESET = u'X-Rate-Limit-Reset'
 
 
 class SailthruEmailChannel(Channel):
-    """
+    u"""
     An email channel for delivering messages to users using Sailthru.
 
     This channel makes use of the Sailthru REST API to send messages. It is designed for "at most once" delivery of
@@ -91,6 +89,7 @@ class SailthruEmailChannel(Channel):
     The integration with Sailthru requires several Django settings to be defined.
 
     Example:
+
         Sample settings::
 
             ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME = "Some template name"
@@ -101,16 +100,18 @@ class SailthruEmailChannel(Channel):
     should be set to ``{{ace_template_from_name}}``. The "Subject" field should be set to ``{{ace_template_subject}}``.
     The "Code" for the template should be::
 
-        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-        <html lang="en">
+        <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
             <head>
                 {{ace_template_head_html}}
             </head>
             <body>
-                {beacon}
-                {{ace_template_body_html}}
-                <p><small>If you believe this has been sent to you in error, please safely
-                <a href="{optout_confirm_url}">unsubscribe</a>.</small></p>
+                {body_html = replace(ace_template_body_html, '{view_url}', view_url)}
+                {body_html = replace(body_html, '{optout_confirm_url}', optout_confirm_url)}
+                {body_html = replace(body_html, '{forward_url}', forward_url)}
+                {body_html = replace(body_html, '{beacon_src}', beacon_src)}
+                {body_html}
+                <span id="sailthru-message-id" style="display: none;">{message_id()}</span>
+                <a href="{optout_confirm_url}" style="display: none;"></a>
             </body>
         </html>
 
@@ -120,21 +121,21 @@ class SailthruEmailChannel(Channel):
 
     @classmethod
     def enabled(cls):
-        """
+        u"""
         Returns: True iff all required settings are not empty and the Sailthru client library is installed.
         """
         required_settings = (
-            'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME',
-            'ACE_CHANNEL_SAILTHRU_API_KEY',
-            'ACE_CHANNEL_SAILTHRU_API_SECRET',
+            u'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME',
+            u'ACE_CHANNEL_SAILTHRU_API_KEY',
+            u'ACE_CHANNEL_SAILTHRU_API_SECRET',
         )
 
         for setting in required_settings:
             if not hasattr(settings, setting):
-                LOG.warning("%s is not set, Sailthru email channel is disabled.", setting)
+                LOG.warning(u'%s is not set, Sailthru email channel is disabled.', setting)
 
         if not CLIENT_LIBRARY_INSTALLED:
-            LOG.warning('The Sailthru API client is not installed, so the Sailthru email channel is disabled.')
+            LOG.warning(u'The Sailthru API client is not installed, so the Sailthru email channel is disabled.')
 
         return CLIENT_LIBRARY_INSTALLED and all(
             hasattr(settings, required_setting)
@@ -155,7 +156,7 @@ class SailthruEmailChannel(Channel):
     def deliver(self, message, rendered_message):
         if message.recipient.email_address is None:
             raise InvalidMessageError(
-                "No email address specified for recipient %s while sending message %s",
+                u'No email address specified for recipient %s while sending message %s',
                 message.recipient,
                 message.log_id
             )
@@ -163,14 +164,14 @@ class SailthruEmailChannel(Channel):
         template_vars = {}
         for key, value in six.iteritems(attr.asdict(rendered_message)):
             if value is not None:
-                template_vars['ace_template_' + key] = value
+                template_vars[u'ace_template_' + key] = value
 
         logger = message.get_message_specific_logger(LOG)
 
-        if getattr(settings, 'ACE_CHANNEL_SAILTHRU_DEBUG', False):
+        if getattr(settings, u'ACE_CHANNEL_SAILTHRU_DEBUG', False):
             logger.info(
                 # TODO(later): Do our splunk parsers do the right thing with multi-line log messages like this?
-                textwrap.dedent("""\
+                textwrap.dedent(u"""\
                     Would have emailed using:
                         template: %s
                         recipient: %s
@@ -184,7 +185,7 @@ class SailthruEmailChannel(Channel):
 
         if not self.enabled:
             raise FatalChannelDeliveryError(
-                textwrap.dedent("""\
+                textwrap.dedent(u"""\
                     Sailthru channel is disabled, unable to send:
                         template: %s
                         recipient: %s
@@ -196,7 +197,7 @@ class SailthruEmailChannel(Channel):
             )
 
         try:
-            logger.debug('Sending to Sailthru')
+            logger.debug(u'Sending to Sailthru')
 
             response = self.sailthru_client.send(
                 self.template_name,
@@ -205,15 +206,15 @@ class SailthruEmailChannel(Channel):
             )
 
             if response.is_ok():
-                logger.debug('Successfully send to Sailthru')
+                logger.debug(u'Successfully send to Sailthru')
                 # TODO(later): emit some sort of analytics event?
                 return
             else:
-                logger.debug('Failed to send to Sailthru')
+                logger.debug(u'Failed to send to Sailthru')
                 self._handle_error_response(response)
 
         except SailthruClientError as exc:
-            raise FatalChannelDeliveryError('Unable to communicate with the Sailthru API: ' + str(exc))
+            raise FatalChannelDeliveryError(u'Unable to communicate with the Sailthru API: ' + six.text_type(exc))
 
     def _handle_error_response(self, response):
         error = response.get_error()
@@ -232,8 +233,8 @@ class SailthruEmailChannel(Channel):
                 )
 
             raise RecoverableChannelDeliveryError(
-                'Recoverable Sailthru error (error_code={error_code} status_code={http_status_code}): '
-                '{message}'.format(
+                u'Recoverable Sailthru error (error_code={error_code} status_code={http_status_code}): '
+                u'{message}'.format(
                     error_code=error_code,
                     http_status_code=http_status_code,
                     message=error_message
@@ -242,8 +243,8 @@ class SailthruEmailChannel(Channel):
             )
         else:
             raise FatalChannelDeliveryError(
-                'Fatal Sailthru error (error_code={error_code} status_code={http_status_code}): '
-                '{message}'.format(
+                u'Fatal Sailthru error (error_code={error_code} status_code={http_status_code}): '
+                u'{message}'.format(
                     error_code=error_code,
                     http_status_code=http_status_code,
                     message=error_message
@@ -252,7 +253,7 @@ class SailthruEmailChannel(Channel):
 
     @staticmethod
     def _get_rate_limit_reset_time(sailthru_response):
-        """
+        u"""
         Given a response from the Sailthru API, check to see if our requests are being rate limited.
 
         If so, return a timestamp indicating when the limit will reset.
