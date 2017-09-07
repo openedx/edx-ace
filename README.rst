@@ -1,22 +1,13 @@
-edx-ace
-=============================
+edX Automated Communication Engine (A.C.E.)
+===========================================
 
-|pypi-badge| |travis-badge| |codecov-badge| |doc-badge| |pyversions-badge|
-|license-badge|
+|pypi-badge| |travis-badge| |codecov-badge| |doc-badge| |pyversions-badge| |license-badge|
 
-The ``README.rst`` file should start with a brief description of the repository,
-which sets it in the context of other repositories under the ``edx``
-organization. It should make clear where this fits in to the overall edX
-codebase.
+The automated communication engine, A.C.E. for short, is a Django app for messaging learners on the edX platform. This
+app can be installed in any edX project, but has only been tested with ``edx-platform``. Email delivery (via Sailthru)
+is the only current delivery channel. In the future we may add support for other delivery channels such as push
+notifications.
 
-Framework for Messaging
-
-Overview (please modify)
-------------------------
-
-The ``README.rst`` file should then provide an overview of the code in this
-repository, including the main components and useful entry points for starting
-to understand the code in more detail.
 
 Documentation
 -------------
@@ -56,9 +47,8 @@ Getting Help
 ------------
 
 Have a question about this repository, or about Open edX in general?  Please
-refer to this `list of resources`_ if you need any assistance.
+refer to this `list of resources <https://open.edx.org/getting-help>`_ if you need any assistance.
 
-.. _list of resources: https://open.edx.org/getting-help
 
 
 .. |pypi-badge| image:: https://img.shields.io/pypi/v/edx-ace.svg
