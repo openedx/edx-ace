@@ -46,16 +46,16 @@ class TestMessage(TestCase):
         }
 
     def test_basic(self):
-        msg = Message(**self.msg_kwargs)  # lint-amnesty, pylint: disable=redefined-outer-name
+        message = Message(**self.msg_kwargs)
         for key in self.msg_kwargs:
-            self.assertEqual(getattr(msg, key), self.msg_kwargs.get(key))
-        self.assertIsNotNone(msg.uuid)
+            self.assertEqual(getattr(message, key), self.msg_kwargs.get(key))
+        self.assertIsNotNone(message.uuid)
 
     def test_serialization(self):
-        msg = Message(**self.msg_kwargs)  # lint-amnesty, pylint: disable=redefined-outer-name
-        string_value = six.text_type(msg)
+        message = Message(**self.msg_kwargs)
+        string_value = six.text_type(message)
         resurrected_msg = Message.from_string(string_value)
-        self.assertEqual(msg, resurrected_msg)
+        self.assertEqual(message, resurrected_msg)
 
     @given(msg)
     def test_serialization_round_trip(self, message):

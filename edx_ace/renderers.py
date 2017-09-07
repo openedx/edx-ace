@@ -43,7 +43,7 @@ class AbstractRenderer(object):
             render_context.update(message.context)
             rendered[field] = template.render(render_context)
 
-        return self.rendered_message_cls(**rendered)  # lint-amnesty, pylint: disable=not-callable
+        return self.rendered_message_cls(**rendered)  # pylint: disable=not-callable
 
     def get_template_for_message(self, message, filename):
         template_path = '{app_label}/edx_ace/{name}/{channel}/{filename}'.format(

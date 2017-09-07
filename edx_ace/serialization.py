@@ -56,12 +56,14 @@ class MessageAttributeSerializationMixin(object):
 
 
 class MessageEncoder(json.JSONEncoder):
-    def default(self, obj):  # lint-amnesty, pylint: disable=arguments-differ, method-hidden
-        if isinstance(obj, UUID):
-            return six.text_type(obj)
-        elif isinstance(obj, date.datetime):
-            return date.serialize(obj)
-        elif hasattr(obj, 'to_json'):
-            return obj.to_json()
+    # The Pylint error is disabled because of a bug in Pylint.
+    # See https://github.com/PyCQA/pylint/issues/414
+    def default(self, o):  # pylint: disable=method-hidden
+        if isinstance(o, UUID):
+            return six.text_type(o)
+        elif isinstance(o, date.datetime):
+            return date.serialize(o)
+        elif hasattr(o, 'to_json'):
+            return o.to_json()
         else:
-            return super(MessageEncoder, self).default(obj)
+            return super(MessageEncoder, self).default(o)
