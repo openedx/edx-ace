@@ -15,8 +15,8 @@ notifications.
    :maxdepth: 2
 
    getting_started
+   design
    testing
-   internationalization
    modules
    changelog
 

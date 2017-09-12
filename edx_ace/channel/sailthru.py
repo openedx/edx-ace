@@ -92,9 +92,12 @@ class SailthruEmailChannel(Channel):
 
         Sample settings::
 
+            .. settings_start
+            ACE_CHANNEL_SAILTHRU_DEBUG = False
             ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME = "Some template name"
             ACE_CHANNEL_SAILTHRU_API_KEY = "1234567890"
             ACE_CHANNEL_SAILTHRU_API_SECRET = "this is secret"
+            .. settings_end
 
     The named template in Sailthru should be minimal, most of the rendering happens within ACE. The "From Name" field
     should be set to ``{{ace_template_from_name}}``. The "Subject" field should be set to ``{{ace_template_subject}}``.
