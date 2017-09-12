@@ -18,39 +18,103 @@ Dependencies can be installed via the command below.
 
 Configure delivery channels
 ---------------------------
-Each delivery channel requires its own configuration via Django settings.
 
-Sailthru
-~~~~~~~~
-`Sailthru <http://www.sailthru.com/>`_ is an email delivery channel. All settings below are required. The API key and
-secret can be retrieved from https://my.sailthru.com/settings/api_postbacks.
+Certain delivery channels may require additional configuration
+before they will function correctly.
 
-.. list-table::
-   :widths: auto
-   :header-rows: 1
+:class:`~.SailthruEmailChannel` Settings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   * - Setting
-     - Description
-   * - ``ACE_CHANNEL_SAILTHRU_API_KEY``
-     - API key used to send an email via the `send API endpoint <https://getstarted.sailthru.com/developers/api/send/>`_
-   * - ``ACE_CHANNEL_SAILTHRU_API_SECRET``
-     - API secret used to send an email via the `send API endpoint <https://getstarted.sailthru.com/developers/api/send/>`_
-   * - ``ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME``
-     - Base template for all messages
-
+.. literalinclude:: /../edx_ace/channel/sailthru.py
+    :start-after: .. settings_start
+    :end-before: .. settings_end
+    :language: python
+    :dedent: 12
 
 Create a message
 ----------------
-TODO: List template files that need to be present
+
+Each message sent with ACE is represented by an instance of :class:`.Message`.
+These can be created manually, or can be created by calling :meth:`.MessageType.personalize`
+on a :class:`.MessageType` instance. The name and package of the :class:`.MessageType`
+determines what templates will be used when the :class:`.Message` is rendered for delivery.
+
+For example, the class
+
+.. code:: python
+
+    # myapp/messages.py
+
+    class CustomMessage(edx_ace.message.MessageType):
+        pass
+
+would use the following templates when rendered for email delivery:
+
+.. code::
+
+    myapp/edx_ace/custommessage/email/from_name.txt
+    myapp/edx_ace/custommessage/email/subject.txt
+    myapp/edx_ace/custommessage/email/body.html
+    myapp/edx_ace/custommessage/email/heah.html
+    myapp/edx_ace/custommessage/email/body.txt
+
+These all follow the format ``{app_label}/edx_ace/{message_name}/{renderer}/{attribute}``,
+where the ``app_label`` and ``message_name`` are defined by the :class:`.MessageType` (or
+the manually created :class:`.Message`), and `renderer` and ``attribute`` come from
+the renderer being used by the specific delivery channel. The templates will be retrieved
+using standard Django template resolution mechanisms.
+
+The specific templates needed for existing renderers are listed in :py:mod:`edx_ace.renderers`.
 
 
 Send a message
 --------------
-TODO: Add message
+
+The simplest way to send a message using ACE is to just create it, and call :py:func:`edx_ace.ace.send`.
 
 .. code-block:: python
 
     from edx_ace import ace
+    from edx_ace.messages import Message
 
-    msg = ...
+    msg = Message(
+        name="test_message",
+        app_label="my_app",
+        recipient=Recipient(username='a_user', email='a_user@example.com'),
+        language='en',
+        context={
+            'stuff': 'to personalize the message',
+        }
+    )
     ace.send(msg)
+
+The ``name`` and ``app_label`` attributes are required in order for ACE to look
+up the correct templates in the django environment.
+
+For messages being sent from multiple places in the code, it can be simpler to
+define a :class:`.MessageType` first, and then :meth:`.MessageType.personalize` it.
+
+.. code-block:: python
+
+    from edx_ace import ace
+    from edx_ace.messages import Message
+
+    class TestMessage(MessageType):
+        APP_LABEL = "my_app"  # Optional
+        NAME = "test_message"  # Optional
+
+    msg_type = TestMessage(
+        context={
+            'generic_stuff': 'that is applicable to all recipients'
+        }
+    )
+
+    for recipient in recipients:
+        msg = msg_type.personalize(
+            recipient=recipient,
+            language='en',
+            context={
+                'stuff': 'to personalize the message',
+            }
+        )
+        ace.send(msg)
