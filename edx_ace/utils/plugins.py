@@ -56,7 +56,7 @@ def check_plugin(extension, namespace, names=None):
         bool: Whether or not this extension is enabled and should be used.
     """
     if names is None or extension.name in names:
-        plugin_enabled = getattr(extension.plugin, u'enabled', True)
+        plugin_enabled = extension.plugin.enabled()
         if not plugin_enabled:
             LOG.info(u'Extension with name %s for namespace %s is not enabled', extension.name, namespace)
         return plugin_enabled
