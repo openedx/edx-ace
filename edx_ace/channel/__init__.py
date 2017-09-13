@@ -29,10 +29,18 @@ class Channel(object):
 
     Examples include email messages, push notifications, or in-browser messages. Implementations of this abstract class
     should not require any parameters be passed into their constructor since they are instantiated.
+
+    :attr:`.channel_type` must be a :class:`.ChannelType`.
     """
 
-    enabled = True
     channel_type = None
+
+    @classmethod
+    def enabled(cls):
+        u"""
+        Validate settings to determine whether this channel can be enabled.
+        """
+        return True
 
     @abc.abstractmethod
     def deliver(self, message, rendered_message):

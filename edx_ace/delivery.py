@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+u"""
+Functions for delivering ACE messages.
+
+This is an internal interface used by :func:`.ace.send`.
+"""
 from __future__ import absolute_import, division, print_function
 
 import datetime
@@ -34,7 +39,7 @@ def deliver(channel_type, rendered_message, message):
         message (Message): The message that is being sent.
 
     Raises:
-        UnsupportedChannelError: If no channel of the requested channel type is available.
+        :class:`.UnsupportedChannelError`: If no channel of the requested channel type is available.
 
     """
     channel = channels().get(channel_type)

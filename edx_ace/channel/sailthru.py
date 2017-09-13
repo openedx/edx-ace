@@ -146,7 +146,7 @@ class SailthruEmailChannel(Channel):
         )
 
     def __init__(self):
-        if not self.enabled:
+        if not self.enabled():
             self.sailthru_client = None
         else:
             self.sailthru_client = SailthruClient(
@@ -186,7 +186,7 @@ class SailthruEmailChannel(Channel):
             )
             return
 
-        if not self.enabled:
+        if not self.enabled():
             raise FatalChannelDeliveryError(
                 textwrap.dedent(u"""\
                     Sailthru channel is disabled, unable to send:
