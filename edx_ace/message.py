@@ -50,6 +50,7 @@ class Message(MessageAttributeSerializationMixin):
         default=None
     )
     language = attr.ib(default=None)
+    log_level = attr.ib(default=None)
 
     @context.default
     def default_context_value(self):
@@ -79,12 +80,20 @@ class Message(MessageAttributeSerializationMixin):
         monitoring_report(u'language', self.language)
 
     def report(self, key, value):
+        logging.debug('Reporting: %s: %s', key, value)
         monitoring_report(key, value)
 
 
 class MessageLoggingAdapter(logging.LoggerAdapter):
     def process(self, msg, kwargs):
         return u'[%s] %s' % (self.extra[u'message'].log_id, msg), kwargs
+
+    def isEnabledFor(self, level):
+        message_log_level = self.extra['message'].log_level
+        if message_log_level:
+            return level >= message_log_level
+        else:
+            return super(MessageLoggingAdapter, self).isEnabledFor(level)
 
 
 @attr.s(cmp=False)
@@ -103,6 +112,7 @@ class MessageType(MessageAttributeSerializationMixin):
     )
     app_label = attr.ib()
     name = attr.ib()
+    log_level = attr.ib(default=None)
 
     @context.default
     def default_context_value(self):
@@ -137,6 +147,7 @@ class MessageType(MessageAttributeSerializationMixin):
             send_uuid=self.uuid,
             recipient=recipient,
             language=language,
+            log_level=self.log_level,
         )
 
     # TODO(later): Why is it necessary to override attr's
