@@ -1,9 +1,13 @@
-from django.dispatch import Signal
-
-# Signal for reporting metrics
-# Can be used by applications to support their own monitoring tools.
-report_metric = Signal(providing_args=['key', 'value'])
+try:
+    import newrelic.agent
+except ImportError:
+    newrelic = None  # pylint: disable=invalid-name
 
 
 def report(key, value):
-    report_metric.send(sender=None, key=key, value=value)
+    report_to_newrelic(key, value)
+
+
+def report_to_newrelic(key, value):
+    if newrelic:
+        newrelic.agent.add_custom_parameter(key, value)

@@ -14,12 +14,16 @@ from edx_ace.utils.plugins import get_plugins
 CHANNEL_EXTENSION_NAMESPACE = u'openedx.ace.channel'
 
 
+@six.python_2_unicode_compatible
 class ChannelType(Enum):
     u"""
     All supported communication channels.
     """
     EMAIL = u'email'
     PUSH = u'push'
+
+    def __str__(self):
+        return self.value
 
 
 @six.add_metaclass(abc.ABCMeta)
