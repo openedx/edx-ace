@@ -71,9 +71,12 @@ def deliver(channel_type, rendered_message, message):
             elif num_seconds > 0:
                 logger.debug(u'Sleeping for %d seconds.', num_seconds)
                 time.sleep(num_seconds)
-                message.report(u'delivery_retried', num_seconds)
+                message.report(u'{channel_type}_delivery_retried'.format(channel_type=channel_type), num_seconds)
         else:
-            message.report(u'delivery_succeeded', True)
+            message.report(u'{channel_type}_delivery_succeeded'.format(channel_type=channel_type), True)
             return
 
-    message.report(u'delivery_expired', get_current_time() - start_time)
+    message.report(
+        u'{channel_type}_delivery_expired'.format(channel_type=channel_type),
+        get_current_time() - start_time
+    )

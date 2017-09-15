@@ -2,6 +2,7 @@
 from abc import ABCMeta, abstractmethod
 
 import attr
+import six
 
 from django.conf import settings
 
@@ -23,8 +24,12 @@ class PolicyResult(object):
                 raise ValueError(u"PolicyResult for {} has an invalid value {}.".format(attribute, value))
 
 
+@six.add_metaclass(ABCMeta)
 class Policy(object):
-    __metaclass__ = ABCMeta
+
+    @classmethod
+    def enabled(cls):
+        return True
 
     @abstractmethod
     def check(self, message):

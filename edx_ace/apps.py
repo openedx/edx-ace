@@ -10,7 +10,3 @@ class EdxAceConfig(AppConfig):
     """
 
     name = u'edx_ace'
-
-    def ready(self):
-        # noinspection PyUnresolvedReferences
-        import edx_ace.signals  # pylint: disable=unused-variable

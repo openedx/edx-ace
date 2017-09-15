@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import six
+
 from edx_ace import delivery, policy, presentation
 from edx_ace.errors import ChannelError
 
@@ -22,12 +24,12 @@ def send(msg):
     msg.report_basics()
 
     channels_for_message = policy.channels_for(msg)
-    for channel in channels_for_message:
+    for channel_type in channels_for_message:
         try:
-            rendered_message = presentation.render(channel, msg)
-            delivery.deliver(channel, rendered_message, msg)
+            rendered_message = presentation.render(channel_type, msg)
+            delivery.deliver(channel_type, rendered_message, msg)
         except ChannelError as error:
             msg.report(
-                u'channel_error',
-                u'Unable to send over channel {}: {}'.format(channel, str(error))
+                u'{channel_type}_error'.format(channel_type=channel_type),
+                six.text_type(error)
             )

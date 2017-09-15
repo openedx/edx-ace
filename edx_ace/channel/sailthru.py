@@ -167,7 +167,9 @@ class SailthruEmailChannel(Channel):
         template_vars = {}
         for key, value in six.iteritems(attr.asdict(rendered_message)):
             if value is not None:
-                template_vars[u'ace_template_' + key] = value
+                # Sailthru will silently fail to send the email if the from name or subject line contain new line
+                # characters at the beginning or end of the string
+                template_vars[u'ace_template_' + key] = value.strip()
 
         logger = message.get_message_specific_logger(LOG)
 
