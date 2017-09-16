@@ -1,14 +1,19 @@
+import logging
 from functools import partial
 from unittest import TestCase
 
+import ddt
 import six
 from hypothesis import strategies as st
 from hypothesis import given
 from hypothesis.extra.pytz import timezones
+from mock import patch
 
 from edx_ace.message import Message, MessageType
 from edx_ace.recipient import Recipient
 from edx_ace.utils.date import get_current_time
+
+LOG = logging.getLogger(__name__)
 
 context_values = st.one_of(st.text(), st.booleans(), st.floats(allow_nan=False))
 dates = st.datetimes(timezones=st.none() | timezones() | st.none())
@@ -30,6 +35,7 @@ msg = st.builds(
 )
 
 
+@ddt.ddt
 class TestMessage(TestCase):
     def setUp(self):
         self.msg_kwargs = {
@@ -62,6 +68,25 @@ class TestMessage(TestCase):
         serialized = six.text_type(message)
         parsed = Message.from_string(serialized)
         self.assertEqual(message, parsed)
+
+    @ddt.data(
+        (None, True, False),
+        (logging.WARNING, True, False),
+        (logging.DEBUG, True, True),
+    )
+    @ddt.unpack
+    def test_log_level(self, log_level, expect_log_warn, expect_log_debug):
+        logging.getLogger().setLevel(logging.INFO)
+
+        self.msg_kwargs['log_level'] = log_level
+        message = Message(**self.msg_kwargs)
+        logger = message.get_message_specific_logger(LOG)
+        with patch('logging.Logger.callHandlers') as mock_log:
+            logger.warning(u'Test warning statement')
+            self.assertEqual(mock_log.called, expect_log_warn)
+        with patch('logging.Logger.callHandlers') as mock_log:
+            logger.debug(u'Test debug statement')
+            self.assertEqual(mock_log.called, expect_log_debug)
 
 
 def mk_message_type(name, app_label):
