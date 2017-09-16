@@ -3,15 +3,18 @@ API Documentation
 
 .. contents::
 
-Sending Messages
-----------------
+Basic Interface
+---------------
 
-.. automodule:: edx_ace.ace
+.. automodule:: edx_ace
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: edx_ace
+Sending Messages
+----------------
+
+.. automodule:: edx_ace.ace
     :members:
     :undoc-members:
     :show-inheritance:

@@ -13,6 +13,11 @@ from edx_ace.utils.plugins import get_plugins
 
 @attr.s
 class PolicyResult(object):
+    u"""
+    Arguments:
+        deny (set): A set of :class:`.ChannelType` values that should be excluded
+            when sending a message.
+    """
     deny = attr.ib(
         default=attr.Factory(set),
     )
@@ -24,8 +29,16 @@ class PolicyResult(object):
                 raise ValueError(u"PolicyResult for {} has an invalid value {}.".format(attribute, value))
 
 
+POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
+
+
 @six.add_metaclass(ABCMeta)
 class Policy(object):
+    u"""
+    A ``Policy`` allows an application to specify what :class:`.Channel` any specific
+    :class:`.Message` shouldn't be sent over. Policies are one of the primary
+    extension mechanisms for ACE, and are registered using the entrypoint ``openedx.ace.policy``.
+    """
 
     @classmethod
     def enabled(cls):
@@ -33,13 +46,17 @@ class Policy(object):
 
     @abstractmethod
     def check(self, message):
-        """
-        Returns PolicyResult.
+        u"""
+        Validate the supplied :class:`~edx_ace.message.Message` against a specific
+        delivery policy.
+
+        Arguments:
+            message (:class:`.Message`): The message to run the policy against.
+
+        Returns: :class:`.PolicyResult`
+            A :class:`.PolicyResult` that represents what channels the ``message`` should not be delivered over.
         """
         pass
-
-
-POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 
 
 # TODO(later): Need to support Denying ALL channels for a message
