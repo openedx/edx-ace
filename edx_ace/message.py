@@ -19,6 +19,30 @@ from edx_ace.serialization import MessageAttributeSerializationMixin
 @attr.s
 @six.add_metaclass(ABCMeta)
 class Message(MessageAttributeSerializationMixin):
+    u"""
+    A ``Message`` is the core piece of data that is passed into ACE.
+    It captures the message, recipient, and all context needed to render
+    the message for delivery.
+
+    Arguments:
+        app_label (str): The name of the Django app that is sending
+            this message. Used to look up the appropriate template
+            during rendering. Required.
+        name (str): The name of this type of message. Used to look up
+            the appropriate template during rendering. Required.
+
+        recipient (:class:`.Recipient`): The intended recipient of the
+            message. Optional.
+        expiration_time(:class:`~datetime.datetime`): The date and time
+            at which this message expires. After this time, the message
+            should not be delivered. Optional.
+        context (dict): A dictionary to be supplied to the template at
+            render time as the context.
+        send_uuid (:class:`uuid.UUID`): The :class:`uuid.UUID` assigned
+            to this bulk-send of many messages.
+        language (str): The language the message should be rendered in.
+            Optional.
+    """
 
     # mandatory attributes
     # Name is the unique identifier for the message type.
@@ -62,10 +86,18 @@ class Message(MessageAttributeSerializationMixin):
 
     @property
     def unique_name(self):
+        u"""
+        A unique name for this message, used for logging and reporting.
+
+        Returns: str
+        """
         return u'.'.join([self.app_label, self.name])
 
     @property
     def log_id(self):
+        u"""
+        The identity of this message for logging.
+        """
         return u'.'.join([
             self.unique_name,
             six.text_type(self.send_uuid) if self.send_uuid else u'no_send_uuid',
@@ -73,6 +105,12 @@ class Message(MessageAttributeSerializationMixin):
         ])
 
     def get_message_specific_logger(self, logger):
+        u"""
+        Arguments:
+            logger (:class:`logging.Logger`): The logger to be adapted.
+
+        Returns:  :class:`.MessageLoggingAdapter` that is specific to this message.
+        """
         return MessageLoggingAdapter(logger, {u'message': self})
 
     def report_basics(self):
@@ -84,6 +122,13 @@ class Message(MessageAttributeSerializationMixin):
 
 
 class MessageLoggingAdapter(logging.LoggerAdapter):
+    u"""
+    A :class:`logging.LoggingAdapter` that prefixes log items with
+    a message :attr:`.log_id`.ABCMeta
+
+    Expects a ``message`` key in its ``extra`` argument which should
+    contain the :class:`.Message` being logged for.
+    """
     def process(self, msg, kwargs):
         return u'[%s] %s' % (self.extra[u'message'].log_id, msg), kwargs
 
@@ -97,6 +142,22 @@ class MessageLoggingAdapter(logging.LoggerAdapter):
 
 @attr.s(cmp=False)
 class MessageType(MessageAttributeSerializationMixin):
+    u"""
+    A class representing a type of :class:`Message`. An instance of
+    a ``MessageType`` is used for each batch send of messages.
+
+    Arguments:
+        context (dict): Context to be supplied to all messages sent in
+            this batch of messages.
+        expiration_time (:class:`datetime.datetime`): The time at which
+            these messages expire.
+        app_label (str): Override the Django app that is used to resolve
+            the template for rendering. Defaults to :attr:`.APP_LABEL` or
+            to the app that the message type was defined in.
+        name (str): Override the message name that is used to resolve
+            the template for rendering. Defaults to :attr:`.NAME` or
+            to the name of the class.
+    """
     NAME = None
     APP_LABEL = None
 
@@ -136,6 +197,21 @@ class MessageType(MessageAttributeSerializationMixin):
             return self.APP_LABEL
 
     def personalize(self, recipient, language, user_context):
+        u"""
+        Personalize this `MessageType` to a specific recipient, in order to
+        send a specific message.
+
+        Arguments:
+            recipient (:class:`.Recipient`): The intended recipient of the
+                message. Optional.
+            language (str): The language the message should be rendered in.
+                Optional.
+            user_context (dict): A dictionary containing recipient-specific
+                context to be supplied to the template at render time.
+
+        Returns: A new :class:`.Message` that has been personalized to a
+            specific recipient.
+        """
         context = dict(self.context)
         context.update(user_context)
         return Message(
@@ -149,8 +225,8 @@ class MessageType(MessageAttributeSerializationMixin):
             log_level=self.log_level,
         )
 
-    # TODO(later): Why is it necessary to override attr's
-    # implementation of these?
+    # We override these so that a subtype of MessageType can compare equal
+    # to a deserialized non-subtyped MessageType
     def __eq__(self, other):
         if isinstance(other, MessageType):
             return attr.astuple(self) == attr.astuple(other)
