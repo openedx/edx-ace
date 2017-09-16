@@ -80,7 +80,6 @@ class Message(MessageAttributeSerializationMixin):
         monitoring_report(u'language', self.language)
 
     def report(self, key, value):
-        logging.debug('Reporting: %s: %s', key, value)
         monitoring_report(key, value)
 
 
@@ -88,12 +87,12 @@ class MessageLoggingAdapter(logging.LoggerAdapter):
     def process(self, msg, kwargs):
         return u'[%s] %s' % (self.extra[u'message'].log_id, msg), kwargs
 
-    def isEnabledFor(self, level):
-        message_log_level = self.extra['message'].log_level
-        if message_log_level:
-            return level >= message_log_level
+    def debug(self, msg, *args, **kwargs):
+        log_level = self.extra[u'message'].log_level
+        if log_level and log_level <= logging.DEBUG:
+            return self.info(msg, *args, **kwargs)
         else:
-            return super(MessageLoggingAdapter, self).isEnabledFor(level)
+            super(MessageLoggingAdapter, self).debug(msg, *args, **kwargs)
 
 
 @attr.s(cmp=False)
