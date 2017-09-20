@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import functools
 
 
-def once(fn):
+def once(func):
     u"""
     Decorates a function that will be called exactly once.
 
@@ -47,16 +47,16 @@ def once(fn):
                                  # of this function.
 
     Args:
-        fn (callable): The function that should be called exactly once.
+        func (callable): The function that should be called exactly once.
 
     Returns:
         callable: The wrapped function.
     """
 
-    @functools.wraps(fn)
+    @functools.wraps(func)
     def wrapper():
-        if not hasattr(fn, u'__once_result'):
-            fn.__once_result = fn()  # pylint: disable=protected-access
-        return fn.__once_result  # pylint: disable=protected-access
+        if not hasattr(func, u'__once_result'):
+            func.__once_result = func()  # pylint: disable=protected-access
+        return func.__once_result  # pylint: disable=protected-access
 
     return wrapper
