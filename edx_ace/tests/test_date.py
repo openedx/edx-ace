@@ -13,7 +13,7 @@ class TestDateSerialization(TestCase):
 
     @given(st.one_of(st.datetimes(timezones=st.none() | timezones()), st.none()))
     @example(datetime(16, 1, 1, 0, 0, 16))
-    def test_round_trip(self, d):
-        serialized = serialize(d)
+    def test_round_trip(self, date):
+        serialized = serialize(date)
         parsed = deserialize(serialized)
-        self.assertEqual(d, parsed)
+        self.assertEqual(date, parsed)
