@@ -15,31 +15,31 @@ TEMPLATES = {}
 
 class TestAce(TestCase):
     @patch(
-        'edx_ace.renderers.loader.get_template',
-        side_effect=lambda t: TEMPLATES.setdefault(t, Mock(name='template {}'.format(t)))
+        u'edx_ace.renderers.loader.get_template',
+        side_effect=lambda t: TEMPLATES.setdefault(t, Mock(name=u'template {}'.format(t)))
     )
     def test_ace_send_happy_path(self, _mock_get_template):
         patch_policies(self, [StubPolicy([ChannelType.PUSH])])
         mock_channel = Mock(
-            name='test_channel',
+            name=u'test_channel',
             channel_type=ChannelType.EMAIL
         )
         patch_channels(self, [mock_channel])
 
-        recipient = Recipient(username='testuser')
+        recipient = Recipient(username=u'testuser')
         msg = Message(
-            app_label='testapp',
-            name='testmessage',
+            app_label=u'testapp',
+            name=u'testmessage',
             recipient=recipient,
         )
         ace.send(msg)
         mock_channel.deliver.assert_called_once_with(
             msg,
             RenderedEmail(
-                from_name=TEMPLATES['testapp/edx_ace/testmessage/email/from_name.txt'].render(),
-                subject=TEMPLATES['testapp/edx_ace/testmessage/email/subject.txt'].render(),
-                body_html=TEMPLATES['testapp/edx_ace/testmessage/email/body.html'].render(),
-                head_html=TEMPLATES['testapp/edx_ace/testmessage/email/head.html'].render(),
-                body=TEMPLATES['testapp/edx_ace/testmessage/email/body.txt'].render(),
+                from_name=TEMPLATES[u'testapp/edx_ace/testmessage/email/from_name.txt'].render(),
+                subject=TEMPLATES[u'testapp/edx_ace/testmessage/email/subject.txt'].render(),
+                body_html=TEMPLATES[u'testapp/edx_ace/testmessage/email/body.html'].render(),
+                head_html=TEMPLATES[u'testapp/edx_ace/testmessage/email/head.html'].render(),
+                body=TEMPLATES[u'testapp/edx_ace/testmessage/email/body.txt'].render(),
             ),
         )

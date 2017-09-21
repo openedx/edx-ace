@@ -39,14 +39,14 @@ msg = st.builds(
 class TestMessage(TestCase):
     def setUp(self):
         self.msg_kwargs = {
-            'app_label': u'test_app_label',
-            'name': u'test_message',
-            'expiration_time': get_current_time(),
-            'context': {
+            u'app_label': u'test_app_label',
+            u'name': u'test_message',
+            u'expiration_time': get_current_time(),
+            u'context': {
                 u'key1': u'value1',
                 u'key2': u'value2',
             },
-            'recipient': Recipient(
+            u'recipient': Recipient(
                 username=u'me',
             )
         }
@@ -78,13 +78,13 @@ class TestMessage(TestCase):
     def test_log_level(self, log_level, expect_log_warn, expect_log_debug):
         logging.getLogger().setLevel(logging.INFO)
 
-        self.msg_kwargs['log_level'] = log_level
+        self.msg_kwargs[u'log_level'] = log_level
         message = Message(**self.msg_kwargs)
         logger = message.get_message_specific_logger(LOG)
-        with patch('logging.Logger.callHandlers') as mock_log:
+        with patch(u'logging.Logger.callHandlers') as mock_log:
             logger.warning(u'Test warning statement')
             self.assertEqual(mock_log.called, expect_log_warn)
-        with patch('logging.Logger.callHandlers') as mock_log:
+        with patch(u'logging.Logger.callHandlers') as mock_log:
             logger.debug(u'Test debug statement')
             self.assertEqual(mock_log.called, expect_log_debug)
 

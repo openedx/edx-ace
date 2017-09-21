@@ -7,7 +7,7 @@ from edx_ace.channel import ChannelType
 
 
 class AbstractRenderer(object):
-    """
+    u"""
     Base class for message renderers.
 
     A message renderer is responsible for taking one, or more, templates,
@@ -18,7 +18,7 @@ class AbstractRenderer(object):
     rendered_message_cls = None
 
     def render(self, message):
-        """
+        u"""
         Renders the given message.
 
         Args:
@@ -32,13 +32,13 @@ class AbstractRenderer(object):
             # TODO(later): Add comments to explain this difference in
             # behavior between html and txt files, or make it consistent.
             field = attribute.name
-            if field.endswith('_html'):
-                filename = field.replace('_html', '.html')
+            if field.endswith(u'_html'):
+                filename = field.replace(u'_html', u'.html')
             else:
-                filename = field + '.txt'
+                filename = field + u'.txt'
             template = self.get_template_for_message(message, filename)
             render_context = {
-                'message': message,
+                u'message': message,
             }
             render_context.update(message.context)
             rendered[field] = template.render(render_context)
@@ -46,7 +46,7 @@ class AbstractRenderer(object):
         return self.rendered_message_cls(**rendered)  # pylint: disable=not-callable
 
     def get_template_for_message(self, message, filename):
-        template_path = '{app_label}/edx_ace/{name}/{channel}/{filename}'.format(
+        template_path = u'{app_label}/edx_ace/{name}/{channel}/{filename}'.format(
             app_label=message.app_label,
             name=message.name,
             channel=self.channel.value,
