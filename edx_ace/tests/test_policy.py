@@ -12,7 +12,7 @@ from edx_ace.test_utils import StubPolicy
 
 @ddt.ddt
 class TestPolicy(TestCase):
-    PolicyCase = namedtuple('PolicyCase', 'deny_values, expected_channels')
+    PolicyCase = namedtuple(u'PolicyCase', u'deny_values, expected_channels')
 
     @ddt.data(
         # allow all
@@ -35,6 +35,6 @@ class TestPolicy(TestCase):
     @ddt.unpack
     def test_policies(self, deny_values, expected_channels):
         policies = [StubPolicy(deny_value) for deny_value in deny_values]
-        with patch.object(policy, 'policies', return_value=policies):
+        with patch.object(policy, u'policies', return_value=policies):
             channels = policy.channels_for(message=mock.Mock())
             self.assertEqual(channels, expected_channels)

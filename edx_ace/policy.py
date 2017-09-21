@@ -29,7 +29,7 @@ class PolicyResult(object):
                 raise ValueError(u"PolicyResult for {} has an invalid value {}.".format(attribute, value))
 
 
-POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
+POLICY_PLUGIN_NAMESPACE = u'openedx.ace.policy'
 
 
 @six.add_metaclass(ABCMeta)
@@ -75,7 +75,7 @@ def channels_for(message):
     for policy in policies():
         allowed_channels -= policy.check(message).deny
 
-    message.report(u'policy_allowed_channels', ','.join(c.value for c in allowed_channels))
+    message.report(u'policy_allowed_channels', u','.join(c.value for c in allowed_channels))
     return allowed_channels
 
 
@@ -85,6 +85,6 @@ def policies():
         extension.obj
         for extension in get_plugins(
             namespace=POLICY_PLUGIN_NAMESPACE,
-            names=getattr(settings, 'ACE_ENABLED_POLICIES', []),
+            names=getattr(settings, u'ACE_ENABLED_POLICIES', []),
         )
     ]

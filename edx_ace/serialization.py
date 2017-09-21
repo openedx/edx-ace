@@ -18,7 +18,7 @@ class MessageAttributeSerializationMixin(object):
             string_value,
             object_hook=cls._deserialize,
         )
-        uuid = fields.pop('uuid')
+        uuid = fields.pop(u'uuid')
         instance = cls(**fields)
         instance.uuid = uuid
         return instance
@@ -42,14 +42,14 @@ class MessageAttributeSerializationMixin(object):
         if field_value is None:
             return None
 
-        if field_name == 'expiration_time':
+        if field_name == u'expiration_time':
             return date.deserialize(field_value)
-        elif field_name in ('uuid', 'send_uuid'):
+        elif field_name in (u'uuid', u'send_uuid'):
             return UUID(field_value)
         # TODO(later): should this be more dynamic?
-        elif field_name == 'message':
+        elif field_name == u'message':
             return Message(**field_value)
-        elif field_name == 'recipient':
+        elif field_name == u'recipient':
             return Recipient(**field_value)
         else:
             return field_value
@@ -63,7 +63,7 @@ class MessageEncoder(json.JSONEncoder):
             return six.text_type(o)
         elif isinstance(o, date.datetime):
             return date.serialize(o)
-        elif hasattr(o, 'to_json'):
+        elif hasattr(o, u'to_json'):
             return o.to_json()
         else:
             return super(MessageEncoder, self).default(o)

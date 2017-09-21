@@ -19,7 +19,7 @@ class TestDelivery(TestCase):
         super(TestDelivery, self).setUp()
 
         self.mock_channel = Mock(
-            name='test_channel',
+            name=u'test_channel',
             channel_type=ChannelType.EMAIL
         )
         patch_channels(self, [self.mock_channel])
@@ -38,7 +38,7 @@ class TestDelivery(TestCase):
         self.mock_channel.deliver.assert_called_once_with(self.message, sentinel.rendered_email)
 
     def test_fatal_error(self):
-        self.mock_channel.deliver.side_effect = FatalChannelDeliveryError('testing')
+        self.mock_channel.deliver.side_effect = FatalChannelDeliveryError(u'testing')
         with self.assertRaises(FatalChannelDeliveryError):
             deliver(ChannelType.EMAIL, sentinel.rendered_email, self.message)
 
@@ -46,15 +46,15 @@ class TestDelivery(TestCase):
         with self.assertRaises(UnsupportedChannelError):
             deliver(ChannelType.PUSH, sentinel.rendered_email, self.message)
 
-    @patch('edx_ace.delivery.get_current_time')
+    @patch(u'edx_ace.delivery.get_current_time')
     def test_custom_message_expiration(self, mock_get_current_time):
         self.message.expiration_time = self.current_time - datetime.timedelta(seconds=10)
         mock_get_current_time.return_value = self.current_time
         deliver(ChannelType.EMAIL, sentinel.rendered_email, self.message)
         assert not self.mock_channel.deliver.called
 
-    @patch('edx_ace.delivery.time')
-    @patch('edx_ace.delivery.get_current_time')
+    @patch(u'edx_ace.delivery.time')
+    @patch(u'edx_ace.delivery.get_current_time')
     def test_single_retry(self, mock_get_current_time, mock_time):
         mock_get_current_time.side_effect = [
             self.current_time,  # First call to figure out the expiration time
@@ -63,27 +63,27 @@ class TestDelivery(TestCase):
             self.current_time + datetime.timedelta(seconds=1.1),
         ]
         self.mock_channel.deliver.side_effect = [
-            RecoverableChannelDeliveryError('Try again later', self.current_time + datetime.timedelta(seconds=1)),
+            RecoverableChannelDeliveryError(u'Try again later', self.current_time + datetime.timedelta(seconds=1)),
             True
         ]
         deliver(ChannelType.EMAIL, sentinel.rendered_email, self.message)
         assert self.mock_channel.deliver.call_count == 2
         mock_time.sleep.assert_called_once_with(1)
 
-    @patch('edx_ace.delivery.time')
-    @patch('edx_ace.delivery.get_current_time')
+    @patch(u'edx_ace.delivery.time')
+    @patch(u'edx_ace.delivery.get_current_time')
     def test_next_attempt_time_after_expiration(self, mock_get_current_time, mock_time):
         self.message.expiration_time = self.current_time + datetime.timedelta(seconds=10)
         mock_get_current_time.return_value = self.current_time
         self.mock_channel.deliver.side_effect = [
-            RecoverableChannelDeliveryError('Try again later', self.current_time + datetime.timedelta(seconds=11)),
+            RecoverableChannelDeliveryError(u'Try again later', self.current_time + datetime.timedelta(seconds=11)),
         ]
         deliver(ChannelType.EMAIL, sentinel.rendered_email, self.message)
         assert not mock_time.sleep.called
         assert self.mock_channel.deliver.call_count == 1
 
-    @patch('edx_ace.delivery.time')
-    @patch('edx_ace.delivery.get_current_time')
+    @patch(u'edx_ace.delivery.time')
+    @patch(u'edx_ace.delivery.get_current_time')
     def test_multiple_retries(self, mock_get_current_time, mock_time):
         mock_get_current_time.side_effect = [
             self.current_time,  # First call to figure out the expiration time
@@ -96,8 +96,8 @@ class TestDelivery(TestCase):
             self.current_time + datetime.timedelta(seconds=2),  # Final expiration check
         ]
         self.mock_channel.deliver.side_effect = [
-            RecoverableChannelDeliveryError('Try again later', self.current_time + datetime.timedelta(seconds=1)),
-            RecoverableChannelDeliveryError('Try again later', self.current_time + datetime.timedelta(seconds=2)),
+            RecoverableChannelDeliveryError(u'Try again later', self.current_time + datetime.timedelta(seconds=1)),
+            RecoverableChannelDeliveryError(u'Try again later', self.current_time + datetime.timedelta(seconds=2)),
             True
         ]
         deliver(ChannelType.EMAIL, sentinel.rendered_email, self.message)
