@@ -22,6 +22,9 @@ def serialize(timestamp_obj):
     Returns:
         basestring: A string representation of the timestamp in ISO8601 format.
     """
+    if timestamp_obj is None:
+        return None
+
     # TODO(later): my understanding is that type checks like this are not pythonic.
     assert isinstance(timestamp_obj, datetime)
 
