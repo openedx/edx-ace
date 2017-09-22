@@ -11,7 +11,7 @@ from edx_ace.utils.date import deserialize, serialize
 
 class TestDateSerialization(TestCase):
 
-    @given(st.datetimes(timezones=st.none() | timezones()))
+    @given(st.one_of(st.datetimes(timezones=st.none() | timezones()), st.none()))
     @example(datetime(16, 1, 1, 0, 0, 16))
     def test_round_trip(self, d):
         serialized = serialize(d)
