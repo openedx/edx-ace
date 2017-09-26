@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+u"""
+:mod:`edx_ace.channel` exposes the ACE extension point needed
+to add new delivery :class:`Channel` instances to an ACE application.
+
+Developers wanting to add a new deliver channel should subclass :class:`Channel`,
+and then add an entry to the ``openedx.ace.channel`` entrypoint in their ``setup.py``.
+"""
 from __future__ import absolute_import, print_function, division
 
 import abc

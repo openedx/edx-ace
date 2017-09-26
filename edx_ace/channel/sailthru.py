@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+u"""
+:mod:`edx_ace.channel.sailthru` implements a SailThru-based email delivery
+channel for ACE.
+"""
 from __future__ import absolute_import, division, print_function
 
 import logging
@@ -222,6 +226,13 @@ class SailthruEmailChannel(Channel):
             raise FatalChannelDeliveryError(u'Unable to communicate with the Sailthru API: ' + six.text_type(exc))
 
     def _handle_error_response(self, response):
+        u"""
+        Handle an error response from SailThru, either by retrying or failing
+        with an appropriate exception.
+
+        Arguments:
+            response: The HTTP response recieved from SailThru.
+        """
         error = response.get_error()
         error_code = error.get_error_code()
         error_message = error.get_message()

@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+u"""
+An internal module that manages the presentation/rendering step of the
+ACE pipeline.
+"""
 
 from django.utils import translation
 

@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+u"""
+:mod:`edx_ace.monitoring` exposes functions that are useful for reporting ACE
+message delivery stats to monitoring services.
+"""
 try:
     import newrelic.agent
 except ImportError:

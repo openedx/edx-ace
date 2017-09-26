@@ -1,4 +1,6 @@
-
+u"""
+Tests of :mod:`edx_ace.utils.date`.
+"""
 from datetime import datetime
 from unittest import TestCase
 

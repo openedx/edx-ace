@@ -272,7 +272,9 @@ disable =
 	no-self-use,
 	too-few-public-methods,
 	
-	missing-docstring,
+	cyclic-import,
+	
+	cyclic-import,
 
 [REPORTS]
 output-format = text
@@ -372,4 +374,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 17292f45b57c731d69e161f6ee05e5954f9b2c4e
+# 9458f02180aa8dc4813a60e95bb40101d7907918

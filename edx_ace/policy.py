@@ -1,3 +1,9 @@
+u"""
+:mod:`edx_ace.policy` contains all classes relating to message policies.
+
+These policies manage which messages should be sent over which channels,
+and are a point of pluggability in ACE.
+"""
 
 from abc import ABCMeta, abstractmethod
 
@@ -70,6 +76,14 @@ class Policy(object):
 
 
 def channels_for(message):
+    u"""
+    Arguments:
+        message (:class:`.Message`): The message apply policies to.
+
+    Returns: set
+        A set of :class:`.ChannelType` values that are allowed by all policies
+        applied to the message.
+    """
     allowed_channels = set(ChannelType)
 
     for policy in policies():

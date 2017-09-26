@@ -1,4 +1,4 @@
-"""
+u"""
 Test utilities.
 
 Since py.test discourages putting __init__.py into test directory (i.e. making tests a package)
@@ -20,8 +20,15 @@ class StubPolicy(policy.Policy):
 
 
 def patch_policies(test_case, policies):
+    u"""
+    Set active policies for the duration of a test.
+
+    Arguments:
+        test_case (:class:`unittest.TestCase`): The test case that is running
+        policies: The set of active policies to return from :func:`edx_ace.policy.policies`
+    """
     patcher = patch(
-        'edx_ace.policy.policies',
+        u'edx_ace.policy.policies',
         return_value=policies
     )
     patcher.start()
@@ -29,8 +36,15 @@ def patch_policies(test_case, policies):
 
 
 def patch_channels(test_case, channels):
+    u"""
+    Set active channels for the duration of a test.
+
+    Arguments:
+        test_case (:class:`unittest.TestCase`): The test case that is running
+        channels: The set of active channels to return from :func:`edx_ace.delivery.channels`
+    """
     patcher = patch(
-        'edx_ace.delivery.channels',
+        u'edx_ace.delivery.channels',
         return_value={
             c.channel_type: c for c in channels
         }
