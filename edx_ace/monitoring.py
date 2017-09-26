@@ -3,6 +3,8 @@ u"""
 :mod:`edx_ace.monitoring` exposes functions that are useful for reporting ACE
 message delivery stats to monitoring services.
 """
+from __future__ import absolute_import
+
 try:
     import newrelic.agent
 except ImportError:

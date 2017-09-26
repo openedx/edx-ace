@@ -2,6 +2,7 @@ u"""
 :mod:`edx_ace.recipient_resolver` contains the :class:`RecipientResolver`, which facilitates
 a design pattern that separates message content from recipient lists.
 """
+from __future__ import absolute_import
 
 from abc import ABCMeta, abstractmethod
 

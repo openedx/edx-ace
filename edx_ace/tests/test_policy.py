@@ -1,6 +1,7 @@
 u"""
 Tests of :mod:`edx_ace.policy`.
 """
+from __future__ import absolute_import
 
 from collections import namedtuple
 from unittest import TestCase

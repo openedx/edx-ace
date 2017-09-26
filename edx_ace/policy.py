@@ -4,6 +4,7 @@ u"""
 These policies manage which messages should be sent over which channels,
 and are a point of pluggability in ACE.
 """
+from __future__ import absolute_import
 
 from abc import ABCMeta, abstractmethod
 
