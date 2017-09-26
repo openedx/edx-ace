@@ -1,3 +1,7 @@
+u"""
+Tests of :mod:`edx_ace.message`.
+"""
+
 import logging
 from functools import partial
 from unittest import TestCase
@@ -37,6 +41,9 @@ msg = st.builds(
 
 @ddt.ddt
 class TestMessage(TestCase):
+    u"""
+    Tests of :class:`.Message` and :class:`.MessageType`.
+    """
     def setUp(self):
         self.msg_kwargs = {
             u'app_label': u'test_app_label',
@@ -90,6 +97,13 @@ class TestMessage(TestCase):
 
 
 def mk_message_type(name, app_label):
+    u"""
+    Create a new :class:`MessageType` subclass for testing purposes.
+
+    Arguments:
+        name: The NAME class attribute to set.
+        app_label: The APP_LABEL class attribute to set.
+    """
     class CustomType(MessageType):
         NAME = name
         APP_LABEL = app_label

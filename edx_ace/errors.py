@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+u"""
+:mod:`edx_ace.errors` exposes all exceptions that are specific to ACE.
+"""
 from __future__ import absolute_import, division, print_function
 
 # TODO(later): To prevent a monolith of exception classes here,

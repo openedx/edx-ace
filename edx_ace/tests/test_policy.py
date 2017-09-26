@@ -1,3 +1,6 @@
+u"""
+Tests of :mod:`edx_ace.policy`.
+"""
 
 from collections import namedtuple
 from unittest import TestCase

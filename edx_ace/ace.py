@@ -1,4 +1,26 @@
 # -*- coding: utf-8 -*-
+u"""
+The main entry point for sending messages with ACE.
+
+Usage:
+
+.. code-block:: python
+
+    from edx_ace import ace
+    from edx_ace.messages import Message
+
+    msg = Message(
+        name="test_message",
+        app_label="my_app",
+        recipient=Recipient(username='a_user', email='a_user@example.com'),
+        language='en',
+        context={
+            'stuff': 'to personalize the message',
+        }
+    )
+    ace.send(msg)
+"""
+
 from __future__ import absolute_import, division, print_function
 
 import six

@@ -1,3 +1,6 @@
+u"""
+Tests of :mod:`edx_ace.ace`.
+"""
 
 from mock import Mock, patch
 

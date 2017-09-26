@@ -2,7 +2,7 @@ u"""
 ACE (Automated Communications Engine) is a framework for automatically
 sending messages to users.
 
-This module exports the typical set of functions and classes needed to use
+:mod:`edx_ace` exports the typical set of functions and classes needed to use
 ACE.
 """
 # -*- coding: utf-8 -*-

@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+u"""
+:mod:`edx_ace.utils.date` contains utility functions used for
+serializing and deserializing dates. It is intended for internal ACE
+use.
+"""
 from __future__ import absolute_import, division, print_function
 
 from datetime import datetime

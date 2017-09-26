@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+u"""
+:mod:`edx_ace.message` contains the core :class:`Message` and :class:`MessageType`
+classes, which allow specification of the content to be delivered by ACE.
+"""
 from __future__ import absolute_import, division, print_function
 
 import logging
