@@ -237,6 +237,9 @@ class MessageType(MessageAttributeSerializationMixin):
         else:
             return NotImplemented
 
+    def __hash__(self):
+        return hash(attr.astuple(self))
+
     def __ne__(self, other):
         result = self == other
         if result == NotImplemented:
