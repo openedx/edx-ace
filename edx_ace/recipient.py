@@ -2,6 +2,8 @@ u"""
 :mod:`edx_ace.recipient` contains :class:`Recipient`, which captures all targeting
 information needed to deliver a message to some user.
 """
+from __future__ import absolute_import
+
 import attr
 
 from edx_ace.serialization import MessageAttributeSerializationMixin

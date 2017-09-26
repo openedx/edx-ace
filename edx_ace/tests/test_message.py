@@ -1,6 +1,7 @@
 u"""
 Tests of :mod:`edx_ace.message`.
 """
+from __future__ import absolute_import
 
 import logging
 from functools import partial

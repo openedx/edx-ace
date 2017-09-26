@@ -1,6 +1,8 @@
 u"""
 Tests of :mod:`edx_ace.utils.date`.
 """
+from __future__ import absolute_import
+
 from datetime import datetime
 from unittest import TestCase
 

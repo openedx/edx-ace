@@ -5,6 +5,7 @@ Since py.test discourages putting __init__.py into test directory (i.e. making t
 one cannot import from anywhere under tests folder. However, some utility classes/methods might be useful
 in multiple test modules (i.e. factoryboy factories, base test classes). So this package is the place to put them.
 """
+from __future__ import absolute_import
 
 from mock import patch
 

@@ -3,6 +3,7 @@ u"""
 An internal module that manages the presentation/rendering step of the
 ACE pipeline.
 """
+from __future__ import absolute_import
 
 from django.utils import translation
 

@@ -4,6 +4,8 @@ u"""
 which allows messages to be round-tripped through JSON, and
 :class:`MessageEncoder`, which actually performs the JSON encoding.
 """
+from __future__ import absolute_import
+
 import json
 from uuid import UUID
 

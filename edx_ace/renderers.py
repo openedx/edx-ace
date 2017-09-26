@@ -5,6 +5,7 @@ render messages for particular types of delivery channels. Each
 associated with it, which is used to render messages for all
 :class:`Channel` subclasses of that type.
 """
+from __future__ import absolute_import
 
 import attr
 
