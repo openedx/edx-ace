@@ -15,7 +15,7 @@ from .recipient import Recipient
 from .recipient_resolver import RecipientResolver
 from .channel import ChannelType, Channel
 
-__version__ = u'0.1.5'
+__version__ = u'0.1.6'
 
 default_app_config = u'edx_ace.apps.EdxAceConfig'
 

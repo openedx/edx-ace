@@ -79,7 +79,8 @@ setup(
     ],
     entry_points={
         'openedx.ace.channel': [
-            'sailthru_email = edx_ace.channel.sailthru:SailthruEmailChannel'
+            'sailthru_email = edx_ace.channel.sailthru:SailthruEmailChannel',
+            'file_email = edx_ace.channel.file:FileEmailChannel',
         ]
     }
 )
