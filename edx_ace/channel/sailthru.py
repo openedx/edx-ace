@@ -32,16 +32,19 @@ except ImportError:
 
 
 EMAIL_TEMPLATE_LABELS = [u'ACE']
-EMAIL_TEMPLATE_TXT = u"""
-{body_text = replace(ace_template_body, '{view_url}', view_url)}
-{body_text = replace(body_text, '{optout_confirm_url}', optout_confirm_url)}
-{body_text = replace(body_text, '{forward_url}', forward_url)}
-{body_text = replace(body_text, '{beacon_src}', beacon_src)}
-{body_text}
 
-If you believe this has been sent to you in error, please click <{optout_confirm_url}> to safely unsubscribe.
-""".strip()
+# Note: Some of these values are only known by Sailthru. It generates the beacon image URL (for example) so at python
+# template rendering time we don't actually know the value of these variables in order to render them into the template.
+# This forces us to delay substitution of these variables until the point where we are rendering the template using
+# Sailthru's template engine.
 
+# Note: The <a href="{optout_confirm_url}"></a> tag is required to appear in the template. Presumably Sailthru doesn't
+# want you sending email without an unsubscribe link. However, we are embedding that link elsewhere in our body HTML, so
+# we just tack on the obligatory link and style it with "display:none" to ensure it's not user visible.
+
+# Note: Sailthru doesn't appear to offer a way to perform substitution on the value of a variable. We are passing in our
+# rendered body in "ace_template_body_html" and we want to do something like "render(ace_template_body_html)", but we
+# couldn't find any such function in Zephyr.
 EMAIL_TEMPLATE_HTML = u"""
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
@@ -58,6 +61,16 @@ EMAIL_TEMPLATE_HTML = u"""
         <a href="{optout_confirm_url}" style="display: none;"></a>
     </body>
 </html>
+""".strip()
+
+EMAIL_TEMPLATE_TXT = u"""
+{body_text = replace(ace_template_body, '{view_url}', view_url)}
+{body_text = replace(body_text, '{optout_confirm_url}', optout_confirm_url)}
+{body_text = replace(body_text, '{forward_url}', forward_url)}
+{body_text = replace(body_text, '{beacon_src}', beacon_src)}
+{body_text}
+
+If you believe this has been sent to you in error, please click <{optout_confirm_url}> to safely unsubscribe.
 """.strip()
 
 
@@ -330,6 +343,16 @@ class SailthruEmailChannel(Channel):
         return u'{{' + SailthruEmailChannel._get_template_var_name_for_field(message_field_name) + u'}}'
 
     def _create_sailthru_template_for_message(self, message):
+        u"""
+        Create a template in Sailthru for this message.
+
+        Args:
+            message (Message): The message being sent.
+
+        Raises:
+            RecoverableChannelDeliveryError: If we couldn't create the template but suspect we could if we tried again.
+            FatalChannelDeliveryError: If we can't create the template and should not bother trying again.
+        """
         template_name = self._get_template_name_for_message(message)
         template_spec = {
             u'labels': EMAIL_TEMPLATE_LABELS,
