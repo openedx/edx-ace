@@ -14,7 +14,6 @@ from enum import Enum
 import attr
 import six
 from dateutil.tz import tzutc
-
 from django.conf import settings
 
 from edx_ace.channel import Channel, ChannelType
@@ -30,6 +29,36 @@ try:
 except ImportError:
     LOG.warning(u'Sailthru client not installed. The Sailthru delivery channel is disabled.')
     CLIENT_LIBRARY_INSTALLED = False
+
+
+EMAIL_TEMPLATE_LABELS = [u'ACE']
+EMAIL_TEMPLATE_TXT = u"""
+{body_text = replace(ace_template_body, '{view_url}', view_url)}
+{body_text = replace(body_text, '{optout_confirm_url}', optout_confirm_url)}
+{body_text = replace(body_text, '{forward_url}', forward_url)}
+{body_text = replace(body_text, '{beacon_src}', beacon_src)}
+{body_text}
+
+If you believe this has been sent to you in error, please click <{optout_confirm_url}> to safely unsubscribe.
+""".strip()
+
+EMAIL_TEMPLATE_HTML = u"""
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+    <head>
+            {{ace_template_head_html}}
+    </head>
+    <body>
+        {body_html = replace(ace_template_body_html, '{view_url}', view_url)}
+        {body_html = replace(body_html, '{optout_confirm_url}', optout_confirm_url)}
+        {body_html = replace(body_html, '{forward_url}', forward_url)}
+        {body_html = replace(body_html, '{beacon_src}', beacon_src)}
+        {body_html}
+        <span id="sailthru-message-id" style="display: none;">{message_id()}</span>
+        <a href="{optout_confirm_url}" style="display: none;"></a>
+    </body>
+</html>
+""".strip()
 
 
 class RecoverableErrorCodes(Enum):
@@ -50,6 +79,11 @@ class RecoverableErrorCodes(Enum):
     Too many [type] requests this minute to /[endpoint] API: You have exceeded the limit of requests per minute for the
     given type (GET or POST) and endpoint. For limit details, see the Rate Limiting section on the API Technical Details
     page.
+    """
+
+    TEMPLATE_DOES_NOT_EXIST = 14
+    u"""
+    This template does not exist in Sailthru.
     """
 
 
@@ -98,30 +132,17 @@ class SailthruEmailChannel(Channel):
 
             .. settings_start
             ACE_CHANNEL_SAILTHRU_DEBUG = False
-            ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME = "Some template name"
+            ACE_CHANNEL_SAILTHRU_FROM_ADDRESS = "verified_email@example.com"
             ACE_CHANNEL_SAILTHRU_API_KEY = "1234567890"
             ACE_CHANNEL_SAILTHRU_API_SECRET = "this is secret"
             .. settings_end
 
-    The named template in Sailthru should be minimal, most of the rendering happens within ACE. The "From Name" field
-    should be set to ``{{ace_template_from_name}}``. The "Subject" field should be set to ``{{ace_template_subject}}``.
-    The "Code" for the template should be::
+    It will create a minimal template in Sailthru for this message type if it doesn't already exist. The template name
+    used will be the `unique_name` of the message. For example: "schedules.recurringnudge3".
 
-        <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-            <head>
-                {{ace_template_head_html}}
-            </head>
-            <body>
-                {body_html = replace(ace_template_body_html, '{view_url}', view_url)}
-                {body_html = replace(body_html, '{optout_confirm_url}', optout_confirm_url)}
-                {body_html = replace(body_html, '{forward_url}', forward_url)}
-                {body_html = replace(body_html, '{beacon_src}', beacon_src)}
-                {body_html}
-                <span id="sailthru-message-id" style="display: none;">{message_id()}</span>
-                <a href="{optout_confirm_url}" style="display: none;"></a>
-            </body>
-        </html>
-
+    Messages are also expected to include a "template_public_name" option which is displayed on the opt-out form.
+    This will be injected into a sentence like this: "You have followed a link to opt out of {template_public_name}
+    emails from {platform_name}." If the user opts out they will not receive any more messages from that template.
     """
 
     channel_type = ChannelType.EMAIL
@@ -132,9 +153,9 @@ class SailthruEmailChannel(Channel):
         Returns: True iff all required settings are not empty and the Sailthru client library is installed.
         """
         required_settings = (
-            u'ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME',
             u'ACE_CHANNEL_SAILTHRU_API_KEY',
             u'ACE_CHANNEL_SAILTHRU_API_SECRET',
+            u'ACE_CHANNEL_SAILTHRU_FROM_ADDRESS',
         )
 
         for setting in required_settings:
@@ -158,8 +179,6 @@ class SailthruEmailChannel(Channel):
                 settings.ACE_CHANNEL_SAILTHRU_API_SECRET,
             )
 
-        self.template_name = settings.ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME
-
     def deliver(self, message, rendered_message):
         if message.recipient.email_address is None:
             raise InvalidMessageError(
@@ -173,9 +192,11 @@ class SailthruEmailChannel(Channel):
             if value is not None:
                 # Sailthru will silently fail to send the email if the from name or subject line contain new line
                 # characters at the beginning or end of the string
-                template_vars[u'ace_template_' + key] = value.strip()
+                var_name = self._get_template_var_name_for_field(key)
+                template_vars[var_name] = value.strip()
 
         logger = message.get_message_specific_logger(LOG)
+        template_name = self._get_template_name_for_message(message)
 
         if getattr(settings, u'ACE_CHANNEL_SAILTHRU_DEBUG', False):
             logger.info(
@@ -186,7 +207,7 @@ class SailthruEmailChannel(Channel):
                         recipient: %s
                         variables: %s
                 """),
-                self.template_name,
+                template_name,
                 message.recipient.email_address,
                 six.text_type(template_vars),
             )
@@ -200,7 +221,7 @@ class SailthruEmailChannel(Channel):
                         recipient: %s
                         variables: %s
                 """),
-                self.template_name,
+                template_name,
                 message.recipient.email_address,
                 six.text_type(template_vars),
             )
@@ -209,7 +230,7 @@ class SailthruEmailChannel(Channel):
             logger.debug(u'Sending to Sailthru')
 
             response = self.sailthru_client.send(
-                self.template_name,
+                template_name,
                 message.recipient.email_address,
                 _vars=template_vars,
             )
@@ -220,12 +241,12 @@ class SailthruEmailChannel(Channel):
                 return
             else:
                 logger.debug(u'Failed to send to Sailthru')
-                self._handle_error_response(response)
+                self._handle_error_response(message, response)
 
         except SailthruClientError as exc:
             raise FatalChannelDeliveryError(u'Unable to communicate with the Sailthru API: ' + six.text_type(exc))
 
-    def _handle_error_response(self, response):
+    def _handle_error_response(self, message, response):
         u"""
         Handle an error response from SailThru, either by retrying or failing
         with an appropriate exception.
@@ -241,6 +262,9 @@ class SailthruEmailChannel(Channel):
             next_attempt_time = None
             if error_code == RecoverableErrorCodes.RATE_LIMIT:
                 next_attempt_time = self._get_rate_limit_reset_time(sailthru_response=response)
+            elif error_code == RecoverableErrorCodes.TEMPLATE_DOES_NOT_EXIST:
+                self._create_sailthru_template_for_message(message)
+                next_attempt_time = get_current_time()
 
             if next_attempt_time is None:
                 # Sailthru advises waiting "a moment" and then trying again.
@@ -292,3 +316,45 @@ class SailthruEmailChannel(Channel):
             return datetime.utcfromtimestamp(reset_timestamp).replace(tzinfo=tzutc())
         except ValueError:
             return None
+
+    @staticmethod
+    def _get_template_name_for_message(message):
+        return message.unique_name
+
+    @staticmethod
+    def _get_template_var_name_for_field(message_field_name):
+        return u'ace_template_' + message_field_name
+
+    @staticmethod
+    def _get_sailthru_template_var_for_field(message_field_name):
+        return u'{{' + SailthruEmailChannel._get_template_var_name_for_field(message_field_name) + u'}}'
+
+    def _create_sailthru_template_for_message(self, message):
+        template_name = self._get_template_name_for_message(message)
+        template_spec = {
+            u'labels': EMAIL_TEMPLATE_LABELS,
+            u'subject': self._get_sailthru_template_var_for_field(u'subject'),
+            u'from_email': settings.ACE_CHANNEL_SAILTHRU_FROM_ADDRESS,
+            u'public_name': message.options.get(u'template_public_name', u'course'),
+            u'is_google_analytics': True,
+            u'from_name': self._get_sailthru_template_var_for_field(u'from_name'),
+            u'is_link_tracking': True,
+            u'content_html': EMAIL_TEMPLATE_HTML,
+            u'content_text': EMAIL_TEMPLATE_TXT,
+        }
+
+        logger = message.get_message_specific_logger(LOG)
+        try:
+            logger.debug(u'Creating a new template in Sailthru: %s', template_name)
+
+            response = self.sailthru_client.save_template(template_name, template_spec)
+
+            if response.is_ok():
+                logger.debug(u'Successfully created a new template called %s', template_name)
+                return
+            else:
+                logger.debug(u'Failed to create a new template in Sailthru')
+                self._handle_error_response(message, response)
+
+        except SailthruClientError as exc:
+            raise FatalChannelDeliveryError(u'Unable to communicate with the Sailthru API: ' + six.text_type(exc))

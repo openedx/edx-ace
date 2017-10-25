@@ -58,7 +58,7 @@ class FileEmailChannel(Channel):
     By default it writes the output file to /edx/src/ace_output.html and overwrites any existing file at that location.
     In the edX devstack, this folder is shared between the host and the containers so you can easily open the file using
     a browser on the host. You can override this output file location by passing in a ``output_file_path`` key in the
-    message context. That path specifies where in the container filesystem the file should be written.
+    message options. That path specifies where in the container filesystem the file should be written.
 
     Both streams of output are UTF-8 encoded.
     """
@@ -77,7 +77,7 @@ class FileEmailChannel(Channel):
         template_vars[u'email_address'] = message.recipient.email_address
 
         rendered_template = TEMPLATE.format(**template_vars)
-        output_file_path = message.context.get(PATH_OVERRIDE_KEY, DEFAULT_OUTPUT_FILE_PATH_TPL.format(
+        output_file_path = message.options.get(PATH_OVERRIDE_KEY, DEFAULT_OUTPUT_FILE_PATH_TPL.format(
             recipient=message.recipient,
             date=datetime.now()
         ))
