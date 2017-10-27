@@ -77,25 +77,6 @@ class TestMessage(TestCase):
         parsed = Message.from_string(serialized)
         self.assertEqual(message, parsed)
 
-    @ddt.data(
-        (None, True, False),
-        (logging.WARNING, True, False),
-        (logging.DEBUG, True, True),
-    )
-    @ddt.unpack
-    def test_log_level(self, log_level, expect_log_warn, expect_log_debug):
-        logging.getLogger().setLevel(logging.INFO)
-
-        self.msg_kwargs[u'log_level'] = log_level
-        message = Message(**self.msg_kwargs)
-        logger = message.get_message_specific_logger(LOG)
-        with patch(u'logging.Logger.callHandlers') as mock_log:
-            logger.warning(u'Test warning statement')
-            self.assertEqual(mock_log.called, expect_log_warn)
-        with patch(u'logging.Logger.callHandlers') as mock_log:
-            logger.debug(u'Test debug statement')
-            self.assertEqual(mock_log.called, expect_log_debug)
-
 
 def mk_message_type(name, app_label):
     u"""

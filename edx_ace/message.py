@@ -78,7 +78,6 @@ class Message(MessageAttributeSerializationMixin):
         default=None
     )
     language = attr.ib(default=None)
-    log_level = attr.ib(default=None)
 
     @context.default
     def default_context_value(self):
@@ -136,13 +135,6 @@ class MessageLoggingAdapter(logging.LoggerAdapter):
     def process(self, msg, kwargs):
         return u'[%s] %s' % (self.extra[u'message'].log_id, msg), kwargs
 
-    def debug(self, msg, *args, **kwargs):
-        log_level = self.extra[u'message'].log_level
-        if log_level and log_level <= logging.DEBUG:
-            return self.info(msg, *args, **kwargs)
-        else:
-            super(MessageLoggingAdapter, self).debug(msg, *args, **kwargs)
-
 
 @attr.s(cmp=False)
 class MessageType(MessageAttributeSerializationMixin):
@@ -176,7 +168,6 @@ class MessageType(MessageAttributeSerializationMixin):
     )
     app_label = attr.ib()
     name = attr.ib()
-    log_level = attr.ib(default=None)
 
     @context.default
     def default_context_value(self):
@@ -226,7 +217,6 @@ class MessageType(MessageAttributeSerializationMixin):
             send_uuid=self.uuid,
             recipient=recipient,
             language=language,
-            log_level=self.log_level,
         )
 
     # We override these so that a subtype of MessageType can compare equal
