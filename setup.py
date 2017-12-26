@@ -47,7 +47,7 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        "Django>=1.8,<2.0"
+        "Django>=1.8,<2.0",
         "six",
         "stevedore",
         "attrs>=17.2.0,<18.0.0",
@@ -55,7 +55,7 @@ setup(
         'enum34;python_version<"3.4"',
         'mock;python_version<"3.3"',
     ],
-    extras_require = {
+    extras_require={
         'sailthru':  ["sailthru-client>2.2,<2.3"]
     },
     license="AGPL 3.0",
