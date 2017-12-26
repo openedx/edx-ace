@@ -16,7 +16,7 @@ click==6.7                # via click-log, edx-lint, pip-tools
 diff-cover==0.9.12
 distlib==0.2.5            # via caniusepython3
 django==1.11.5            # via edx-i18n-tools
-edx-i18n-tools==0.3.10
+edx-i18n-tools==0.4.2
 edx-lint==0.5.4
 first==2.0.1              # via pip-tools
 futures==3.1.1            # via caniusepython3
