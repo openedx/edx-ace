@@ -56,7 +56,8 @@ setup(
         'mock;python_version<"3.3"',
     ],
     extras_require = {
-        'sailthru':  ["sailthru-client>2.2,<2.3"]
+        'sailthru': ["sailthru-client>2.2,<2.3"],
+        'pyfcm': ['pyfcm'],
     },
     license="AGPL 3.0",
     zip_safe=False,
@@ -81,6 +82,7 @@ setup(
         'openedx.ace.channel': [
             'sailthru_email = edx_ace.channel.sailthru:SailthruEmailChannel',
             'file_email = edx_ace.channel.file:FileEmailChannel',
+            'firebase_push = edx_ace.channel.firebase:FirebaseChannel',
         ]
     }
 )

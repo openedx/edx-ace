@@ -17,6 +17,8 @@ class Recipient(MessageAttributeSerializationMixin):
     Arguments:
         username (str): The username of the intended recipient.
         email_address (str): The email address of the intended recipient. Optional.
+        mobile_device_id (str): The mobile device to send the message to. Optional.
     """
     username = attr.ib()
     email_address = attr.ib(default=None)
+    mobile_device_id = attr.ib(default=None)

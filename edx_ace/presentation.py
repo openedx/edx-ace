@@ -10,8 +10,10 @@ from django.utils import translation
 from edx_ace import errors, renderers
 from edx_ace.channel import ChannelType
 
+
 RENDERERS = {
     ChannelType.EMAIL: renderers.EmailRenderer(),
+    ChannelType.PUSH: renderers.PushNotificationRenderer(),
 }
 
 
