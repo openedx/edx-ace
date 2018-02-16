@@ -10,6 +10,7 @@ import random
 import textwrap
 from datetime import datetime, timedelta
 from enum import Enum
+from gettext import gettext as _
 
 import attr
 import six
@@ -148,6 +149,13 @@ class SailthruEmailChannel(Channel):
             hasattr(settings, required_setting)
             for required_setting in required_settings
         )
+
+    @property
+    def action_links(self):
+        return [
+            ('{view_url}', _('View on Web')),
+            ('{optout_confirm_url}', _('Unsubscribe from this list')),
+        ]
 
     def __init__(self):
         if not self.enabled():
