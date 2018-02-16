@@ -54,6 +54,9 @@ class TestMessage(TestCase):
                 u'key1': u'value1',
                 u'key2': u'value2',
             },
+            u'options': {
+                u'transactional': True,
+            },
             u'recipient': Recipient(
                 username=u'me',
             )

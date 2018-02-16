@@ -10,10 +10,12 @@ from __future__ import absolute_import, print_function, division
 
 import abc
 from enum import Enum
+from collections import defaultdict
 
 import six
 from django.conf import settings
 
+from edx_ace.errors import UnsupportedChannelError
 from edx_ace.utils.once import once
 from edx_ace.utils.plugins import get_plugins
 
@@ -86,16 +88,32 @@ def channels():
         names=getattr(settings, u'ACE_ENABLED_CHANNELS', []),
     )
 
-    channel_map = {}
+    channel_map = defaultdict(dict)
     for extension in plugins:
         channel = extension.obj
-        if channel.channel_type in channel_map:
-            raise ValueError(
-                u'Multiple plugins registered for the same channel: {first} and {second}'.format(
-                    first=channel_map[channel.channel_type].__class__.__name__,
-                    second=channel.__class__.__name__,
-                )
-            )
-        channel_map[channel.channel_type] = extension.obj
+        channel_map[channel.channel_type][extension.name] = channel
 
     return channel_map
+
+
+def get_channel_for_channel_type(channel_type, message):
+    channel_map = channels()
+    channels = channel_map.get(channel_type)
+    if channel_type == ChannelType.EMAIL:
+        channel_name = settings.ACE_CHANNEL_DEFAULT_EMAIL
+        if message.options.get('transactional'):
+            channel_name = settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL
+        channel = channels.get(channel_name)
+    else:
+        # replace with a better way of getting the first channel from the dictionary
+        channel = channels[channels.keys()[0]]
+
+    if not channel:
+        raise UnsupportedChannelError(
+            u'No implementation for channel {channel_type} registered. Available channels are: {channels}'.format(
+                channel_type=channel_type,
+                channels=u', '.join(six.text_type(registered_channel_type) for registered_channel_type in channels())
+            )
+        )
+
+    return channel

@@ -22,14 +22,14 @@ class AbstractRenderer(object):
     and context, and outputting a rendered message for a specific message
     channel (e.g. email, SMS, push notification).
     """
-    channel = None
     rendered_message_cls = None
 
-    def render(self, message):
+    def render(self, channel, message):
         u"""
         Renders the given message.
 
         Args:
+             channel (Channel)
              message (Message)
 
          Returns:
@@ -44,16 +44,17 @@ class AbstractRenderer(object):
                 filename = field.replace(u'_html', u'.html')
             else:
                 filename = field + u'.txt'
-            template = self.get_template_for_message(message, filename)
+            template = self.get_template_for_message(channel, message, filename)
             render_context = {
                 u'message': message,
+                u'channel': channel,
             }
             render_context.update(message.context)
             rendered[field] = template.render(render_context)
 
         return self.rendered_message_cls(**rendered)  # pylint: disable=not-callable
 
-    def get_template_for_message(self, message, filename):
+    def get_template_for_message(self, channel, message, filename):
         u"""
         Arguments:
             message (:class:`Message`): The message being rendered.
@@ -62,10 +63,10 @@ class AbstractRenderer(object):
         Returns:
             The full template path to the template to render.
         """
-        template_path = u'{app_label}/edx_ace/{name}/{channel}/{filename}'.format(
+        template_path = u'{app_label}/edx_ace/{name}/{channel_type}/{filename}'.format(
             app_label=message.app_label,
             name=message.name,
-            channel=self.channel.value,
+            channel_type=channel.channel_type.value,
             filename=filename,
         )
         return loader.get_template(template_path)
@@ -88,5 +89,4 @@ class EmailRenderer(AbstractRenderer):
     u"""
     A renderer for :attr:`.ChannelType.EMAIL` channels.
     """
-    channel = ChannelType.EMAIL
     rendered_message_cls = RenderedEmail
