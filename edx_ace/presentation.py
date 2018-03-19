@@ -17,12 +17,12 @@ RENDERERS = {
 
 def render(channel, message):
     u""" Returns the rendered content for the given channel and message. """
-    renderer = RENDERERS.get(channel)
+    renderer = RENDERERS.get(channel.channel_type)
 
     if not renderer:
-        error_msg = u'No renderer is registered for the channel [{}].'.format(channel)
+        error_msg = u'No renderer is registered for the channel type [{}].'.format(channel.channel_type)
         raise errors.UnsupportedChannelError(error_msg)
 
     message_language = message.language or translation.get_language()
     with translation.override(message_language):
-        return renderer.render(message)
+        return renderer.render(channel, message)

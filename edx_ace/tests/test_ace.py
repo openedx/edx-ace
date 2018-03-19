@@ -8,27 +8,25 @@ from mock import Mock, patch
 from django.test import TestCase
 
 from edx_ace import ace
-from edx_ace.channel import ChannelType
+from edx_ace.channel import ChannelMap, ChannelType
+from edx_ace.errors import UnsupportedChannelError
 from edx_ace.message import Message
 from edx_ace.recipient import Recipient
 from edx_ace.renderers import RenderedEmail
-from edx_ace.test_utils import StubPolicy, patch_channels, patch_policies
-
-TEMPLATES = {}
+from edx_ace.test_utils import StubPolicy, patch_policies
 
 
 class TestAce(TestCase):
-    @patch(
-        u'edx_ace.renderers.loader.get_template',
-        side_effect=lambda t: TEMPLATES.setdefault(t, Mock(name=u'template {}'.format(t)))
-    )
-    def test_ace_send_happy_path(self, _mock_get_template):
+    u"""
+    Tests for the send method.
+    """
+    def test_ace_send_happy_path(self):
         patch_policies(self, [StubPolicy([ChannelType.PUSH])])
         mock_channel = Mock(
-            name=u'test_channel',
-            channel_type=ChannelType.EMAIL
+            channel_type=ChannelType.EMAIL,
+            action_links=[],
+            tracker_image_sources=[],
         )
-        patch_channels(self, [mock_channel])
 
         recipient = Recipient(username=u'testuser')
         msg = Message(
@@ -36,14 +34,33 @@ class TestAce(TestCase):
             name=u'testmessage',
             recipient=recipient,
         )
-        ace.send(msg)
+
+        channel_map = ChannelMap([
+            [u'sailthru_email', mock_channel],
+        ])
+
+        with patch(u'edx_ace.channel.channels', return_value=channel_map):
+            ace.send(msg)
+
         mock_channel.deliver.assert_called_once_with(
             msg,
             RenderedEmail(
-                from_name=TEMPLATES[u'testapp/edx_ace/testmessage/email/from_name.txt'].render(),
-                subject=TEMPLATES[u'testapp/edx_ace/testmessage/email/subject.txt'].render(),
-                body_html=TEMPLATES[u'testapp/edx_ace/testmessage/email/body.html'].render(),
-                head_html=TEMPLATES[u'testapp/edx_ace/testmessage/email/head.html'].render(),
-                body=TEMPLATES[u'testapp/edx_ace/testmessage/email/body.txt'].render(),
+                from_name=u'template from_name.txt',
+                subject=u'template subject.txt',
+                # The new lines are needed because the template has some tags, which means leftover newlines
+                body_html=u'template body.html\n\n\n\n\n',
+                head_html=u'template head.html\n',
+                body=u'template body.txt',
             ),
         )
+
+    @patch(u'edx_ace.ace.get_channel_for_message', side_effect=UnsupportedChannelError)
+    def test_ace_send_unsupported_channel(self, *_args):
+        recipient = Recipient(username=u'testuser')
+        msg = Message(
+            app_label=u'testapp',
+            name=u'testmessage',
+            recipient=recipient,
+        )
+
+        ace.send(msg)  # UnsupportedChannelError shouldn't throw UnsupportedChannelError

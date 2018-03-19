@@ -34,21 +34,3 @@ def patch_policies(test_case, policies):
     )
     patcher.start()
     test_case.addCleanup(patcher.stop)
-
-
-def patch_channels(test_case, channels):
-    u"""
-    Set active channels for the duration of a test.
-
-    Arguments:
-        test_case (:class:`unittest.TestCase`): The test case that is running
-        channels: The set of active channels to return from :func:`edx_ace.delivery.channels`
-    """
-    patcher = patch(
-        u'edx_ace.delivery.channels',
-        return_value={
-            c.channel_type: c for c in channels
-        }
-    )
-    patcher.start()
-    test_case.addCleanup(patcher.stop)

@@ -77,11 +77,16 @@ class Message(MessageAttributeSerializationMixin):
         validator=attr.validators.optional(attr.validators.instance_of(UUID)),
         default=None
     )
+    options = attr.ib()
     language = attr.ib(default=None)
     log_level = attr.ib(default=None)
 
     @context.default
     def default_context_value(self):
+        return {}
+
+    @options.default
+    def default_options_value(self):
         return {}
 
     @uuid.default
@@ -176,11 +181,16 @@ class MessageType(MessageAttributeSerializationMixin):
     )
     app_label = attr.ib()
     name = attr.ib()
+    options = attr.ib()
     log_level = attr.ib(default=None)
 
     @context.default
     def default_context_value(self):
         return {}
+
+    @options.default
+    def default_options_value(self):
+        return {}  # pragma: no cover
 
     @uuid.default
     def generate_uuid(self):
@@ -227,6 +237,7 @@ class MessageType(MessageAttributeSerializationMixin):
             recipient=recipient,
             language=language,
             log_level=self.log_level,
+            options=self.options,
         )
 
     # We override these so that a subtype of MessageType can compare equal
