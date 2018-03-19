@@ -60,10 +60,14 @@ class TestMessage(TestCase):
         }
 
     def test_basic(self):
-        message = Message(**self.msg_kwargs)
+        transactional_message = Message(options={u'transactional': True}, **self.msg_kwargs)
         for key in self.msg_kwargs:
-            self.assertEqual(getattr(message, key), self.msg_kwargs.get(key))
-        self.assertIsNotNone(message.uuid)
+            self.assertEqual(getattr(transactional_message, key), self.msg_kwargs.get(key))
+        self.assertIsNotNone(transactional_message.uuid)
+        assert transactional_message.options.get(u'transactional')  # pylint: disable=no-member
+
+        normal_message = Message(**self.msg_kwargs)
+        assert not dict(normal_message.options)
 
     def test_serialization(self):
         message = Message(**self.msg_kwargs)

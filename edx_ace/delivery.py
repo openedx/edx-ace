@@ -10,12 +10,9 @@ import datetime
 import logging
 import time
 
-import six
-
 from django.conf import settings
 
-from edx_ace.channel import channels
-from edx_ace.errors import RecoverableChannelDeliveryError, UnsupportedChannelError
+from edx_ace.errors import RecoverableChannelDeliveryError
 from edx_ace.utils.date import get_current_time
 
 LOG = logging.getLogger(__name__)
@@ -29,12 +26,12 @@ LOG = logging.getLogger(__name__)
 MAX_EXPIRATION_DELAY = 5 * 60
 
 
-def deliver(channel_type, rendered_message, message):
+def deliver(channel, rendered_message, message):
     u"""
     Deliver a message via a particular channel.
 
     Args:
-        channel_type (ChannelType): The channel type to deliver the channel over.
+        channel (Channel): The channel to deliver the message over.
         rendered_message (object): Each attribute of this object contains rendered content.
         message (Message): The message that is being sent.
 
@@ -42,15 +39,8 @@ def deliver(channel_type, rendered_message, message):
         :class:`.UnsupportedChannelError`: If no channel of the requested channel type is available.
 
     """
-    channel = channels().get(channel_type)
-    if not channel:
-        raise UnsupportedChannelError(
-            u'No implementation for channel {channel_type} registered. Available channels are: {channels}'.format(
-                channel_type=channel_type,
-                channels=u', '.join(six.text_type(registered_channel_type) for registered_channel_type in channels())
-            )
-        )
     logger = message.get_message_specific_logger(LOG)
+    channel_type = channel.channel_type
 
     timeout_seconds = getattr(settings, u'ACE_DEFAULT_EXPIRATION_DELAY', 120)
     start_time = get_current_time()

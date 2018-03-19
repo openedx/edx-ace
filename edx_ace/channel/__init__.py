@@ -10,10 +10,12 @@ from __future__ import absolute_import, print_function, division
 
 import abc
 from enum import Enum
+from collections import defaultdict, OrderedDict
 
 import six
 from django.conf import settings
 
+from edx_ace.errors import UnsupportedChannelError
 from edx_ace.utils.once import once
 from edx_ace.utils.plugins import get_plugins
 
@@ -66,8 +68,68 @@ class Channel(object):
         raise NotImplementedError()
 
 
+@six.python_2_unicode_compatible
+class ChannelMap(object):
+    u"""
+    A class that represents a channel map, usually as described in Django settings and `setup.py` files.
+    """
+    def __init__(self, channels_list):
+        u"""
+        Initialize a ChannelMap.
+
+        Args:
+            channels_list (list): A list of [channel_name, channel] pairs to fill in the channel map, in order.
+        """
+        self.channel_type_to_channel_impl = defaultdict(OrderedDict)
+        for channel_name, channel in channels_list:
+            self.register_channel(channel, channel_name)
+
+    def register_channel(self, channel, channel_name):
+        u"""
+        Registers a channel in the channel map.
+
+        Args:
+            channel (Channel): The channel to register.
+            channel_name (str): The channel name, as stated in the `setup.py` file.
+        """
+        self.channel_type_to_channel_impl[channel.channel_type][channel_name] = channel
+
+    def get_channel_by_name(self, channel_type, channel_name):
+        u"""
+        Gets a registered a channel by its name and type.
+
+        Raises:
+            KeyError: If either of the channel or its type are not registered.
+
+        Returns:
+            Channel: The channel object.
+        """
+        return self.channel_type_to_channel_impl[channel_type][channel_name]
+
+    def get_default_channel(self, channel_type):
+        u"""
+        Returns the first registered channel by type.
+
+        Raises:
+            UnsupportedChannelError: If there's no channel that matched the request.
+
+        Args:
+            channel_type (ChannelType): The channel type.
+        """
+        try:
+            return six.next(six.itervalues(self.channel_type_to_channel_impl[channel_type]))
+        except (StopIteration, KeyError):
+            raise UnsupportedChannelError((
+                u'No implementation for channel {channel_type} is registered. '
+                u'Available channels are: {channels}'
+            ).format(channel_type=channel_type, channels=channels()))
+
+    def __str__(self):
+        return u'ChannelMap {channels}'.format(channels=repr(self.channel_type_to_channel_impl))
+
+
 @once
-def channels():
+def channels():  # pragma: no cover
     u"""
     Gathers all available channels.
 
@@ -79,23 +141,39 @@ def channels():
         ValueError: If multiple plugins are enabled for the same channel type.
 
     Returns:
-        dict: A mapping of channel types to instances of channel objects that can be used to deliver messages.
+        ChannelMap: A mapping of channel types to instances of channel objects that can be used to deliver messages.
     """
     plugins = get_plugins(
         namespace=CHANNEL_EXTENSION_NAMESPACE,
         names=getattr(settings, u'ACE_ENABLED_CHANNELS', []),
     )
 
-    channel_map = {}
-    for extension in plugins:
-        channel = extension.obj
-        if channel.channel_type in channel_map:
-            raise ValueError(
-                u'Multiple plugins registered for the same channel: {first} and {second}'.format(
-                    first=channel_map[channel.channel_type].__class__.__name__,
-                    second=channel.__class__.__name__,
-                )
-            )
-        channel_map[channel.channel_type] = extension.obj
+    return ChannelMap([
+        [extension.name, extension.obj]
+        for extension in plugins
+    ])
 
-    return channel_map
+
+def get_channel_for_message(channel_type, message):
+    u"""
+    Based on available `channels()` returns a single channels for a message.
+
+    Raises:
+        UnsupportedChannelError: If there's no channel matches the request.
+
+    Returns:
+        Channel: The selected channel object.
+    """
+    channels_map = channels()
+
+    if channel_type == ChannelType.EMAIL:
+        if message.options.get(u'transactional'):
+            channel_name = settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL
+        else:
+            channel_name = settings.ACE_CHANNEL_DEFAULT_EMAIL
+        try:
+            return channels_map.get_channel_by_name(channel_type, channel_name)
+        except KeyError:
+            pass
+
+    return channels_map.get_default_channel(channel_type)

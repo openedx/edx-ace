@@ -81,6 +81,7 @@ setup(
         'openedx.ace.channel': [
             'sailthru_email = edx_ace.channel.sailthru:SailthruEmailChannel',
             'file_email = edx_ace.channel.file:FileEmailChannel',
+            'django_email = edx_ace.channel.django_email:DjangoEmailChannel',
         ]
     }
 )

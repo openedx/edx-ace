@@ -10,6 +10,7 @@ import os
 from datetime import datetime
 
 import attr
+import six
 
 from edx_ace.channel import Channel, ChannelType
 
@@ -58,7 +59,7 @@ class FileEmailChannel(Channel):
     By default it writes the output file to /edx/src/ace_output.html and overwrites any existing file at that location.
     In the edX devstack, this folder is shared between the host and the containers so you can easily open the file using
     a browser on the host. You can override this output file location by passing in a ``output_file_path`` key in the
-    message context. That path specifies where in the container filesystem the file should be written.
+    message options. That path specifies where in the container filesystem the file should be written.
 
     Both streams of output are UTF-8 encoded.
     """
@@ -72,20 +73,26 @@ class FileEmailChannel(Channel):
         """
         return True
 
+    def _encode(self, s):  # pragma: no cover
+        if six.PY2:
+            return s.encode(OUTPUT_ENCODING)
+        else:
+            return s
+
     def deliver(self, message, rendered_message):
         template_vars = {k: v.strip() for k, v in attr.asdict(rendered_message).items()}
         template_vars[u'email_address'] = message.recipient.email_address
 
         rendered_template = TEMPLATE.format(**template_vars)
-        output_file_path = message.context.get(PATH_OVERRIDE_KEY, DEFAULT_OUTPUT_FILE_PATH_TPL.format(
+        output_file_path = message.options.get(PATH_OVERRIDE_KEY, DEFAULT_OUTPUT_FILE_PATH_TPL.format(
             recipient=message.recipient,
             date=datetime.now()
         ))
         make_parent_directories(output_file_path)
         with open(output_file_path, u'w') as output_file:  # pylint: disable=open-builtin
-            output_file.write(rendered_template.encode(OUTPUT_ENCODING))
+            output_file.write(self._encode(rendered_template))
 
-        print(STDOUT_TEMPLATE.format(**template_vars).encode(OUTPUT_ENCODING))
+        print(self._encode(STDOUT_TEMPLATE.format(**template_vars)))
 
 
 def make_parent_directories(path):

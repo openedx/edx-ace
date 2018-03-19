@@ -26,7 +26,8 @@ from __future__ import absolute_import, division, print_function
 import six
 
 from edx_ace import delivery, policy, presentation
-from edx_ace.errors import ChannelError
+from edx_ace.channel import get_channel_for_message
+from edx_ace.errors import ChannelError, UnsupportedChannelError
 
 
 def send(msg):
@@ -46,10 +47,16 @@ def send(msg):
     msg.report_basics()
 
     channels_for_message = policy.channels_for(msg)
+
     for channel_type in channels_for_message:
         try:
-            rendered_message = presentation.render(channel_type, msg)
-            delivery.deliver(channel_type, rendered_message, msg)
+            channel = get_channel_for_message(channel_type, msg)
+        except UnsupportedChannelError:
+            continue
+
+        try:
+            rendered_message = presentation.render(channel, msg)
+            delivery.deliver(channel, rendered_message, msg)
         except ChannelError as error:
             msg.report(
                 u'{channel_type}_error'.format(channel_type=channel_type),

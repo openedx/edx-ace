@@ -10,6 +10,7 @@ import random
 import textwrap
 from datetime import datetime, timedelta
 from enum import Enum
+from gettext import gettext as _
 
 import attr
 import six
@@ -148,6 +149,20 @@ class SailthruEmailChannel(Channel):
             hasattr(settings, required_setting)
             for required_setting in required_settings
         )
+
+    @property
+    def action_links(self):
+        # Note that these variables are evaluated by Sailthru, not the Django template engine
+        return [
+            (u'{view_url}', _(u'View on Web')),
+            (u'{optout_confirm_url}', _(u'Unsubscribe from this list')),
+        ]
+
+    @property
+    def tracker_image_sources(self):
+        # Note {beacon_src} is not a template variable that is evaluated by the Django template engine.
+        # It is evaluated by Sailthru when the email is sent.
+        return [u'{beacon_src}']
 
     def __init__(self):
         if not self.enabled():

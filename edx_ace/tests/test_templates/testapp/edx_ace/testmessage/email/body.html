@@ -1,0 +1,20 @@
+template body.html
+
+{% for image_source in channel.tracker_image_sources %}
+    <img src="{{ image_source }}" alt="" role="presentation" aria-hidden="true" />
+{% endfor %}
+
+{% if channel.action_links %}
+<tr>
+    <!-- Actions -->
+    <td style="padding-bottom: 20px;">
+        {% for href, title in channel.action_links %}
+            <p>
+                <a href="{{ href }}" style="color: #960909">
+                    <font color="#960909"><b>{{ title }}</b></font>
+                </a>
+            </p>
+        {% endfor %}
+    </td>
+</tr>
+{% endif %}
