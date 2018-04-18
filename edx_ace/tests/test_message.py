@@ -9,8 +9,8 @@ from unittest import TestCase
 
 import ddt
 import six
-from hypothesis import strategies as st
 from hypothesis import given
+from hypothesis import strategies as st
 from hypothesis.extra.pytz import timezones
 from mock import patch
 
