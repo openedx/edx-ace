@@ -36,6 +36,26 @@ class DjangoEmailChannel(Channel):
 
     This is both useful for providing an alternative to Sailthru and to debug ACE mail by
     inspecting `django.core.mail.outbox`.
+
+
+
+    Example:
+
+        Sample settings::
+
+            .. settings_start
+            EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+            EMAIL_HOST = 'localhost'
+            DEFAULT_FROM_EMAIL = 'hello@example.org'
+
+            ACE_CHANNEL_DEFAULT_EMAIL = 'sailthru_email'
+            ACE_CHANNEL_TRANSACTIONAL_EMAIL = 'django_email'
+
+            ACE_ENABLED_CHANNELS = [
+                'sailthru_email',
+                'django_email',
+            ]
+            .. settings_end
     """
 
     channel_type = ChannelType.EMAIL
