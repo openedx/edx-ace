@@ -10,8 +10,6 @@ certifi==2018.4.16        # via requests
 chardet==3.0.4            # via requests
 coverage==4.5.1           # via hypothesis, pytest-cov
 ddt==1.1.2
-enum34==1.1.6             # via hypothesis
-funcsigs==1.0.2           # via mock, pytest
 hypothesis-pytest==0.19.0
 hypothesis[pytz]==3.56.0
 idna==2.6                 # via requests
