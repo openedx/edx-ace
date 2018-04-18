@@ -6,8 +6,8 @@ from __future__ import absolute_import
 from datetime import datetime
 from unittest import TestCase
 
-from hypothesis import strategies as st
 from hypothesis import example, given
+from hypothesis import strategies as st
 from hypothesis.extra.pytz import timezones
 
 from edx_ace.utils.date import deserialize, serialize
