@@ -35,6 +35,14 @@ edx\_ace\.channel\.sailthru
     :undoc-members:
     :show-inheritance:
 
+edx\_ace\.channel\.django_email
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automodule:: edx_ace.channel.django_email
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Exceptions
 ----------

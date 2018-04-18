@@ -31,6 +31,15 @@ before they will function correctly.
     :language: python
     :dedent: 12
 
+:class:`~.DjangoEmailChannel` Settings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. literalinclude:: /../edx_ace/channel/django_email.py
+    :start-after: .. settings_start
+    :end-before: .. settings_end
+    :language: python
+    :dedent: 12
+
 Create a message
 ----------------
 
@@ -66,6 +75,24 @@ using standard Django template resolution mechanisms.
 
 The specific templates needed for existing renderers are listed in :py:mod:`edx_ace.renderers`.
 
+Transactional messages
+----------------------
+
+Transactional messages such as password reset should be marked as ``options.transactional = True``,
+while not required, transactional messages are recommened to use the ``django_email`` channel which supports
+a custom ``options.from_address`` email.
+to ensure that it won't be subject to marketing messages opt-out policies, for example:
+
+.. code:: python
+
+    # myapp/messages.py
+
+    class PurchaseOrderComplete(edx_ace.message.MessageType):
+        def __init__(self, *args, **kwargs):
+            super(PurchaseOrderComplete, self).__init__(*args, **kwargs)
+
+            self.options['transactional'] = True
+            self.options['from_address'] = settings.ECOMMERCE_FROM_EMAIL
 
 Send a message
 --------------
