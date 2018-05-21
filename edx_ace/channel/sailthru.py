@@ -183,12 +183,15 @@ class SailthruEmailChannel(Channel):
                 message.log_id
             )
 
-        template_vars = {}
+        template_vars, options = {}, {}
         for key, value in six.iteritems(attr.asdict(rendered_message)):
             if value is not None:
                 # Sailthru will silently fail to send the email if the from name or subject line contain new line
                 # characters at the beginning or end of the string
                 template_vars[u'ace_template_' + key] = value.strip()
+
+        if u'from_address' in message.options:
+            options[u'behalf_email'] = message.options.get(u'from_address')
 
         logger = message.get_message_specific_logger(LOG)
 
@@ -200,10 +203,12 @@ class SailthruEmailChannel(Channel):
                         template: %s
                         recipient: %s
                         variables: %s
+                        options: %s
                 """),
                 self.template_name,
                 message.recipient.email_address,
                 six.text_type(template_vars),
+                six.text_type(options),
             )
             return
 
@@ -214,10 +219,12 @@ class SailthruEmailChannel(Channel):
                         template: %s
                         recipient: %s
                         variables: %s
+                        options: %s
                 """),
                 self.template_name,
                 message.recipient.email_address,
                 six.text_type(template_vars),
+                six.text_type(options),
             )
 
         try:
@@ -227,6 +234,7 @@ class SailthruEmailChannel(Channel):
                 self.template_name,
                 message.recipient.email_address,
                 _vars=template_vars,
+                options=options,
             )
 
             if response.is_ok():
