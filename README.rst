@@ -4,8 +4,9 @@ edX Automated Communication Engine (A.C.E.)
 |pypi-badge| |travis-badge| |codecov-badge| |doc-badge| |pyversions-badge| |license-badge|
 
 The automated communication engine, A.C.E. for short, is a Django app for messaging learners on the edX platform. This
-app can be installed in any edX project, but has only been tested with ``edx-platform``. Email delivery (via Sailthru)
-is the only current delivery channel. In the future we may add support for other delivery channels such as push
+app can be installed in any edX project, but has only been tested with ``edx-platform``. Email delivery
+(via Sailthru and Django Email)
+are the currently supported delivery channels. In the future we may add support for other delivery channels such as push
 notifications.
 
 
@@ -33,7 +34,8 @@ Even though they were written with ``edx-platform`` in mind, the guidelines
 should be followed for Open edX code in general.
 
 PR description template should be automatically applied if you are sending PR from github interface; otherwise you
-can find it it at `PULL_REQUEST_TEMPLATE.md <https://github.com/edx/edx-ace/blob/master/.github/PULL_REQUEST_TEMPLATE.md>`_
+can find it
+at `PULL_REQUEST_TEMPLATE.md <https://github.com/edx/edx-ace/blob/master/.github/PULL_REQUEST_TEMPLATE.md>`_
 
 Issue report template should be automatically applied if you are sending it from github UI as well; otherwise you
 can find it at `ISSUE_TEMPLATE.md <https://github.com/edx/edx-ace/blob/master/.github/ISSUE_TEMPLATE.md>`_
