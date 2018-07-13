@@ -30,7 +30,7 @@ from edx_ace.channel import get_channel_for_message
 from edx_ace.errors import ChannelError, UnsupportedChannelError
 
 
-def send(msg):
+def send(msg, return_status=False):
     u"""
     Send a message to a recipient.
 
@@ -43,7 +43,12 @@ def send(msg):
 
     Args:
         msg (Message): The message to send.
+        return_status (bool): Whether this function should return the
+
+    Returns
+        status (list): A list of success/failure status for each channel type
     """
+    status = []
     msg.report_basics()
 
     channels_for_message = policy.channels_for(msg)
@@ -52,13 +57,23 @@ def send(msg):
         try:
             channel = get_channel_for_message(channel_type, msg)
         except UnsupportedChannelError:
+            status.append((channel_type, "UnsupportedChannelError"))
             continue
 
         try:
             rendered_message = presentation.render(channel, msg)
-            delivery.deliver(channel, rendered_message, msg)
+            status_report = delivery.deliver(channel, rendered_message, msg)
+            status.append((channel_type, status_report))
         except ChannelError as error:
+            status.append((channel_type, "ChannelError"))
             msg.report(
                 u'{channel_type}_error'.format(channel_type=channel_type),
                 six.text_type(error)
             )
+
+    # TODO: REMOVE. Is it weird to have a method optionally return?
+    # I wanted to make sure any code calling send() won't be confused by a
+    # return statement but I don't think any method is trying to assign
+    # send() to anything
+    if return_status:
+        return status

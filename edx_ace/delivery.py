@@ -38,6 +38,8 @@ def deliver(channel, rendered_message, message):
     Raises:
         :class:`.UnsupportedChannelError`: If no channel of the requested channel type is available.
 
+    Returns
+        status (str): Success/failure response
     """
     logger = message.get_message_specific_logger(LOG)
     channel_type = channel.channel_type
@@ -63,10 +65,10 @@ def deliver(channel, rendered_message, message):
                 time.sleep(num_seconds)
                 message.report(u'{channel_type}_delivery_retried'.format(channel_type=channel_type), num_seconds)
         else:
-            message.report(u'{channel_type}_delivery_succeeded'.format(channel_type=channel_type), True)
-            return
+            report_success = u'{channel_type}_delivery_succeeded'.format(channel_type=channel_type)
+            message.report(report_success, True)
+            return report_success
 
-    message.report(
-        u'{channel_type}_delivery_expired'.format(channel_type=channel_type),
-        get_current_time() - start_time
-    )
+    report_expired = u'{channel_type}_delivery_expired'.format(channel_type=channel_type)
+    message.report(report_expired, get_current_time() - start_time)
+    return report_expired
