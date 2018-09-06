@@ -5,9 +5,12 @@
 
 edX Automated Communication Engine (A.C.E.)
 ===========================================
-The automated communication engine, A.C.E. for short, is a Django app for messaging learners on the edX platform. This
-app can be installed in any edX project, but has only been tested with ``edx-platform``. Email delivery (via Sailthru)
-is the only current delivery channel. In the future we may add support for other delivery channels such as push
+
+The Automated Communication Engine, ACE for short, is a Django app for
+messaging learners on the edX platform. This app can be installed in any Open
+edX project, but has only been tested with ``edx-platform``. Email delivery
+(via Sailthru or Django email) is the only current delivery channel. In the
+future we may add support for other delivery channels such as push
 notifications.
 
 

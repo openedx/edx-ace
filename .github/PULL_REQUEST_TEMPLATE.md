@@ -14,10 +14,10 @@ instructions.
 1. Open page A
 2. Do thing B
 3. Expect C to happen
-4. If D happend instead - check failed.
+4. If D happened instead - check failed.
 
 **Reviewers:**
-- [ ] tag reviwer 
+- [ ] tag reviewer 
 - [ ] tag reviewer 
 
 **Merge checklist:**
@@ -31,7 +31,7 @@ instructions.
 
 **Post merge:**
 - [ ] Create a tag
-- [ ] Check new version is pushed to PyPi after tag-triggered build is 
+- [ ] Check new version is pushed to PyPI after tag-triggered build is 
       finished.
 - [ ] Delete working branch (if not needed anymore)
 

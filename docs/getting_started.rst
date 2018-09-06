@@ -64,12 +64,12 @@ would use the following templates when rendered for email delivery:
     myapp/edx_ace/custommessage/email/from_name.txt
     myapp/edx_ace/custommessage/email/subject.txt
     myapp/edx_ace/custommessage/email/body.html
-    myapp/edx_ace/custommessage/email/heah.html
+    myapp/edx_ace/custommessage/email/head.html
     myapp/edx_ace/custommessage/email/body.txt
 
 These all follow the format ``{app_label}/edx_ace/{message_name}/{renderer}/{attribute}``,
 where the ``app_label`` and ``message_name`` are defined by the :class:`.MessageType` (or
-the manually created :class:`.Message`), and `renderer` and ``attribute`` come from
+the manually created :class:`.Message`), and ``renderer`` and ``attribute`` come from
 the renderer being used by the specific delivery channel. The templates will be retrieved
 using standard Django template resolution mechanisms.
 
@@ -79,9 +79,9 @@ Transactional messages
 ----------------------
 
 Transactional messages such as password reset should be marked as ``options.transactional = True``,
-while not required, transactional messages are recommened to use the ``django_email`` channel which supports
-a custom ``options.from_address`` email.
-to ensure that it won't be subject to marketing messages opt-out policies, for example:
+to ensure that it won't be subject to marketing messages opt-out policies.
+While not required, transactional messages are recommended to use the ``django_email`` channel which supports
+a custom ``options.from_address`` email. For example:
 
 .. code:: python
 
@@ -116,7 +116,7 @@ The simplest way to send a message using ACE is to just create it, and call :py:
     ace.send(msg)
 
 The ``name`` and ``app_label`` attributes are required in order for ACE to look
-up the correct templates in the django environment.
+up the correct templates in the Django environment.
 
 For messages being sent from multiple places in the code, it can be simpler to
 define a :class:`.MessageType` first, and then :meth:`.MessageType.personalize` it.
