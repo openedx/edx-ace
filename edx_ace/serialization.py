@@ -12,6 +12,8 @@ from uuid import UUID
 import attr
 import six
 
+from django.utils.functional import Promise
+
 from edx_ace.utils import date
 
 
@@ -115,5 +117,7 @@ class MessageEncoder(json.JSONEncoder):
             return date.serialize(o)
         elif hasattr(o, u'to_json'):
             return o.to_json()
+        elif isinstance(o, Promise):
+            return six.text_type(o)
         else:
             return super(MessageEncoder, self).default(o)

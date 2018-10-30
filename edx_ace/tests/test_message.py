@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 u"""
 Tests of :mod:`edx_ace.message`.
 """
@@ -14,8 +15,11 @@ from hypothesis import strategies as st
 from hypothesis.extra.pytz import timezones
 from mock import patch
 
+from django.utils.translation import ugettext_lazy
+
 from edx_ace.message import Message, MessageType
 from edx_ace.recipient import Recipient
+from edx_ace.serialization import MessageEncoder
 from edx_ace.utils.date import get_current_time
 
 LOG = logging.getLogger(__name__)
@@ -59,6 +63,8 @@ class TestMessage(TestCase):
             )
         }
 
+        self.encoder = MessageEncoder()
+
     def test_basic(self):
         transactional_message = Message(options={u'transactional': True}, **self.msg_kwargs)
         for key in self.msg_kwargs:
@@ -74,6 +80,11 @@ class TestMessage(TestCase):
         string_value = six.text_type(message)
         resurrected_msg = Message.from_string(string_value)
         self.assertEqual(message, resurrected_msg)
+
+    def test_serialization_lazy_text(self):
+        unicode_text = u"A 𝓾𝓷𝓲𝓬𝓸𝓭𝓮 Text"
+        lazy_text = ugettext_lazy(unicode_text)
+        self.assertEqual(self.encoder.default(lazy_text), unicode_text)
 
     @given(msg)
     def test_serialization_round_trip(self, message):
