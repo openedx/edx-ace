@@ -1,7 +1,9 @@
 # openedx.yaml
 
 ---
-owner: edx/rapid-experiments-team
+owner: mulby
+supporting_teams:
+    - rev-team
 nick: edx-ace
 tags:
     - tools
