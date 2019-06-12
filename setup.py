@@ -54,6 +54,7 @@ setup(
         "python-dateutil",
         'enum34;python_version<"3.4"',
         'mock;python_version<"3.3"',
+        'futures;python_version == "2.7"'
     ],
     extras_require={
         'sailthru':  ["sailthru-client>2.2,<2.3"]
