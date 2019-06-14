@@ -9,13 +9,13 @@ ACE.
 from __future__ import absolute_import, division, print_function
 
 from .ace import send
+from .channel import Channel, ChannelType
 from .message import Message, MessageType
 from .policy import Policy, PolicyResult
 from .recipient import Recipient
 from .recipient_resolver import RecipientResolver
-from .channel import ChannelType, Channel
 
-__version__ = u'0.1.10'
+__version__ = u'0.1.11'
 
 default_app_config = u'edx_ace.apps.EdxAceConfig'
 

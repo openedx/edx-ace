@@ -50,6 +50,7 @@ class TestMessage(TestCase):
     Tests of :class:`.Message` and :class:`.MessageType`.
     """
     def setUp(self):
+        super(TestMessage, self).setUp()
         self.msg_kwargs = {
             u'app_label': u'test_app_label',
             u'name': u'test_message',
@@ -83,7 +84,7 @@ class TestMessage(TestCase):
 
     def test_serialization_lazy_text(self):
         unicode_text = u"A 𝓾𝓷𝓲𝓬𝓸𝓭𝓮 Text"
-        lazy_text = ugettext_lazy(unicode_text)
+        lazy_text = ugettext_lazy(unicode_text)                    # pylint: disable=translation-of-non-string
         self.assertEqual(self.encoder.default(lazy_text), unicode_text)
 
     @given(msg)
