@@ -6,13 +6,14 @@ to add new delivery :class:`Channel` instances to an ACE application.
 Developers wanting to add a new deliver channel should subclass :class:`Channel`,
 and then add an entry to the ``openedx.ace.channel`` entrypoint in their ``setup.py``.
 """
-from __future__ import absolute_import, print_function, division
+from __future__ import absolute_import, division, print_function
 
 import abc
+from collections import OrderedDict, defaultdict
 from enum import Enum
-from collections import defaultdict, OrderedDict
 
 import six
+
 from django.conf import settings
 
 from edx_ace.errors import UnsupportedChannelError

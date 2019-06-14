@@ -11,7 +11,7 @@ babel==2.7.0              # via sphinx
 bleach==3.1.0             # via readme-renderer
 certifi==2019.3.9         # via requests
 chardet==3.0.4            # via doc8, requests
-django==1.11.20
+django==1.11.21
 doc8==0.8.0
 docutils==0.14            # via doc8, readme-renderer, restructuredtext-lint, sphinx
 edx-sphinx-theme==1.4.0
@@ -20,7 +20,7 @@ imagesize==1.1.0          # via sphinx
 jinja2==2.10.1            # via sphinx
 markupsafe==1.1.1         # via jinja2
 packaging==19.0           # via sphinx
-pbr==5.2.1                # via stevedore
+pbr==5.3.0                # via stevedore
 pygments==2.4.2           # via readme-renderer, sphinx
 pyparsing==2.4.0          # via packaging
 python-dateutil==2.8.0
@@ -38,3 +38,6 @@ stevedore==1.10.0
 typing==3.6.6             # via sphinx
 urllib3==1.25.3           # via requests
 webencodings==0.5.1       # via bleach
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools==41.0.1        # via sphinx

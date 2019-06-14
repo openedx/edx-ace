@@ -23,6 +23,46 @@ def get_version(*file_paths):
     raise RuntimeError('Unable to find version string.')
 
 
+def load_requirements(*requirements_paths):
+    """
+    Load all requirements from the specified requirements files.
+    Returns:
+        list: Requirements file relative path strings
+    """
+    requirements = {
+        "Django>=1.8,<2.0",
+        "six",
+        "stevedore",
+        "attrs>=17.2.0,<18.0.0",
+        "python-dateutil",
+        'enum34;python_version<"3.4"',
+        'mock;python_version<"3.3"'
+    }
+    for path in requirements_paths:
+        with open(path) as reqs:
+            requirements.update(
+                line.split('#')[0].strip() for line in reqs
+                if is_requirement(line.strip())
+            )
+    return list(requirements)
+
+
+def is_requirement(line):
+    """
+    Return True if the requirement line is a package requirement.
+    Returns:
+        bool: True if the line is not blank, a comment, a URL, or an included file
+    """
+    return not (
+        line == '' or
+        line.startswith('-r') or
+        line.startswith('#') or
+        line.startswith('-e') or
+        line.startswith('git+') or
+        line.startswith('-c')
+    )
+
+
 VERSION = get_version('edx_ace', '__init__.py')
 
 if sys.argv[-1] == 'tag':
@@ -46,16 +86,7 @@ setup(
         'edx_ace',
     ],
     include_package_data=True,
-    install_requires=[
-        "Django>=1.8,<2.0",
-        "six",
-        "stevedore",
-        "attrs>=17.2.0,<18.0.0",
-        "python-dateutil",
-        'enum34;python_version<"3.4"',
-        'mock;python_version<"3.3"',
-        'futures;python_version == "2.7"'
-    ],
+    install_requires=load_requirements('requirements/base.in'),
     extras_require={
         'sailthru':  ["sailthru-client>2.2,<2.3"]
     },

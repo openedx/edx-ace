@@ -1,5 +1,6 @@
 # Core requirements for using this application
 
+-c constraints.txt
 Django                    # Web application framework
 python-dateutil           # Python Date Utilities
 attrs                     # Attributes without boilerplate
