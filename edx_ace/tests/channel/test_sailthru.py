@@ -38,6 +38,7 @@ class TestSailthruChannel(TestCase):
     )
     @ddt.data(
         ({u'from_address': 'custom@example.com'}, {u'behalf_email': 'custom@example.com'}),
+        ({u'reply_to': 'student@example.com'}, {u'behalf_email': 'student@example.com'}),
         ({u'irrelevant': 'test'}, {}),
         ({}, {}),
     )
@@ -46,7 +47,6 @@ class TestSailthruChannel(TestCase):
         """
         Tests sailthru send API is called with on_behalf option
         """
-        from_address = 'custom@example.com'
         message = Message(
             app_label=u'testapp',
             name=u'testmessage',
