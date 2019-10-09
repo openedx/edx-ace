@@ -58,16 +58,16 @@ class TestDjangoEmailChannel(TestCase):
 
         sent_email = mail.outbox[0]
 
+        html_body, _ = sent_email.alternatives[0]
+
         assert sent_email.subject == u'Hello from Robot !'
         assert u'Just trying to see what' in sent_email.body
         assert sent_email.to == [u'mr@robot.io']
 
-        html_body, _ = sent_email.alternatives[0]
-
         assert u'talk to a human!</p>' in html_body
 
-    @patch(u'django.core.mail.send_mail', side_effect=SMTPException)
-    def test_smtp_failure(self, _send_mail):
+    @patch(u'django.core.mail.EmailMultiAlternatives.send', side_effect=SMTPException)
+    def test_smtp_failure(self, _send):
         with self.assertRaises(FatalChannelDeliveryError):
             self.channel.deliver(self.message, self.mock_rendered_message)
 
@@ -106,6 +106,16 @@ class TestDjangoEmailChannel(TestCase):
         self.channel.deliver(self.message, rendered_message)
 
         assert mail.outbox, u'Should send the message'
+
         html_email = mail.outbox[0].alternatives[0][0]
         assert u'template head.html' in html_email
         assert u'template body.html' in html_email
+
+    def test_happy_email_with_reply_to(self):
+        rendered_message = self._get_rendered_message()
+        self.message.options[u'reply_to'] = [u'learner@example.com']
+        self.channel.deliver(self.message, rendered_message)
+
+        sent_email = mail.outbox[0]
+
+        assert sent_email.reply_to == [u'learner@example.com']

@@ -10,7 +10,7 @@ import re
 from smtplib import SMTPException
 
 from django.conf import settings
-from django.core import mail
+from django.core.mail import EmailMultiAlternatives
 
 from edx_ace.channel import Channel, ChannelType
 from edx_ace.errors import FatalChannelDeliveryError
@@ -71,6 +71,7 @@ class DjangoEmailChannel(Channel):
         # Compress spaces and remove newlines to make it easier to author templates.
         subject = re.sub(u'\\s+', u' ', rendered_message.subject, re.UNICODE).strip()
         default_from_address = getattr(settings, u'DEFAULT_FROM_EMAIL', None)
+        reply_to = message.options.get(u'reply_to', None)
         from_address = message.options.get(u'from_address', default_from_address)
         if not from_address:
             raise FatalChannelDeliveryError(
@@ -81,15 +82,17 @@ class DjangoEmailChannel(Channel):
             head_html=rendered_message.head_html,
             body_html=rendered_message.body_html,
         )
-
         try:
-            mail.send_mail(
-                subject,
-                rendered_message.body,
-                from_address,
-                [message.recipient.email_address],
-                html_message=rendered_template,
+            mail = EmailMultiAlternatives(
+                subject=subject,
+                body=rendered_message.body,
+                from_email=from_address,
+                to=[message.recipient.email_address],
+                reply_to=reply_to,
             )
+
+            mail.attach_alternative(rendered_template, u'text/html')
+            mail.send()
         except SMTPException as e:
             LOG.exception(e)
             raise FatalChannelDeliveryError(u'An SMTP error occurred (and logged) from Django send_email()')

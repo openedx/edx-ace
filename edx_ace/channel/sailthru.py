@@ -190,7 +190,9 @@ class SailthruEmailChannel(Channel):
                 # characters at the beginning or end of the string
                 template_vars[u'ace_template_' + key] = value.strip()
 
-        if u'from_address' in message.options:
+        if u'reply_to' in message.options and message.options.get(u'reply_to'):
+            options[u'behalf_email'] = message.options.get(u'reply_to')
+        elif u'from_address' in message.options:
             options[u'behalf_email'] = message.options.get(u'from_address')
 
         logger = message.get_message_specific_logger(LOG)
