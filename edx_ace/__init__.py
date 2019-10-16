@@ -15,7 +15,7 @@ from .policy import Policy, PolicyResult
 from .recipient import Recipient
 from .recipient_resolver import RecipientResolver
 
-__version__ = u'0.1.11'
+__version__ = u'0.1.12'
 
 default_app_config = u'edx_ace.apps.EdxAceConfig'
 
