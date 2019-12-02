@@ -108,6 +108,7 @@ class MessageAttributeSerializationMixin(object):
 
 
 class MessageEncoder(json.JSONEncoder):
+    """ Custom Message Encoder. """
     # The Pylint error is disabled because of a bug in Pylint.
     # See https://github.com/PyCQA/pylint/issues/414
     def default(self, o):  # pylint: disable=method-hidden

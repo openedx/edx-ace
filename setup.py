@@ -29,15 +29,7 @@ def load_requirements(*requirements_paths):
     Returns:
         list: Requirements file relative path strings
     """
-    requirements = {
-        "Django>=1.8,<2.0",
-        "six",
-        "stevedore",
-        "attrs>=17.2.0,<18.0.0",
-        "python-dateutil",
-        'enum34;python_version<"3.4"',
-        'mock;python_version<"3.3"'
-    }
+    requirements = set()
     for path in requirements_paths:
         with open(path) as reqs:
             requirements.update(
@@ -79,6 +71,7 @@ setup(
     version=VERSION,
     description='Framework for Messaging',
     long_description=README + '\n\n' + CHANGELOG,
+    long_description_content_type='text/x-rst',
     author='edX',
     author_email='oscm@edx.org',
     url='https://github.com/edx/edx-ace',
@@ -96,10 +89,10 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
-        'Framework :: Django :: 1.8',
-        'Framework :: Django :: 1.9',
-        'Framework :: Django :: 1.10',
         'Framework :: Django :: 1.11',
+        'Framework :: Django :: 2.0',
+        'Framework :: Django :: 2.1',
+        'Framework :: Django :: 2.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
         'Natural Language :: English',
@@ -107,7 +100,6 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
     ],
     entry_points={
         'openedx.ace.channel': [

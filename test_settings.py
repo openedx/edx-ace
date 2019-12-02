@@ -60,6 +60,12 @@ TEMPLATES = [
     },
 ]
 
+MIDDLEWARE = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+)
+
 ACE_CHANNEL_SAILTHRU_DEBUG = True
 ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME = 'Automated Communication Engine Email'
 ACE_CHANNEL_SAILTHRU_API_KEY = None

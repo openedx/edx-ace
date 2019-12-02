@@ -16,6 +16,7 @@ from edx_ace.test_utils import StubPolicy
 
 @ddt.ddt
 class TestPolicy(TestCase):
+    """ Test Policies. """
     PolicyCase = namedtuple(u'PolicyCase', u'deny_values, expected_channels')
 
     @ddt.data(

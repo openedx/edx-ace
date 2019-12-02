@@ -89,13 +89,14 @@ class FileEmailChannel(Channel):
             date=datetime.now()
         ))
         make_parent_directories(output_file_path)
-        with open(output_file_path, u'w') as output_file:  # pylint: disable=open-builtin
+        with open(output_file_path, u'w') as output_file:
             output_file.write(self._encode(rendered_template))
 
         print(self._encode(STDOUT_TEMPLATE.format(**template_vars)))
 
 
 def make_parent_directories(path):
+    """ helper Method for creating parent directories. """
     parent_dir_path = os.path.dirname(os.path.realpath(path))
     try:
         os.makedirs(parent_dir_path)
