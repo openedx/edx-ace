@@ -144,7 +144,7 @@ class MessageLoggingAdapter(logging.LoggerAdapter):
     def debug(self, msg, *args, **kwargs):
         log_level = self.extra[u'message'].log_level
         if log_level and log_level <= logging.DEBUG:
-            return self.info(msg, *args, **kwargs)
+            self.info(msg, *args, **kwargs)
         else:
             super(MessageLoggingAdapter, self).debug(msg, *args, **kwargs)
 
@@ -198,6 +198,7 @@ class MessageType(MessageAttributeSerializationMixin):
 
     @name.default
     def default_name(self):
+        """ Return default class name. """
         if self.NAME is None:
             return self.__class__.__name__.lower()
         else:
@@ -205,6 +206,7 @@ class MessageType(MessageAttributeSerializationMixin):
 
     @app_label.default
     def default_app_label(self):
+        u""" Get default app Label. """
         if self.APP_LABEL is None:
             return apps.get_containing_app_config(self.__class__.__module__).label
         else:

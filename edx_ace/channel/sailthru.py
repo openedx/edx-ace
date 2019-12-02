@@ -178,9 +178,10 @@ class SailthruEmailChannel(Channel):
     def deliver(self, message, rendered_message):
         if message.recipient.email_address is None:
             raise InvalidMessageError(
-                u'No email address specified for recipient %s while sending message %s',
-                message.recipient,
-                message.log_id
+                u'No email address specified for recipient {} while sending message {}'.format(
+                    message.recipient,
+                    message.log_id
+                )
             )
 
         template_vars, options = {}, {}

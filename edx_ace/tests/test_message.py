@@ -71,7 +71,7 @@ class TestMessage(TestCase):
         for key in self.msg_kwargs:
             self.assertEqual(getattr(transactional_message, key), self.msg_kwargs.get(key))
         self.assertIsNotNone(transactional_message.uuid)
-        assert transactional_message.options.get(u'transactional')  # pylint: disable=no-member
+        assert transactional_message.options.get(u'transactional')
 
         normal_message = Message(**self.msg_kwargs)
         assert not dict(normal_message.options)
@@ -145,6 +145,7 @@ msg_type = st.builds(
 
 
 class TestMessageTypes(TestCase):
+    """ Test Message Types. """
     @given(msg_type)
     def test_serialization_roundtrip(self, message_type):
         serialized = six.text_type(message_type)
