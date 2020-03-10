@@ -149,7 +149,7 @@ class MessageLoggingAdapter(logging.LoggerAdapter):
             super(MessageLoggingAdapter, self).debug(msg, *args, **kwargs)
 
 
-@attr.s(cmp=False)
+@attr.s(eq=False, order=False)
 class MessageType(MessageAttributeSerializationMixin):
     u"""
     A class representing a type of :class:`Message`. An instance of
