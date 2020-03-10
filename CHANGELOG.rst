@@ -16,6 +16,11 @@ Unreleased
 
 *
 
+[0.1.14] - 2020-03-11
+~~~~~~~~~~~~~~~~~~~~~
+
+* Fix trivial warning from deprecated use of attr library.
+
 [0.1.13] - 2019-12-06
 ~~~~~~~~~~~~~~~~~~~~~
 
