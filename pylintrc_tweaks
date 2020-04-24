@@ -10,6 +10,7 @@ disable =
     fixme,
     no-self-use,
     too-few-public-methods,
+    too-many-instance-attributes,
 
     # We disable this globally because we have a safe cyclic import in edx_ace/serialization.py, and this
     # message cannot be disabled with a smaller granularity. See https://github.com/PyCQA/pylint/issues/850.

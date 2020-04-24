@@ -281,6 +281,7 @@ disable =
 	fixme,
 	no-self-use,
 	too-few-public-methods,
+	too-many-instance-attributes,
 	
 	cyclic-import,
 
@@ -382,4 +383,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 5c9ee962464ee40effc2a276c46143e58c629afb
+# 57b60aef875f219495966f1ae072a5a43ef0c124

@@ -18,7 +18,7 @@ from edx_ace.utils import date
 
 
 @six.python_2_unicode_compatible
-class MessageAttributeSerializationMixin(object):
+class MessageAttributeSerializationMixin:
     u"""
     This mixin allows an object to be serialized to (and deserialized from)
     a JSON string.

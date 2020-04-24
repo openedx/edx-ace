@@ -37,7 +37,7 @@ class ChannelType(Enum):
 
 
 @six.add_metaclass(abc.ABCMeta)
-class Channel(object):
+class Channel:
     u"""
     Channels deliver messages to users that have already passed through the presentation and policy steps.
 
@@ -70,7 +70,7 @@ class Channel(object):
 
 
 @six.python_2_unicode_compatible
-class ChannelMap(object):
+class ChannelMap:
     u"""
     A class that represents a channel map, usually as described in Django settings and `setup.py` files.
     """
