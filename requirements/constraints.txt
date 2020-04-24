@@ -8,5 +8,5 @@
 # pin when possible.  Writing an issue against the offending project and
 # linking to it here is good.
 
-  # These packages are backports which can only be installed on Python 2.7
-futures ; python_version == "2.7"
+# pip20+ requires for greater version of pip-tools. But installing 19.3.1 in all our containers and VMs.
+pip-tools==4.5.1

@@ -5,26 +5,16 @@ language: python
 python:
   - 2.7
   - 3.5
+  - 3.8
 
 env:
-  - TOXENV=django111
-  - TOXENV=django20
-  - TOXENV=django21
   - TOXENV=django22
+  - TOXENV=docs
+  - TOXENV=quality
 
 matrix:
-  include:
-    - python: 3.5
-      env: TOXENV=quality
-    - python: 3.5
-      env: TOXENV=docs
-  exclude:
-    - python: 2.7
-      env: TOXENV=django20
-    - python: 2.7
-      env: TOXENV=django21
-    - python: 2.7
-      env: TOXENV=django22
+  allow_failures:
+    - python: 3.8
 
 cache:
   - pip
