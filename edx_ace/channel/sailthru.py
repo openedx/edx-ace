@@ -283,15 +283,15 @@ class SailthruEmailChannel(Channel):
                 ),
                 next_attempt_time
             )
-        else:
-            raise FatalChannelDeliveryError(
-                u'Fatal Sailthru error (error_code={error_code} status_code={http_status_code}): '
-                u'{message}'.format(
-                    error_code=error_code,
-                    http_status_code=http_status_code,
-                    message=error_message
-                )
+
+        raise FatalChannelDeliveryError(
+            u'Fatal Sailthru error (error_code={error_code} status_code={http_status_code}): '
+            u'{message}'.format(
+                error_code=error_code,
+                http_status_code=http_status_code,
+                message=error_message
             )
+        )
 
     @staticmethod
     def _get_rate_limit_reset_time(sailthru_response):

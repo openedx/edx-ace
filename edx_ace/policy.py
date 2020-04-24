@@ -19,7 +19,7 @@ from edx_ace.utils.plugins import get_plugins
 
 
 @attr.s
-class PolicyResult(object):
+class PolicyResult:
     u"""
     Arguments:
         deny (set): A set of :class:`.ChannelType` values that should be excluded
@@ -40,7 +40,7 @@ POLICY_PLUGIN_NAMESPACE = u'openedx.ace.policy'
 
 
 @six.add_metaclass(ABCMeta)
-class Policy(object):
+class Policy:
     u"""
     A ``Policy`` allows an application to specify what :class:`.Channel` any specific
     :class:`.Message` shouldn't be sent over. Policies are one of the primary
@@ -63,7 +63,6 @@ class Policy(object):
         Returns: :class:`.PolicyResult`
             A :class:`.PolicyResult` that represents what channels the ``message`` should not be delivered over.
         """
-        pass
 
 
 # TODO(later): Need to support Denying ALL channels for a message

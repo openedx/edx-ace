@@ -58,10 +58,9 @@ def deliver(channel, rendered_message, message):
             if delivery_error.next_attempt_time > expiration_time:
                 logger.debug(u'Message will expire before delivery can be reattempted, aborting.')
                 break
-            else:
-                logger.debug(u'Sleeping for %d seconds before reattempting delivery of message.', num_seconds)
-                time.sleep(num_seconds)
-                message.report(u'{channel_type}_delivery_retried'.format(channel_type=channel_type), num_seconds)
+            logger.debug(u'Sleeping for %d seconds before reattempting delivery of message.', num_seconds)
+            time.sleep(num_seconds)
+            message.report(u'{channel_type}_delivery_retried'.format(channel_type=channel_type), num_seconds)
         else:
             message.report(u'{channel_type}_delivery_succeeded'.format(channel_type=channel_type), True)
             return

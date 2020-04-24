@@ -12,7 +12,7 @@ import attr
 from django.template import loader
 
 
-class AbstractRenderer(object):
+class AbstractRenderer:
     u"""
     Base class for message renderers.
 
@@ -71,7 +71,7 @@ class AbstractRenderer(object):
 
 
 @attr.s
-class RenderedEmail(object):
+class RenderedEmail:
     u"""
     Encapsulates all values needed to send a :class:`.Message`
     over an :attr:`.ChannelType.EMAIL`.

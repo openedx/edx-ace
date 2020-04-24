@@ -11,7 +11,7 @@ import six
 
 # TODO(now): Do we even need to define this class? It seems like something the client could manage on their own.
 @six.add_metaclass(ABCMeta)
-class RecipientResolver(object):
+class RecipientResolver:
     u"""
     This class represents a pattern for separating the content of a message
     (the :class:`.MessageType`) from the selection of recipients (the :class:`RecipientResolver`).
@@ -26,4 +26,3 @@ class RecipientResolver(object):
             msg_type (:class:`.MessageType`): An instantiated :class:`.MessageType`
                 that describes the message batch to send.
         """
-        pass
