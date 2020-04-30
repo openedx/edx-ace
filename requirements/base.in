@@ -1,7 +1,7 @@
 # Core requirements for using this application
 
 -c constraints.txt
-Django                            # Web application framework
+Django>=2.2,<2.3                  # Web application framework
 python-dateutil                   # Python Date Utilities
 attrs>=17.2.0                     # Attributes without boilerplate
 sailthru-client==2.2.3

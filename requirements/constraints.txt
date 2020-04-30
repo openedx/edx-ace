@@ -7,9 +7,3 @@
 # link to other information that will help people in the future to remove the
 # pin when possible.  Writing an issue against the offending project and
 # linking to it here is good.
-
-# pip20+ requires for greater version of pip-tools. But installing 19.3.1 in all our containers and VMs.
-pip-tools==4.5.1
-
-# Stay on latest LTS release
-Django>=2.2,<2.3

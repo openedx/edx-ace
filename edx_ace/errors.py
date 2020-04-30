@@ -11,6 +11,7 @@ from __future__ import absolute_import, division, print_function
 
 class ChannelError(Exception):
     u"""Indicates something went wrong in a delivery channel."""
+    pass
 
 
 class RecoverableChannelDeliveryError(ChannelError):
@@ -23,11 +24,14 @@ class RecoverableChannelDeliveryError(ChannelError):
 
 class FatalChannelDeliveryError(ChannelError):
     u"""A fatal error occurred during channel delivery. Do not retry."""
+    pass
 
 
 class UnsupportedChannelError(ChannelError):
     u"""Raised when an attempt is made to process a message for an unsupported channel."""
+    pass
 
 
 class InvalidMessageError(Exception):
     u"""Encountered a message that cannot be sent due to missing or inconsistent information."""
+    pass
