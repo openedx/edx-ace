@@ -15,6 +15,11 @@ Unreleased
 ~~~~~~~~~~
 
 *
+[0.1.15] - 2020-03-11
+~~~~~~~~~~~~~~~~~~~~~
+
+* Added support for Python 3.8
+* Removed support for Django 2.0 and 2.1
 
 [0.1.14] - 2020-03-11
 ~~~~~~~~~~~~~~~~~~~~~
