@@ -282,6 +282,7 @@ disable =
 	no-self-use,
 	too-few-public-methods,
 	too-many-instance-attributes,
+	unnecessary-pass,
 	
 	cyclic-import,
 
@@ -383,4 +384,4 @@ int-import-graph =
 [EXCEPTIONS]
 overgeneral-exceptions = Exception
 
-# 57b60aef875f219495966f1ae072a5a43ef0c124
+# aeefe65cb922078f3185a9e7fc2b3b01b3d67732

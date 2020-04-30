@@ -7,10 +7,10 @@
 alabaster==0.7.12         # via sphinx
 attrs==19.3.0             # via -r requirements/base.in
 babel==2.8.0              # via sphinx
-bleach==3.1.4             # via readme-renderer
+bleach==3.1.5             # via readme-renderer
 certifi==2020.4.5.1       # via requests
 chardet==3.0.4            # via doc8, requests
-django==2.2.12            # via -c requirements/constraints.txt, -r requirements/base.in
+django==2.2.12            # via -r requirements/base.in
 doc8==0.8.0               # via -r requirements/doc.in
 docutils==0.16            # via doc8, readme-renderer, restructuredtext-lint, sphinx
 edx-sphinx-theme==1.5.0   # via -r requirements/doc.in
@@ -18,13 +18,13 @@ idna==2.9                 # via requests
 imagesize==1.2.0          # via sphinx
 jinja2==2.11.2            # via sphinx
 markupsafe==1.1.1         # via jinja2
-packaging==20.3           # via sphinx
+packaging==20.3           # via bleach, sphinx
 pbr==5.4.5                # via stevedore
 pkginfo==1.5.0.1          # via twine
 pygments==2.6.1           # via readme-renderer, sphinx
 pyparsing==2.4.7          # via packaging
 python-dateutil==2.8.1    # via -r requirements/base.in
-pytz==2019.3              # via babel, django
+pytz==2020.1              # via babel, django
 readme-renderer==26.0     # via -r requirements/doc.in, twine
 requests-toolbelt==0.9.1  # via twine
 requests==2.23.0          # via requests-toolbelt, sailthru-client, sphinx, twine
@@ -33,7 +33,7 @@ sailthru-client==2.2.3    # via -r requirements/base.in
 simplejson==3.17.0        # via sailthru-client
 six==1.14.0               # via -r requirements/base.in, bleach, doc8, edx-sphinx-theme, packaging, python-dateutil, readme-renderer, stevedore
 snowballstemmer==2.0.0    # via sphinx
-sphinx==3.0.2             # via -r requirements/doc.in, edx-sphinx-theme
+sphinx==3.0.3             # via -r requirements/doc.in, edx-sphinx-theme
 sphinxcontrib-applehelp==1.0.2  # via sphinx
 sphinxcontrib-devhelp==1.0.2  # via sphinx
 sphinxcontrib-htmlhelp==1.0.3  # via sphinx
