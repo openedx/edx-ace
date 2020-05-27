@@ -11,13 +11,13 @@ edx-lint==1.4.1           # via -r requirements/quality.in
 isort==4.3.21             # via -r requirements/quality.in, pylint
 lazy-object-proxy==1.4.3  # via astroid
 mccabe==0.6.1             # via pylint
-pycodestyle==2.5.0        # via -r requirements/quality.in
+pycodestyle==2.6.0        # via -r requirements/quality.in
 pydocstyle==5.0.2         # via -r requirements/quality.in
 pylint-celery==0.3        # via edx-lint
 pylint-django==2.0.11     # via edx-lint
 pylint-plugin-utils==0.6  # via pylint-celery, pylint-django
 pylint==2.4.2             # via edx-lint, pylint-celery, pylint-django, pylint-plugin-utils
-six==1.14.0               # via astroid, edx-lint
+six==1.15.0               # via astroid, edx-lint
 snowballstemmer==2.0.0    # via pydocstyle
 typed-ast==1.4.1          # via astroid
 wrapt==1.11.2             # via astroid
