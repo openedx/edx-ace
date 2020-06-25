@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 A diagnostic utility that can be used to render email messages to files on disk.
 """
-from __future__ import absolute_import, division, print_function
-
 import errno
 import logging
 import os
@@ -16,9 +14,9 @@ from edx_ace.channel import Channel, ChannelType
 
 LOG = logging.getLogger(__name__)
 
-PATH_OVERRIDE_KEY = u'output_file_path'
-DEFAULT_OUTPUT_FILE_PATH_TPL = u'/edx/src/ace_messages/{recipient.username}.{date:%Y%m%d-%H%M%S}.html'
-TEMPLATE = u"""
+PATH_OVERRIDE_KEY = 'output_file_path'
+DEFAULT_OUTPUT_FILE_PATH_TPL = '/edx/src/ace_messages/{recipient.username}.{date:%Y%m%d-%H%M%S}.html'
+TEMPLATE = """
 <!DOCTYPE html>
 <html>
     <head>
@@ -33,7 +31,7 @@ TEMPLATE = u"""
     <!-- body: {body} -->
 </html>
 """
-STDOUT_TEMPLATE = u"""
+STDOUT_TEMPLATE = """
 ------- EMAIL -------
 To: {email_address}
 From: {from_name}
@@ -42,11 +40,11 @@ Body:
 {body}
 -------  END  -------
 """
-OUTPUT_ENCODING = u'utf8'
+OUTPUT_ENCODING = 'utf8'
 
 
 class FileEmailChannel(Channel):
-    u"""
+    """
     An email channel that simply renders the message HTML to a file and the body text to stdout.
 
     If you add this channel to your enabled channels list as your email channel, it will write out the text version
@@ -68,7 +66,7 @@ class FileEmailChannel(Channel):
 
     @classmethod
     def enabled(cls):
-        u"""
+        """
         Returns: True always!
         """
         return True
@@ -80,8 +78,8 @@ class FileEmailChannel(Channel):
             return s
 
     def deliver(self, message, rendered_message):
-        template_vars = {k: v.strip() for k, v in attr.asdict(rendered_message).items()}
-        template_vars[u'email_address'] = message.recipient.email_address
+        template_vars = {k: v.strip() for k, v in list(attr.asdict(rendered_message).items())}
+        template_vars['email_address'] = message.recipient.email_address
 
         rendered_template = TEMPLATE.format(**template_vars)
         output_file_path = message.options.get(PATH_OVERRIDE_KEY, DEFAULT_OUTPUT_FILE_PATH_TPL.format(
@@ -89,7 +87,7 @@ class FileEmailChannel(Channel):
             date=datetime.now()
         ))
         make_parent_directories(output_file_path)
-        with open(output_file_path, u'w') as output_file:
+        with open(output_file_path, 'w') as output_file:
             output_file.write(self._encode(rendered_template))
 
         print(self._encode(STDOUT_TEMPLATE.format(**template_vars)))

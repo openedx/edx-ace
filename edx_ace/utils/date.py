@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 :mod:`edx_ace.utils.date` contains utility functions used for
 serializing and deserializing dates. It is intended for internal ACE
 use.
 """
-from __future__ import absolute_import, division, print_function
-
 from datetime import datetime
 
 from dateutil.parser import parse
@@ -13,12 +11,12 @@ from dateutil.tz import tzutc
 
 
 def get_current_time():
-    u"""The current time in the UTC timezone as a timezone-aware datetime object."""
+    """The current time in the UTC timezone as a timezone-aware datetime object."""
     return datetime.now(tzutc())
 
 
 def serialize(timestamp_obj):
-    u"""
+    """
     Serialize a datetime object to an ISO8601 formatted string.
 
     Args:
@@ -35,13 +33,13 @@ def serialize(timestamp_obj):
 
     # TODO(later): what if utcoffset() returns 0?
     if timestamp_obj.tzinfo is not None and timestamp_obj.utcoffset() is None:
-        return timestamp_obj.isoformat() + u'Z'
+        return timestamp_obj.isoformat() + 'Z'
     else:
         return timestamp_obj.isoformat()
 
 
 def deserialize(timestamp_iso8601_str):
-    u"""
+    """
     Deserialize a datetime object from an ISO8601 formatted string.
 
     Args:

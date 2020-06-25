@@ -1,6 +1,4 @@
 # pylint: disable=missing-docstring
-from __future__ import absolute_import
-
 import ddt
 from mock import patch
 
@@ -21,25 +19,25 @@ class TestSailthruChannel(TestCase):
 
     def test_render_email_with_sailthru(self):
         message = Message(
-            app_label=u'testapp',
-            name=u'testmessage',
+            app_label='testapp',
+            name='testmessage',
             options={},
-            recipient=Recipient(username=u'Robot', email_address=u'mr@robot.io'),
+            recipient=Recipient(username='Robot', email_address='mr@robot.io'),
         )
 
         rendered_email = render(self.channel, message)
 
-        assert u'{beacon_src}' in rendered_email.body_html
-        assert u'{view_url}' in rendered_email.body_html
-        assert u'{optout_confirm_url}' in rendered_email.body_html
+        assert '{beacon_src}' in rendered_email.body_html
+        assert '{view_url}' in rendered_email.body_html
+        assert '{optout_confirm_url}' in rendered_email.body_html
 
     @override_settings(
         ACE_CHANNEL_SAILTHRU_DEBUG=False,
     )
     @ddt.data(
-        ({u'from_address': 'custom@example.com'}, {u'behalf_email': 'custom@example.com'}),
-        ({u'reply_to': 'student@example.com'}, {u'behalf_email': 'student@example.com'}),
-        ({u'irrelevant': 'test'}, {}),
+        ({'from_address': 'custom@example.com'}, {'behalf_email': 'custom@example.com'}),
+        ({'reply_to': 'student@example.com'}, {'behalf_email': 'student@example.com'}),
+        ({'irrelevant': 'test'}, {}),
         ({}, {}),
     )
     @ddt.unpack
@@ -48,10 +46,10 @@ class TestSailthruChannel(TestCase):
         Tests sailthru send API is called with on_behalf option
         """
         message = Message(
-            app_label=u'testapp',
-            name=u'testmessage',
+            app_label='testapp',
+            name='testmessage',
             options=message_options,
-            recipient=Recipient(username=u'Robot', email_address=u'mr@robot.io'),
+            recipient=Recipient(username='Robot', email_address='mr@robot.io'),
         )
         rendered_email = render(self.channel, message)
 

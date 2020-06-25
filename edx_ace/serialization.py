@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 :mod:`edx_ace.serialization` contains :class:`MessageAttributeSerializationMixin`,
 which allows messages to be round-tripped through JSON, and
 :class:`MessageEncoder`, which actually performs the JSON encoding.
 """
-from __future__ import absolute_import
-
 import json
 from uuid import UUID
 
@@ -19,7 +17,7 @@ from edx_ace.utils import date
 
 @six.python_2_unicode_compatible
 class MessageAttributeSerializationMixin:
-    u"""
+    """
     This mixin allows an object to be serialized to (and deserialized from)
     a JSON string.
 
@@ -35,7 +33,7 @@ class MessageAttributeSerializationMixin:
 
     @classmethod
     def from_string(cls, string_value):
-        u"""
+        """
         Decode a JSON-encoded string representation of this type.
 
         Arguments:
@@ -48,13 +46,13 @@ class MessageAttributeSerializationMixin:
             string_value,
             object_hook=cls._deserialize,
         )
-        uuid = fields.pop(u'uuid')
+        uuid = fields.pop('uuid')
         instance = cls(**fields)
         instance.uuid = uuid
         return instance
 
     def to_json(self):
-        u"""
+        """
         Returns: dict
             a python dictionary containing all serializable fields
             of this object, suitable for JSON-encoding.
@@ -63,7 +61,7 @@ class MessageAttributeSerializationMixin:
 
     @classmethod
     def _deserialize(cls, json_value):
-        u"""
+        """
         Deserialize a JSON value (a python dictionary) into an
         instance of the current class.
 
@@ -80,7 +78,7 @@ class MessageAttributeSerializationMixin:
 
     @classmethod
     def _deserialize_field(cls, field_name, field_value):
-        u"""
+        """
         Deserialize a single encoded field value for this message.
 
         Arguments:
@@ -88,20 +86,20 @@ class MessageAttributeSerializationMixin:
             field_value: The value of field being deserialized.
         """
         # We have to import these here to avoid a circular dependency since these classes use this mixin.
-        from edx_ace.recipient import Recipient
-        from edx_ace.message import Message
+        from edx_ace.recipient import Recipient  # pylint: disable=import-outside-toplevel
+        from edx_ace.message import Message  # pylint: disable=import-outside-toplevel
 
         if field_value is None:
             return None
 
-        if field_name == u'expiration_time':
+        if field_name == 'expiration_time':
             return date.deserialize(field_value)
-        elif field_name in (u'uuid', u'send_uuid'):
+        elif field_name in ('uuid', 'send_uuid'):
             return UUID(field_value)
         # TODO(later): should this be more dynamic?
-        elif field_name == u'message':
+        elif field_name == 'message':
             return Message(**field_value)
-        elif field_name == u'recipient':
+        elif field_name == 'recipient':
             return Recipient(**field_value)
         else:
             return field_value
@@ -116,7 +114,7 @@ class MessageEncoder(json.JSONEncoder):
             return six.text_type(o)
         elif isinstance(o, date.datetime):
             return date.serialize(o)
-        elif hasattr(o, u'to_json'):
+        elif hasattr(o, 'to_json'):
             return o.to_json()
         elif isinstance(o, Promise):
             return six.text_type(o)

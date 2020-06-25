@@ -1,8 +1,6 @@
-u"""
+"""
 Tests of :mod:`edx_ace.presentation`.
 """
-from __future__ import absolute_import
-
 from unittest import TestCase
 
 from mock import Mock
@@ -13,7 +11,7 @@ from edx_ace.presentation import render
 
 
 class TestRender(TestCase):
-    u"""
+    """
     Tests for unsupported rendering for a channel.
     """
 

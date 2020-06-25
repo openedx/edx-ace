@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 Functions for delivering ACE messages.
 
 This is an internal interface used by :func:`.ace.send`.
 """
-from __future__ import absolute_import, division, print_function
-
 import datetime
 import logging
 import time
@@ -27,7 +25,7 @@ MAX_EXPIRATION_DELAY = 5 * 60
 
 
 def deliver(channel, rendered_message, message):
-    u"""
+    """
     Deliver a message via a particular channel.
 
     Args:
@@ -42,29 +40,29 @@ def deliver(channel, rendered_message, message):
     logger = message.get_message_specific_logger(LOG)
     channel_type = channel.channel_type
 
-    timeout_seconds = getattr(settings, u'ACE_DEFAULT_EXPIRATION_DELAY', 120)
+    timeout_seconds = getattr(settings, 'ACE_DEFAULT_EXPIRATION_DELAY', 120)
     start_time = get_current_time()
     default_expiration_time = start_time + datetime.timedelta(seconds=timeout_seconds)
     max_expiration_time = start_time + datetime.timedelta(seconds=MAX_EXPIRATION_DELAY)
     expiration_time = min(max_expiration_time, message.expiration_time or default_expiration_time)
 
-    logger.debug(u'Attempting delivery of message')
+    logger.debug('Attempting delivery of message')
     while get_current_time() < expiration_time:
         try:
             channel.deliver(message, rendered_message)
         except RecoverableChannelDeliveryError as delivery_error:
             num_seconds = (delivery_error.next_attempt_time - get_current_time()).total_seconds()
-            logger.debug(u'Encountered a recoverable delivery error.')
+            logger.debug('Encountered a recoverable delivery error.')
             if delivery_error.next_attempt_time > expiration_time:
-                logger.debug(u'Message will expire before delivery can be reattempted, aborting.')
+                logger.debug('Message will expire before delivery can be reattempted, aborting.')
                 break
-            logger.debug(u'Sleeping for %d seconds before reattempting delivery of message.', num_seconds)
+            logger.debug('Sleeping for %d seconds before reattempting delivery of message.', num_seconds)
             time.sleep(num_seconds)
-            message.report(u'{channel_type}_delivery_retried'.format(channel_type=channel_type), num_seconds)
+            message.report('{channel_type}_delivery_retried'.format(channel_type=channel_type), num_seconds)
         else:
-            message.report(u'{channel_type}_delivery_succeeded'.format(channel_type=channel_type), True)
+            message.report('{channel_type}_delivery_succeeded'.format(channel_type=channel_type), True)
             return
 
-    delivery_expired_report = u'{channel_type}_delivery_expired'.format(channel_type=channel_type)
+    delivery_expired_report = '{channel_type}_delivery_expired'.format(channel_type=channel_type)
     logger.debug(delivery_expired_report)
     message.report(delivery_expired_report, get_current_time() - start_time)

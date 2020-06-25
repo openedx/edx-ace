@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 :mod:`edx_ace.utils.plugins` contains utility functions used
 to make working with the ACE plugin system easier. These are intended
 for internal use by ACE.
 """
-from __future__ import absolute_import, division, print_function
-
 import logging
 from functools import partial
 
@@ -15,7 +13,7 @@ LOG = logging.getLogger(__name__)
 
 
 def get_manager(namespace, names=None):
-    u"""
+    """
     Get the stevedore extension manager for this namespace.
 
     Args:
@@ -34,7 +32,7 @@ def get_manager(namespace, names=None):
 
 
 def get_plugins(namespace, names=None):
-    u"""
+    """
     Get all extensions for this namespace and list of names.
 
     Args:
@@ -49,7 +47,7 @@ def get_plugins(namespace, names=None):
 
 
 def check_plugin(extension, namespace, names=None):
-    u"""
+    """
     Check the extension to see if it's enabled.
 
     Args:
@@ -63,6 +61,6 @@ def check_plugin(extension, namespace, names=None):
     if names is None or extension.name in names:
         plugin_enabled = extension.plugin.enabled()
         if not plugin_enabled:
-            LOG.info(u'Extension with name %s for namespace %s is not enabled', extension.name, namespace)
+            LOG.info('Extension with name %s for namespace %s is not enabled', extension.name, namespace)
         return plugin_enabled
     return False
