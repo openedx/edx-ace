@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 :mod:`edx_ace.channel` exposes the ACE extension point needed
 to add new delivery :class:`Channel` instances to an ACE application.
 
 Developers wanting to add a new deliver channel should subclass :class:`Channel`,
 and then add an entry to the ``openedx.ace.channel`` entrypoint in their ``setup.py``.
 """
-from __future__ import absolute_import, division, print_function
-
 import abc
 from collections import OrderedDict, defaultdict
 from enum import Enum
@@ -21,16 +19,16 @@ from edx_ace.utils.once import once
 from edx_ace.utils.plugins import get_plugins
 
 # TODO(later): encapsulate the shared part of this namespace in the utils.plugin module
-CHANNEL_EXTENSION_NAMESPACE = u'openedx.ace.channel'
+CHANNEL_EXTENSION_NAMESPACE = 'openedx.ace.channel'
 
 
 @six.python_2_unicode_compatible
 class ChannelType(Enum):
-    u"""
+    """
     All supported communication channels.
     """
-    EMAIL = u'email'
-    PUSH = u'push'
+    EMAIL = 'email'
+    PUSH = 'push'
 
     def __str__(self):
         return self.value
@@ -38,7 +36,7 @@ class ChannelType(Enum):
 
 @six.add_metaclass(abc.ABCMeta)
 class Channel:
-    u"""
+    """
     Channels deliver messages to users that have already passed through the presentation and policy steps.
 
     Examples include email messages, push notifications, or in-browser messages. Implementations of this abstract class
@@ -51,14 +49,14 @@ class Channel:
 
     @classmethod
     def enabled(cls):
-        u"""
+        """
         Validate settings to determine whether this channel can be enabled.
         """
         return True
 
     @abc.abstractmethod
     def deliver(self, message, rendered_message):
-        u"""
+        """
         Transmit a rendered message to a recipient.
 
         Args:
@@ -71,11 +69,11 @@ class Channel:
 
 @six.python_2_unicode_compatible
 class ChannelMap:
-    u"""
+    """
     A class that represents a channel map, usually as described in Django settings and `setup.py` files.
     """
     def __init__(self, channels_list):
-        u"""
+        """
         Initialize a ChannelMap.
 
         Args:
@@ -86,7 +84,7 @@ class ChannelMap:
             self.register_channel(channel, channel_name)
 
     def register_channel(self, channel, channel_name):
-        u"""
+        """
         Registers a channel in the channel map.
 
         Args:
@@ -96,7 +94,7 @@ class ChannelMap:
         self.channel_type_to_channel_impl[channel.channel_type][channel_name] = channel
 
     def get_channel_by_name(self, channel_type, channel_name):
-        u"""
+        """
         Gets a registered a channel by its name and type.
 
         Raises:
@@ -108,7 +106,7 @@ class ChannelMap:
         return self.channel_type_to_channel_impl[channel_type][channel_name]
 
     def get_default_channel(self, channel_type):
-        u"""
+        """
         Returns the first registered channel by type.
 
         Raises:
@@ -121,17 +119,17 @@ class ChannelMap:
             return six.next(six.itervalues(self.channel_type_to_channel_impl[channel_type]))
         except (StopIteration, KeyError):
             raise UnsupportedChannelError((
-                u'No implementation for channel {channel_type} is registered. '
-                u'Available channels are: {channels}'
+                'No implementation for channel {channel_type} is registered. '
+                'Available channels are: {channels}'
             ).format(channel_type=channel_type, channels=channels()))
 
     def __str__(self):
-        return u'ChannelMap {channels}'.format(channels=repr(self.channel_type_to_channel_impl))
+        return 'ChannelMap {channels}'.format(channels=repr(self.channel_type_to_channel_impl))
 
 
 @once
 def channels():  # pragma: no cover
-    u"""
+    """
     Gathers all available channels.
 
     Note that this function loads all available channels from entry points. It expects the Django setting
@@ -146,7 +144,7 @@ def channels():  # pragma: no cover
     """
     plugins = get_plugins(
         namespace=CHANNEL_EXTENSION_NAMESPACE,
-        names=getattr(settings, u'ACE_ENABLED_CHANNELS', []),
+        names=getattr(settings, 'ACE_ENABLED_CHANNELS', []),
     )
 
     return ChannelMap([
@@ -156,7 +154,7 @@ def channels():  # pragma: no cover
 
 
 def get_channel_for_message(channel_type, message):
-    u"""
+    """
     Based on available `channels()` returns a single channels for a message.
 
     Raises:
@@ -168,7 +166,7 @@ def get_channel_for_message(channel_type, message):
     channels_map = channels()
 
     if channel_type == ChannelType.EMAIL:
-        if message.options.get(u'transactional'):
+        if message.options.get('transactional'):
             channel_name = settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL
         else:
             channel_name = settings.ACE_CHANNEL_DEFAULT_EMAIL

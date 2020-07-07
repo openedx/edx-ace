@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 :mod:`edx_ace.utils.once` provides the ability to create a module-level
 function that caches it's result after the first call (this can be used
 for lazy-loading expensive computations).
 """
-from __future__ import absolute_import, division, print_function
-
 import functools
 
 
 def once(func):
-    u"""
+    """
     Decorates a function that will be called exactly once.
 
     After the function is called once, its result is stored in memory and immediately returned to subsequent callers
@@ -60,7 +58,7 @@ def once(func):
 
     @functools.wraps(func)
     def wrapper():
-        if not hasattr(func, u'__once_result'):
+        if not hasattr(func, '__once_result'):
             func.__once_result = func()  # pylint: disable=protected-access
         return func.__once_result  # pylint: disable=protected-access
 

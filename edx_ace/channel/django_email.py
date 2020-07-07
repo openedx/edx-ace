@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 :mod:`edx_ace.channel.django_email` implements a Django `send_mail()` email
 delivery channel for ACE.
 """
-from __future__ import absolute_import, division, print_function
-
 import logging
 import re
 from smtplib import SMTPException
@@ -17,7 +15,7 @@ from edx_ace.errors import FatalChannelDeliveryError
 
 LOG = logging.getLogger(__name__)
 
-TEMPLATE = u"""\
+TEMPLATE = """\
 <!DOCTYPE html>
 <html>
     <head>
@@ -31,7 +29,7 @@ TEMPLATE = u"""\
 
 
 class DjangoEmailChannel(Channel):
-    u"""
+    """
     A `send_mail()` channel for edX ACE.
 
     This is both useful for providing an alternative to Sailthru and to debug ACE mail by
@@ -62,20 +60,20 @@ class DjangoEmailChannel(Channel):
 
     @classmethod
     def enabled(cls):
-        u"""
+        """
         Returns: True always!
         """
         return True
 
     def deliver(self, message, rendered_message):
         # Compress spaces and remove newlines to make it easier to author templates.
-        subject = re.sub(u'\\s+', u' ', rendered_message.subject, re.UNICODE).strip()
-        default_from_address = getattr(settings, u'DEFAULT_FROM_EMAIL', None)
-        reply_to = message.options.get(u'reply_to', None)
-        from_address = message.options.get(u'from_address', default_from_address)
+        subject = re.sub('\\s+', ' ', rendered_message.subject, re.UNICODE).strip()
+        default_from_address = getattr(settings, 'DEFAULT_FROM_EMAIL', None)
+        reply_to = message.options.get('reply_to', None)
+        from_address = message.options.get('from_address', default_from_address)
         if not from_address:
             raise FatalChannelDeliveryError(
-                u'from_address must be included in message delivery options or as the DEFAULT_FROM_EMAIL settings'
+                'from_address must be included in message delivery options or as the DEFAULT_FROM_EMAIL settings'
             )
 
         rendered_template = TEMPLATE.format(
@@ -91,8 +89,8 @@ class DjangoEmailChannel(Channel):
                 reply_to=reply_to,
             )
 
-            mail.attach_alternative(rendered_template, u'text/html')
+            mail.attach_alternative(rendered_template, 'text/html')
             mail.send()
         except SMTPException as e:
             LOG.exception(e)
-            raise FatalChannelDeliveryError(u'An SMTP error occurred (and logged) from Django send_email()')
+            raise FatalChannelDeliveryError('An SMTP error occurred (and logged) from Django send_email()')

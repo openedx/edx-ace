@@ -1,11 +1,9 @@
-u"""
+"""
 :mod:`edx_ace.policy` contains all classes relating to message policies.
 
 These policies manage which messages should be sent over which channels,
 and are a point of pluggability in ACE.
 """
-from __future__ import absolute_import
-
 from abc import ABCMeta, abstractmethod
 
 import attr
@@ -20,7 +18,7 @@ from edx_ace.utils.plugins import get_plugins
 
 @attr.s
 class PolicyResult:
-    u"""
+    """
     Arguments:
         deny (set): A set of :class:`.ChannelType` values that should be excluded
             when sending a message.
@@ -33,15 +31,15 @@ class PolicyResult:
     def check_set_of_channel_types(self, attribute, set_value):
         for value in set_value:
             if value not in ChannelType:
-                raise ValueError(u"PolicyResult for {} has an invalid value {}.".format(attribute, value))
+                raise ValueError("PolicyResult for {} has an invalid value {}.".format(attribute, value))
 
 
-POLICY_PLUGIN_NAMESPACE = u'openedx.ace.policy'
+POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 
 
 @six.add_metaclass(ABCMeta)
 class Policy:
-    u"""
+    """
     A ``Policy`` allows an application to specify what :class:`.Channel` any specific
     :class:`.Message` shouldn't be sent over. Policies are one of the primary
     extension mechanisms for ACE, and are registered using the entrypoint ``openedx.ace.policy``.
@@ -53,7 +51,7 @@ class Policy:
 
     @abstractmethod
     def check(self, message):
-        u"""
+        """
         Validate the supplied :class:`~edx_ace.message.Message` against a specific
         delivery policy.
 
@@ -76,7 +74,7 @@ class Policy:
 
 
 def channels_for(message):
-    u"""
+    """
     Arguments:
         message (:class:`.Message`): The message apply policies to.
 
@@ -89,7 +87,7 @@ def channels_for(message):
     for policy in policies():
         allowed_channels -= policy.check(message).deny
 
-    message.report(u'policy_allowed_channels', u','.join(c.value for c in allowed_channels))
+    message.report('policy_allowed_channels', ','.join(c.value for c in allowed_channels))
     return allowed_channels
 
 
@@ -99,6 +97,6 @@ def policies():
         extension.obj
         for extension in get_plugins(
             namespace=POLICY_PLUGIN_NAMESPACE,
-            names=getattr(settings, u'ACE_ENABLED_POLICIES', []),
+            names=getattr(settings, 'ACE_ENABLED_POLICIES', []),
         )
     ]

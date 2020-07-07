@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 :mod:`edx_ace.message` contains the core :class:`Message` and :class:`MessageType`
 classes, which allow specification of the content to be delivered by ACE.
 """
-from __future__ import absolute_import, division, print_function
-
 import logging
 from abc import ABCMeta
 from uuid import UUID, uuid4
@@ -23,7 +21,7 @@ from edx_ace.serialization import MessageAttributeSerializationMixin
 @attr.s
 @six.add_metaclass(ABCMeta)
 class Message(MessageAttributeSerializationMixin):
-    u"""
+    """
     A ``Message`` is the core piece of data that is passed into ACE.
     It captures the message, recipient, and all context needed to render
     the message for delivery.
@@ -95,43 +93,43 @@ class Message(MessageAttributeSerializationMixin):
 
     @property
     def unique_name(self):
-        u"""
+        """
         A unique name for this message, used for logging and reporting.
 
         Returns: str
         """
-        return u'.'.join([self.app_label, self.name])
+        return '.'.join([self.app_label, self.name])
 
     @property
     def log_id(self):
-        u"""
+        """
         The identity of this message for logging.
         """
-        return u'.'.join([
+        return '.'.join([
             self.unique_name,
-            six.text_type(self.send_uuid) if self.send_uuid else u'no_send_uuid',
+            six.text_type(self.send_uuid) if self.send_uuid else 'no_send_uuid',
             six.text_type(self.uuid)
         ])
 
     def get_message_specific_logger(self, logger):
-        u"""
+        """
         Arguments:
             logger (:class:`logging.Logger`): The logger to be adapted.
 
         Returns:  :class:`.MessageLoggingAdapter` that is specific to this message.
         """
-        return MessageLoggingAdapter(logger, {u'message': self})
+        return MessageLoggingAdapter(logger, {'message': self})
 
     def report_basics(self):
-        monitoring_report(u'message_name', self.unique_name)
-        monitoring_report(u'language', self.language)
+        monitoring_report('message_name', self.unique_name)
+        monitoring_report('language', self.language)
 
     def report(self, key, value):
         monitoring_report(key, value)
 
 
 class MessageLoggingAdapter(logging.LoggerAdapter):
-    u"""
+    """
     A :class:`logging.LoggingAdapter` that prefixes log items with
     a message :attr:`.log_id`.ABCMeta
 
@@ -139,10 +137,10 @@ class MessageLoggingAdapter(logging.LoggerAdapter):
     contain the :class:`.Message` being logged for.
     """
     def process(self, msg, kwargs):
-        return u'[%s] %s' % (self.extra[u'message'].log_id, msg), kwargs
+        return '[%s] %s' % (self.extra['message'].log_id, msg), kwargs
 
     def debug(self, msg, *args, **kwargs):
-        log_level = self.extra[u'message'].log_level
+        log_level = self.extra['message'].log_level
         if log_level and log_level <= logging.DEBUG:
             self.info(msg, *args, **kwargs)
         else:
@@ -151,7 +149,7 @@ class MessageLoggingAdapter(logging.LoggerAdapter):
 
 @attr.s(eq=False, order=False)
 class MessageType(MessageAttributeSerializationMixin):
-    u"""
+    """
     A class representing a type of :class:`Message`. An instance of
     a ``MessageType`` is used for each batch send of messages.
 
@@ -206,14 +204,14 @@ class MessageType(MessageAttributeSerializationMixin):
 
     @app_label.default
     def default_app_label(self):
-        u""" Get default app Label. """
+        """ Get default app Label. """
         if self.APP_LABEL is None:
             return apps.get_containing_app_config(self.__class__.__module__).label
         else:
             return self.APP_LABEL
 
     def personalize(self, recipient, language, user_context):
-        u"""
+        """
         Personalize this `MessageType` to a specific recipient, in order to
         send a specific message.
 

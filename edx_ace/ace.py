@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 The main entry point for sending messages with ACE.
 
 Usage:
@@ -20,9 +20,6 @@ Usage:
     )
     ace.send(msg)
 """
-
-from __future__ import absolute_import, division, print_function
-
 import six
 
 from edx_ace import delivery, policy, presentation
@@ -31,7 +28,7 @@ from edx_ace.errors import ChannelError, UnsupportedChannelError
 
 
 def send(msg):
-    u"""
+    """
     Send a message to a recipient.
 
     Calling this method will result in an attempt being made to deliver the provided message to the recipient. Depending
@@ -59,6 +56,6 @@ def send(msg):
             delivery.deliver(channel, rendered_message, msg)
         except ChannelError as error:
             msg.report(
-                u'{channel_type}_error'.format(channel_type=channel_type),
+                '{channel_type}_error'.format(channel_type=channel_type),
                 six.text_type(error)
             )

@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-u"""
+"""
 Tests of :mod:`edx_ace.message`.
 """
-from __future__ import absolute_import
-
 import logging
 from functools import partial
 from unittest import TestCase
@@ -46,32 +44,32 @@ msg = st.builds(
 
 @ddt.ddt
 class TestMessage(TestCase):
-    u"""
+    """
     Tests of :class:`.Message` and :class:`.MessageType`.
     """
     def setUp(self):
         super(TestMessage, self).setUp()
         self.msg_kwargs = {
-            u'app_label': u'test_app_label',
-            u'name': u'test_message',
-            u'expiration_time': get_current_time(),
-            u'context': {
-                u'key1': u'value1',
-                u'key2': u'value2',
+            'app_label': 'test_app_label',
+            'name': 'test_message',
+            'expiration_time': get_current_time(),
+            'context': {
+                'key1': 'value1',
+                'key2': 'value2',
             },
-            u'recipient': Recipient(
-                username=u'me',
+            'recipient': Recipient(
+                username='me',
             )
         }
 
         self.encoder = MessageEncoder()
 
     def test_basic(self):
-        transactional_message = Message(options={u'transactional': True}, **self.msg_kwargs)
+        transactional_message = Message(options={'transactional': True}, **self.msg_kwargs)
         for key in self.msg_kwargs:
             self.assertEqual(getattr(transactional_message, key), self.msg_kwargs.get(key))
         self.assertIsNotNone(transactional_message.uuid)
-        assert transactional_message.options.get(u'transactional')
+        assert transactional_message.options.get('transactional')
 
         normal_message = Message(**self.msg_kwargs)
         assert not dict(normal_message.options)
@@ -83,7 +81,7 @@ class TestMessage(TestCase):
         self.assertEqual(message, resurrected_msg)
 
     def test_serialization_lazy_text(self):
-        unicode_text = u"A 𝓾𝓷𝓲𝓬𝓸𝓭𝓮 Text"
+        unicode_text = "A 𝓾𝓷𝓲𝓬𝓸𝓭𝓮 Text"
         lazy_text = ugettext_lazy(unicode_text)                    # pylint: disable=translation-of-non-string
         self.assertEqual(self.encoder.default(lazy_text), unicode_text)
 
@@ -102,19 +100,19 @@ class TestMessage(TestCase):
     def test_log_level(self, log_level, expect_log_warn, expect_log_debug):
         logging.getLogger().setLevel(logging.INFO)
 
-        self.msg_kwargs[u'log_level'] = log_level
+        self.msg_kwargs['log_level'] = log_level
         message = Message(**self.msg_kwargs)
         logger = message.get_message_specific_logger(LOG)
-        with patch(u'logging.Logger.callHandlers') as mock_log:
-            logger.warning(u'Test warning statement')
+        with patch('logging.Logger.callHandlers') as mock_log:
+            logger.warning('Test warning statement')
             self.assertEqual(mock_log.called, expect_log_warn)
-        with patch(u'logging.Logger.callHandlers') as mock_log:
-            logger.debug(u'Test debug statement')
+        with patch('logging.Logger.callHandlers') as mock_log:
+            logger.debug('Test debug statement')
             self.assertEqual(mock_log.called, expect_log_debug)
 
 
 def mk_message_type(name, app_label):
-    u"""
+    """
     Create a new :class:`MessageType` subclass for testing purposes.
 
     Arguments:
