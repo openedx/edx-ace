@@ -33,7 +33,7 @@ sailthru-client==2.2.3    # via -r requirements/base.in
 simplejson==3.17.0        # via sailthru-client
 six==1.15.0               # via -r requirements/base.in, bleach, doc8, edx-sphinx-theme, packaging, python-dateutil, readme-renderer, stevedore
 snowballstemmer==2.0.0    # via sphinx
-sphinx==3.1.1             # via -r requirements/doc.in, edx-sphinx-theme
+sphinx==3.1.2             # via -r requirements/doc.in, edx-sphinx-theme
 sphinxcontrib-applehelp==1.0.2  # via sphinx
 sphinxcontrib-devhelp==1.0.2  # via sphinx
 sphinxcontrib-htmlhelp==1.0.3  # via sphinx
