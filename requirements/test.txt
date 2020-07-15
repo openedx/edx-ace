@@ -10,7 +10,7 @@ chardet==3.0.4            # via requests
 coverage==5.2             # via pytest-cov
 ddt==1.4.1                # via -r requirements/test.in
 hypothesis-pytest==0.19.0  # via -r requirements/test.in
-hypothesis[pytz]==5.19.0  # via -r requirements/test.in, hypothesis-pytest
+hypothesis[pytz]==5.19.2  # via -r requirements/test.in, hypothesis-pytest
 idna==2.10                # via requests
 importlib-metadata==1.7.0  # via pluggy, pytest, pytest-randomly
 mock==3.0.5               # via -r requirements/test.in
@@ -25,7 +25,7 @@ pygments==2.6.1           # via pudb
 pyparsing==2.4.7          # via packaging
 pytest-cov==2.10.0        # via -r requirements/test.in
 pytest-django==3.9.0      # via -r requirements/test.in
-pytest-randomly==3.4.0    # via -r requirements/test.in
+pytest-randomly==3.4.1    # via -r requirements/test.in
 pytest==5.4.3             # via hypothesis-pytest, pytest-cov, pytest-django, pytest-randomly
 python-dateutil==2.8.1    # via -r requirements/base.in
 pytz==2020.1              # via django, hypothesis
