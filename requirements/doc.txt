@@ -44,7 +44,7 @@ sqlparse==0.3.1           # via django
 stevedore==1.32.0         # via -r requirements/base.in, doc8
 tqdm==4.48.0              # via twine
 twine==1.15.0             # via -r requirements/doc.in
-urllib3==1.25.9           # via requests
+urllib3==1.25.10          # via requests
 webencodings==0.5.1       # via bleach
 
 # The following packages are considered to be unsafe in a requirements file:
