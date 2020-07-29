@@ -30,10 +30,10 @@ lazy-object-proxy==1.4.3  # via astroid
 markupsafe==1.1.1         # via jinja2
 mccabe==0.6.1             # via pylint
 packaging==20.4           # via bleach, tox
-path.py==12.4.0           # via edx-i18n-tools
+path.py==12.5.0           # via edx-i18n-tools
 path==13.1.0              # via path.py
 pbr==5.4.5                # via stevedore
-pip-tools==5.2.1          # via -r requirements/dev.in
+pip-tools==5.3.0          # via -r requirements/dev.in
 pkginfo==1.5.0.1          # via twine
 pluggy==0.13.1            # via diff-cover, tox
 polib==1.1.0              # via edx-i18n-tools
@@ -59,12 +59,12 @@ snowballstemmer==2.0.0    # via pydocstyle
 sqlparse==0.3.1           # via django
 stevedore==1.32.0         # via -r requirements/base.in
 toml==0.10.1              # via tox
-tox==3.17.1               # via -r requirements/dev.in
+tox==3.18.1               # via -r requirements/dev.in
 tqdm==4.48.0              # via twine
 twine==1.15.0             # via -r requirements/dev.in
 typed-ast==1.4.1          # via astroid
-urllib3==1.25.9           # via requests
-virtualenv==20.0.27       # via tox
+urllib3==1.25.10          # via requests
+virtualenv==20.0.28       # via tox
 webencodings==0.5.1       # via bleach
 wheel==0.34.2             # via -r requirements/dev.in
 wrapt==1.11.2             # via astroid
