@@ -5,7 +5,7 @@
 #    make upgrade
 #
 alabaster==0.7.12         # via sphinx
-attrs==19.3.0             # via -r requirements/base.in
+attrs==20.1.0             # via -r requirements/base.in
 babel==2.8.0              # via sphinx
 bleach==3.1.5             # via readme-renderer
 certifi==2020.6.20        # via requests
