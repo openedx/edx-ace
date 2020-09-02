@@ -10,7 +10,7 @@ babel==2.8.0              # via sphinx
 bleach==3.1.5             # via readme-renderer
 certifi==2020.6.20        # via requests
 chardet==3.0.4            # via doc8, requests
-django==2.2.15            # via -r requirements/base.in
+django==2.2.16            # via -r requirements/base.in
 doc8==0.8.1               # via -r requirements/doc.in
 docutils==0.16            # via doc8, readme-renderer, restructuredtext-lint, sphinx
 edx-sphinx-theme==1.5.0   # via -r requirements/doc.in
@@ -19,7 +19,7 @@ imagesize==1.2.0          # via sphinx
 jinja2==2.11.2            # via sphinx
 markupsafe==1.1.1         # via jinja2
 packaging==20.4           # via bleach, sphinx
-pbr==5.4.5                # via stevedore
+pbr==5.5.0                # via stevedore
 pkginfo==1.5.0.1          # via twine
 pygments==2.6.1           # via doc8, readme-renderer, sphinx
 pyparsing==2.4.7          # via packaging
