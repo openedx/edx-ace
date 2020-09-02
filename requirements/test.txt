@@ -10,15 +10,15 @@ chardet==3.0.4            # via requests
 coverage==5.2.1           # via pytest-cov
 ddt==1.4.1                # via -r requirements/test.in
 hypothesis-pytest==0.19.0  # via -r requirements/test.in
-hypothesis[pytz]==5.29.0  # via -r requirements/test.in, hypothesis-pytest
+hypothesis[pytz]==5.30.0  # via -r requirements/test.in, hypothesis-pytest
 idna==2.10                # via requests
 importlib-metadata==1.7.0  # via pluggy, pytest, pytest-randomly
 iniconfig==1.0.1          # via pytest
 mock==3.0.5               # via -r requirements/test.in
-more-itertools==8.4.0     # via pytest
+more-itertools==8.5.0     # via pytest
 packaging==20.4           # via pytest
 pathlib2==2.3.5           # via pytest
-pbr==5.4.5                # via stevedore
+pbr==5.5.0                # via stevedore
 pluggy==0.13.1            # via pytest
 pudb==2019.2              # via -r requirements/test.in
 py==1.9.0                 # via pytest
