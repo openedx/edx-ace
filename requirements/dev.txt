@@ -6,7 +6,7 @@
 #
 appdirs==1.4.4            # via virtualenv
 astroid==2.3.3            # via pylint, pylint-celery
-attrs==20.1.0             # via -r requirements/base.in
+attrs==20.2.0             # via -r requirements/base.in
 bleach==3.1.5             # via readme-renderer
 certifi==2020.6.20        # via requests
 chardet==3.0.4            # via requests
