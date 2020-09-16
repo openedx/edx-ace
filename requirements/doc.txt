@@ -21,7 +21,7 @@ markupsafe==1.1.1         # via jinja2
 packaging==20.4           # via bleach, sphinx
 pbr==5.5.0                # via stevedore
 pkginfo==1.5.0.1          # via twine
-pygments==2.6.1           # via doc8, readme-renderer, sphinx
+pygments==2.7.0           # via doc8, readme-renderer, sphinx
 pyparsing==2.4.7          # via packaging
 python-dateutil==2.8.1    # via -r requirements/base.in
 pytz==2020.1              # via babel, django
@@ -42,7 +42,7 @@ sphinxcontrib-qthelp==1.0.3  # via sphinx
 sphinxcontrib-serializinghtml==1.1.4  # via sphinx
 sqlparse==0.3.1           # via django
 stevedore==1.32.0         # via -r requirements/base.in, doc8
-tqdm==4.48.2              # via twine
+tqdm==4.49.0              # via twine
 twine==1.15.0             # via -r requirements/doc.in
 urllib3==1.25.10          # via requests
 webencodings==0.5.1       # via bleach
