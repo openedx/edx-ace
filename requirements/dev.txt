@@ -40,7 +40,7 @@ polib==1.1.0              # via edx-i18n-tools
 py==1.9.0                 # via tox
 pycodestyle==2.6.0        # via -r requirements/quality.in
 pydocstyle==5.1.1         # via -r requirements/quality.in
-pygments==2.6.1           # via diff-cover, readme-renderer
+pygments==2.7.0           # via diff-cover, readme-renderer
 pylint-celery==0.3        # via edx-lint
 pylint-django==2.0.11     # via edx-lint
 pylint-plugin-utils==0.6  # via pylint-celery, pylint-django
@@ -60,7 +60,7 @@ sqlparse==0.3.1           # via django
 stevedore==1.32.0         # via -r requirements/base.in
 toml==0.10.1              # via tox
 tox==3.20.0               # via -r requirements/dev.in
-tqdm==4.48.2              # via twine
+tqdm==4.49.0              # via twine
 twine==1.15.0             # via -r requirements/dev.in
 typed-ast==1.4.1          # via astroid
 urllib3==1.25.10          # via requests
