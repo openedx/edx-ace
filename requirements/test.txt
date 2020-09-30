@@ -15,7 +15,6 @@ idna==2.10                # via requests
 importlib-metadata==2.0.0  # via pluggy, pytest, pytest-randomly
 iniconfig==1.0.1          # via pytest
 mock==3.0.5               # via -r requirements/test.in
-more-itertools==8.5.0     # via pytest
 packaging==20.4           # via pytest
 pathlib2==2.3.5           # via pytest
 pbr==5.5.0                # via stevedore
@@ -27,7 +26,7 @@ pyparsing==2.4.7          # via packaging
 pytest-cov==2.10.1        # via -r requirements/test.in
 pytest-django==3.10.0     # via -r requirements/test.in
 pytest-randomly==3.4.1    # via -r requirements/test.in
-pytest==6.0.2             # via hypothesis-pytest, pytest-cov, pytest-django, pytest-randomly
+pytest==6.1.0             # via hypothesis-pytest, pytest-cov, pytest-django, pytest-randomly
 python-dateutil==2.8.1    # via -r requirements/base.in
 pytz==2020.1              # via django, hypothesis
 requests==2.24.0          # via sailthru-client
@@ -39,5 +38,5 @@ sqlparse==0.3.1           # via django
 stevedore==1.32.0         # via -r requirements/base.in
 toml==0.10.1              # via pytest
 urllib3==1.25.10          # via requests
-urwid==2.1.1              # via pudb
+urwid==2.1.2              # via pudb
 zipp==1.2.0               # via importlib-metadata
