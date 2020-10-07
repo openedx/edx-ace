@@ -26,7 +26,7 @@ pyparsing==2.4.7          # via packaging
 pytest-cov==2.10.1        # via -r requirements/test.in
 pytest-django==3.10.0     # via -r requirements/test.in
 pytest-randomly==3.4.1    # via -r requirements/test.in
-pytest==6.1.0             # via hypothesis-pytest, pytest-cov, pytest-django, pytest-randomly
+pytest==6.1.1             # via hypothesis-pytest, pytest-cov, pytest-django, pytest-randomly
 python-dateutil==2.8.1    # via -r requirements/base.in
 pytz==2020.1              # via django, hypothesis
 requests==2.24.0          # via sailthru-client
