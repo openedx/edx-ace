@@ -261,7 +261,7 @@ class SailthruEmailChannel(Channel):
         error_code = error.get_error_code()
         error_message = error.get_message()
         http_status_code = response.get_status_code()
-        if error_code in RecoverableErrorCodes:
+        if error_code in [rec.value for rec in RecoverableErrorCodes]:
             next_attempt_time = None
             if error_code == RecoverableErrorCodes.RATE_LIMIT:
                 next_attempt_time = self._get_rate_limit_reset_time(sailthru_response=response)
