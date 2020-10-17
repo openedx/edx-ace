@@ -19,7 +19,7 @@ Unreleased
 [0.1.16] - 2020-10-17
 ~~~~~~~~~~~~~~~~~~~~~
 
-* Fixed enum usage for Python 3.9
+* Fixed enum usage for Python 3.8
 
 [0.1.15] - 2020-03-11
 ~~~~~~~~~~~~~~~~~~~~~
