@@ -13,7 +13,7 @@ from .policy import Policy, PolicyResult
 from .recipient import Recipient
 from .recipient_resolver import RecipientResolver
 
-__version__ = '0.1.16'
+__version__ = '0.1.17'
 
 default_app_config = 'edx_ace.apps.EdxAceConfig'
 

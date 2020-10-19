@@ -16,10 +16,15 @@ Unreleased
 
 *
 
+[0.1.17] - 2020-10-19
+~~~~~~~~~~~~~~~~~~~~~
+
+* Use IntEnum to avoid silent failure in value comparisons
+
 [0.1.16] - 2020-10-17
 ~~~~~~~~~~~~~~~~~~~~~
 
-* Fixed enum usage for Python 3.8
+* Fixed Enum usage for Python 3.8 to avoid TypeError when comparing values
 
 [0.1.15] - 2020-03-11
 ~~~~~~~~~~~~~~~~~~~~~

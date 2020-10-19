@@ -7,7 +7,7 @@ import logging
 import random
 import textwrap
 from datetime import datetime, timedelta
-from enum import Enum
+from enum import Enum, IntEnum
 from gettext import gettext as _
 
 import attr
@@ -31,7 +31,7 @@ except ImportError:
     CLIENT_LIBRARY_INSTALLED = False
 
 
-class RecoverableErrorCodes(Enum):
+class RecoverableErrorCodes(IntEnum):
     """
     These `error codes`_ are present in responses to requests that can (and should) be retried after waiting for a bit.
 
