@@ -57,8 +57,8 @@ refer to this `list of resources <https://open.edx.org/getting-help>`_ if you ne
     :target: https://pypi.python.org/pypi/edx-ace/
     :alt: PyPI
 
-.. |travis-badge| image:: https://travis-ci.org/edx/edx-ace.svg?branch=master
-    :target: https://travis-ci.org/edx/edx-ace
+.. |travis-badge| image:: https://travis-ci.com/edx/edx-ace.svg?branch=master
+    :target: https://travis-ci.com/edx/edx-ace
     :alt: Travis
 
 .. |codecov-badge| image:: http://codecov.io/github/edx/edx-ace/coverage.svg?branch=master

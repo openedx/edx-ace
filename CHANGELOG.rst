@@ -16,6 +16,11 @@ Unreleased
 
 *
 
+[0.1.18] - 2020-11-19
+~~~~~~~~~~~~~~~~~~~~~
+
+* Updated he travis-badge in README.rst to point to travis-ci.com
+
 [0.1.17] - 2020-10-19
 ~~~~~~~~~~~~~~~~~~~~~
 
