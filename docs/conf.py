@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # pylint: disable=invalid-name
 """
 edx-ace documentation build configuration file.
@@ -97,7 +96,7 @@ project = 'edx-ace'
 copyright = edx_theme.COPYRIGHT  # pylint: disable=redefined-builtin
 author = edx_theme.AUTHOR
 project_title = 'Automated Communication Engine'
-documentation_title = "{project_title}".format(project_title=project_title)
+documentation_title = f"{project_title}"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -280,7 +279,7 @@ html_static_path = ['_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = '{project_name}doc'.format(project_name=project)
+htmlhelp_basename = f'{project}doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -305,7 +304,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_target = '{project}.tex'.format(project=project)
+latex_target = f'{project}.tex'
 latex_documents = [
     (master_doc, latex_target, documentation_title,
      author, 'manual'),

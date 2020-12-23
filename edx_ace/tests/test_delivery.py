@@ -1,8 +1,8 @@
 # pylint: disable=missing-module-docstring
 import datetime
+from unittest.mock import Mock, call, patch, sentinel
 
 from dateutil.tz import tzutc
-from mock import Mock, call, patch, sentinel
 
 from django.test import TestCase
 
@@ -15,7 +15,7 @@ from edx_ace.recipient import Recipient
 
 class TestDelivery(TestCase):  # pylint: disable=missing-class-docstring
     def setUp(self):
-        super(TestDelivery, self).setUp()
+        super().setUp()
 
         self.mock_channel = Mock(
             name='test_channel',

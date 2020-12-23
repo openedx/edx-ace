@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :mod:`edx_ace.utils.date` contains utility functions used for
 serializing and deserializing dates. It is intended for internal ACE

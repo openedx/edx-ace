@@ -2,10 +2,9 @@
 Tests of :mod:`edx_ace.policy`.
 """
 from collections import namedtuple
-from unittest import TestCase
+from unittest import TestCase, mock
 
 import ddt
-from mock import mock, patch
 
 from edx_ace import policy
 from edx_ace.channel import ChannelType
@@ -38,6 +37,6 @@ class TestPolicy(TestCase):
     @ddt.unpack
     def test_policies(self, deny_values, expected_channels):
         policies = [StubPolicy(deny_value) for deny_value in deny_values]
-        with patch.object(policy, 'policies', return_value=policies):
+        with mock.patch.object(policy, 'policies', return_value=policies):
             channels = policy.channels_for(message=mock.Mock())
             self.assertEqual(channels, expected_channels)

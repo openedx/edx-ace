@@ -7,7 +7,6 @@ and are a point of pluggability in ACE.
 from abc import ABCMeta, abstractmethod
 
 import attr
-import six
 
 from django.conf import settings
 
@@ -31,14 +30,13 @@ class PolicyResult:
     def check_set_of_channel_types(self, attribute, set_value):
         for value in set_value:
             if value not in ChannelType:
-                raise ValueError("PolicyResult for {} has an invalid value {}.".format(attribute, value))
+                raise ValueError(f"PolicyResult for {attribute} has an invalid value {value}.")  # pragma: no cover
 
 
 POLICY_PLUGIN_NAMESPACE = 'openedx.ace.policy'
 
 
-@six.add_metaclass(ABCMeta)
-class Policy:
+class Policy(metaclass=ABCMeta):
     """
     A ``Policy`` allows an application to specify what :class:`.Channel` any specific
     :class:`.Message` shouldn't be sent over. Policies are one of the primary

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :mod:`edx_ace.monitoring` exposes functions that are useful for reporting ACE
 message delivery stats to monitoring services.

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :mod:`edx_ace.errors` exposes all exceptions that are specific to ACE.
 """
@@ -19,7 +18,7 @@ class RecoverableChannelDeliveryError(ChannelError):
 
     def __init__(self, message, next_attempt_time):
         self.next_attempt_time = next_attempt_time
-        super(RecoverableChannelDeliveryError, self).__init__(message)
+        super().__init__(message)
 
 
 class FatalChannelDeliveryError(ChannelError):

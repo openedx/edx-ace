@@ -1,7 +1,6 @@
 # pylint: disable=missing-docstring
 from smtplib import SMTPException
-
-from mock import Mock, patch
+from unittest.mock import Mock, patch
 
 from django.core import mail
 from django.test import TestCase, override_settings
@@ -15,7 +14,7 @@ from edx_ace.recipient import Recipient
 
 class TestDjangoEmailChannel(TestCase):
     def setUp(self):
-        super(TestDjangoEmailChannel, self).setUp()
+        super().setUp()
 
         self.channel = DjangoEmailChannel()
         self.message = Message(

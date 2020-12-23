@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :mod:`edx_ace.message` contains the core :class:`Message` and :class:`MessageType`
 classes, which allow specification of the content to be delivered by ACE.
@@ -8,7 +7,6 @@ from abc import ABCMeta
 from uuid import UUID, uuid4
 
 import attr
-import six
 
 from django.apps import apps
 
@@ -19,8 +17,7 @@ from edx_ace.serialization import MessageAttributeSerializationMixin
 
 
 @attr.s
-@six.add_metaclass(ABCMeta)
-class Message(MessageAttributeSerializationMixin):
+class Message(MessageAttributeSerializationMixin, metaclass=ABCMeta):
     """
     A ``Message`` is the core piece of data that is passed into ACE.
     It captures the message, recipient, and all context needed to render
@@ -107,8 +104,8 @@ class Message(MessageAttributeSerializationMixin):
         """
         return '.'.join([
             self.unique_name,
-            six.text_type(self.send_uuid) if self.send_uuid else 'no_send_uuid',
-            six.text_type(self.uuid)
+            str(self.send_uuid) if self.send_uuid else 'no_send_uuid',
+            str(self.uuid)
         ])
 
     def get_message_specific_logger(self, logger):
@@ -144,7 +141,7 @@ class MessageLoggingAdapter(logging.LoggerAdapter):
         if log_level and log_level <= logging.DEBUG:
             self.info(msg, *args, **kwargs)
         else:
-            super(MessageLoggingAdapter, self).debug(msg, *args, **kwargs)
+            super().debug(msg, *args, **kwargs)
 
 
 @attr.s(eq=False, order=False)

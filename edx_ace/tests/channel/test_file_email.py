@@ -1,7 +1,6 @@
 # pylint: disable=missing-docstring
 from smtplib import SMTPException
-
-from mock import Mock, patch
+from unittest.mock import Mock, patch
 
 from django.core import mail
 from django.core.files.temp import NamedTemporaryFile

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :mod:`edx_ace.channel.django_email` implements a Django `send_mail()` email
 delivery channel for ACE.
@@ -93,4 +92,4 @@ class DjangoEmailChannel(Channel):
             mail.send()
         except SMTPException as e:
             LOG.exception(e)
-            raise FatalChannelDeliveryError('An SMTP error occurred (and logged) from Django send_email()')
+            raise FatalChannelDeliveryError('An SMTP error occurred (and logged) from Django send_email()') from e
