@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :mod:`edx_ace.channel` exposes the ACE extension point needed
 to add new delivery :class:`Channel` instances to an ACE application.
@@ -7,10 +6,9 @@ Developers wanting to add a new deliver channel should subclass :class:`Channel`
 and then add an entry to the ``openedx.ace.channel`` entrypoint in their ``setup.py``.
 """
 import abc
+import itertools
 from collections import OrderedDict, defaultdict
 from enum import Enum
-
-import six
 
 from django.conf import settings
 
@@ -22,7 +20,6 @@ from edx_ace.utils.plugins import get_plugins
 CHANNEL_EXTENSION_NAMESPACE = 'openedx.ace.channel'
 
 
-@six.python_2_unicode_compatible
 class ChannelType(Enum):
     """
     All supported communication channels.
@@ -31,11 +28,10 @@ class ChannelType(Enum):
     PUSH = 'push'
 
     def __str__(self):
-        return self.value
+        return str(self.value)
 
 
-@six.add_metaclass(abc.ABCMeta)
-class Channel:
+class Channel(metaclass=abc.ABCMeta):
     """
     Channels deliver messages to users that have already passed through the presentation and policy steps.
 
@@ -67,7 +63,6 @@ class Channel:
         raise NotImplementedError()
 
 
-@six.python_2_unicode_compatible
 class ChannelMap:
     """
     A class that represents a channel map, usually as described in Django settings and `setup.py` files.
@@ -116,12 +111,12 @@ class ChannelMap:
             channel_type (ChannelType): The channel type.
         """
         try:
-            return six.next(six.itervalues(self.channel_type_to_channel_impl[channel_type]))
-        except (StopIteration, KeyError):
+            return next(itertools.islice(self.channel_type_to_channel_impl[channel_type].values(), 0, 1))
+        except (StopIteration, KeyError) as error:
             raise UnsupportedChannelError((
                 'No implementation for channel {channel_type} is registered. '
                 'Available channels are: {channels}'
-            ).format(channel_type=channel_type, channels=channels()))
+            ).format(channel_type=channel_type, channels=channels())) from error
 
     def __str__(self):
         return 'ChannelMap {channels}'.format(channels=repr(self.channel_type_to_channel_impl))

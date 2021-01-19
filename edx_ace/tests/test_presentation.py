@@ -2,8 +2,7 @@
 Tests of :mod:`edx_ace.presentation`.
 """
 from unittest import TestCase
-
-from mock import Mock
+from unittest.mock import Mock
 
 from edx_ace.channel import ChannelType
 from edx_ace.errors import UnsupportedChannelError

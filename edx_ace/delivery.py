@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Functions for delivering ACE messages.
 
@@ -58,11 +57,11 @@ def deliver(channel, rendered_message, message):
                 break
             logger.debug('Sleeping for %d seconds before reattempting delivery of message.', num_seconds)
             time.sleep(num_seconds)
-            message.report('{channel_type}_delivery_retried'.format(channel_type=channel_type), num_seconds)
+            message.report(f'{channel_type}_delivery_retried', num_seconds)
         else:
-            message.report('{channel_type}_delivery_succeeded'.format(channel_type=channel_type), True)
+            message.report(f'{channel_type}_delivery_succeeded', True)
             return
 
-    delivery_expired_report = '{channel_type}_delivery_expired'.format(channel_type=channel_type)
+    delivery_expired_report = f'{channel_type}_delivery_expired'
     logger.debug(delivery_expired_report)
     message.report(delivery_expired_report, get_current_time() - start_time)

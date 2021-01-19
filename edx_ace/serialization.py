@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :mod:`edx_ace.serialization` contains :class:`MessageAttributeSerializationMixin`,
 which allows messages to be round-tripped through JSON, and
@@ -8,14 +7,12 @@ import json
 from uuid import UUID
 
 import attr
-import six
 
 from django.utils.functional import Promise
 
 from edx_ace.utils import date
 
 
-@six.python_2_unicode_compatible
 class MessageAttributeSerializationMixin:
     """
     This mixin allows an object to be serialized to (and deserialized from)
@@ -72,7 +69,7 @@ class MessageAttributeSerializationMixin:
             An instance of the current class.
         """
         fields = json_value.copy()
-        for field_name, field_value in six.iteritems(fields):
+        for field_name, field_value in fields.items():
             fields[field_name] = cls._deserialize_field(field_name, field_value)
         return fields
 
@@ -86,8 +83,8 @@ class MessageAttributeSerializationMixin:
             field_value: The value of field being deserialized.
         """
         # We have to import these here to avoid a circular dependency since these classes use this mixin.
-        from edx_ace.recipient import Recipient  # pylint: disable=import-outside-toplevel
         from edx_ace.message import Message  # pylint: disable=import-outside-toplevel
+        from edx_ace.recipient import Recipient  # pylint: disable=import-outside-toplevel
 
         if field_value is None:
             return None
@@ -109,14 +106,14 @@ class MessageEncoder(json.JSONEncoder):
     """ Custom Message Encoder. """
     # The Pylint error is disabled because of a bug in Pylint.
     # See https://github.com/PyCQA/pylint/issues/414
-    def default(self, o):  # pylint: disable=method-hidden
+    def default(self, o):
         if isinstance(o, UUID):
-            return six.text_type(o)
+            return str(o)
         elif isinstance(o, date.datetime):
             return date.serialize(o)
         elif hasattr(o, 'to_json'):
             return o.to_json()
         elif isinstance(o, Promise):
-            return six.text_type(o)
+            return str(o)
         else:
-            return super(MessageEncoder, self).default(o)
+            return super().default(o)   # pragma: no cover

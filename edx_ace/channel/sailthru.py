@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :mod:`edx_ace.channel.sailthru` implements a SailThru-based email delivery
 channel for ACE.
@@ -11,7 +10,6 @@ from enum import Enum, IntEnum
 from gettext import gettext as _
 
 import attr
-import six
 from dateutil.tz import tzutc
 
 from django.conf import settings
@@ -183,7 +181,7 @@ class SailthruEmailChannel(Channel):
             )
 
         template_vars, options = {}, {}
-        for key, value in six.iteritems(attr.asdict(rendered_message)):
+        for key, value in attr.asdict(rendered_message).items():
             if value is not None:
                 # Sailthru will silently fail to send the email if the from name or subject line contain new line
                 # characters at the beginning or end of the string
@@ -208,8 +206,8 @@ class SailthruEmailChannel(Channel):
                 """),
                 self.template_name,
                 message.recipient.email_address,
-                six.text_type(template_vars),
-                six.text_type(options),
+                str(template_vars),
+                str(options),
             )
             return
 
@@ -224,8 +222,8 @@ class SailthruEmailChannel(Channel):
                 """),
                 self.template_name,
                 message.recipient.email_address,
-                six.text_type(template_vars),
-                six.text_type(options),
+                str(template_vars),
+                str(options),
             )
 
         try:
@@ -247,7 +245,9 @@ class SailthruEmailChannel(Channel):
                 self._handle_error_response(response)
 
         except SailthruClientError as exc:
-            raise FatalChannelDeliveryError('Unable to communicate with the Sailthru API: ' + six.text_type(exc))
+            raise FatalChannelDeliveryError(
+                'Unable to communicate with the Sailthru API: ' + str(exc)
+            ) from exc  # pragma: no cover
 
     def _handle_error_response(self, response):
         """

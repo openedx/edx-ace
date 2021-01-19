@@ -3,14 +3,13 @@
 language: python
 
 python:
-  - 3.5
-  - 3.8
-
+  - '3.8'
 env:
-  - TOXENV=django22
   - TOXENV=docs
   - TOXENV=quality
-
+  - TOXENV=django22
+  - TOXENV=django30
+  - TOXENV=django31
 cache:
   - pip
 
@@ -34,5 +33,5 @@ deploy:
   distributions: sdist bdist_wheel
   on:
     tags: true
-    condition: "$TOXENV = quality"
-    python: 3.5
+    condition: $TOXENV = quality
+    python: 3.8

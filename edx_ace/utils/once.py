@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 :mod:`edx_ace.utils.once` provides the ability to create a module-level
 function that caches it's result after the first call (this can be used

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Internal module configuring ACE as a Django app.
 """

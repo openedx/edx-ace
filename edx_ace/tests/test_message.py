@@ -1,17 +1,15 @@
-# -*- coding: utf-8 -*-
 """
 Tests of :mod:`edx_ace.message`.
 """
 import logging
 from functools import partial
 from unittest import TestCase
+from unittest.mock import patch
 
 import ddt
-import six
 from hypothesis import given
 from hypothesis import strategies as st
 from hypothesis.extra.pytz import timezones
-from mock import patch
 
 from django.utils.translation import ugettext_lazy
 
@@ -48,7 +46,7 @@ class TestMessage(TestCase):
     Tests of :class:`.Message` and :class:`.MessageType`.
     """
     def setUp(self):
-        super(TestMessage, self).setUp()
+        super().setUp()
         self.msg_kwargs = {
             'app_label': 'test_app_label',
             'name': 'test_message',
@@ -76,7 +74,7 @@ class TestMessage(TestCase):
 
     def test_serialization(self):
         message = Message(**self.msg_kwargs)
-        string_value = six.text_type(message)
+        string_value = str(message)
         resurrected_msg = Message.from_string(string_value)
         self.assertEqual(message, resurrected_msg)
 
@@ -87,7 +85,7 @@ class TestMessage(TestCase):
 
     @given(msg)
     def test_serialization_round_trip(self, message):
-        serialized = six.text_type(message)
+        serialized = str(message)
         parsed = Message.from_string(serialized)
         self.assertEqual(message, parsed)
 
@@ -146,6 +144,6 @@ class TestMessageTypes(TestCase):
     """ Test Message Types. """
     @given(msg_type)
     def test_serialization_roundtrip(self, message_type):
-        serialized = six.text_type(message_type)
+        serialized = str(message_type)
         parsed = MessageType.from_string(serialized)
         self.assertEqual(message_type, parsed)

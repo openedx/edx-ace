@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 An internal module that manages the presentation/rendering step of the
 ACE pipeline.
@@ -18,7 +17,7 @@ def render(channel, message):
     renderer = RENDERERS.get(channel.channel_type)
 
     if not renderer:
-        error_msg = 'No renderer is registered for the channel type [{}].'.format(channel.channel_type)
+        error_msg = f'No renderer is registered for the channel type [{channel.channel_type}].'
         raise errors.UnsupportedChannelError(error_msg)
 
     message_language = message.language or translation.get_language()
