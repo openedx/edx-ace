@@ -96,6 +96,7 @@ setup(
     ],
     entry_points={
         'openedx.ace.channel': [
+            'braze_email = edx_ace.channel.braze:BrazeEmailChannel',
             'sailthru_email = edx_ace.channel.sailthru:SailthruEmailChannel',
             'file_email = edx_ace.channel.file:FileEmailChannel',
             'django_email = edx_ace.channel.django_email:DjangoEmailChannel',

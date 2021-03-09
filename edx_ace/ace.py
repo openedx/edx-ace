@@ -11,7 +11,7 @@ Usage:
     msg = Message(
         name="test_message",
         app_label="my_app",
-        recipient=Recipient(username='a_user', email='a_user@example.com'),
+        recipient=Recipient(lms_user_id='123456', email='a_user@example.com'),
         language='en',
         context={
             'stuff': 'to personalize the message',

@@ -26,7 +26,7 @@ class TestAce(TestCase):
             tracker_image_sources=[],
         )
 
-        recipient = Recipient(username='testuser')
+        recipient = Recipient(lms_user_id=123)
         msg = Message(
             app_label='testapp',
             name='testmessage',
@@ -54,7 +54,7 @@ class TestAce(TestCase):
 
     @patch('edx_ace.ace.get_channel_for_message', side_effect=UnsupportedChannelError)
     def test_ace_send_unsupported_channel(self, *_args):
-        recipient = Recipient(username='testuser')
+        recipient = Recipient(lms_user_id=123)
         msg = Message(
             app_label='testapp',
             name='testmessage',
