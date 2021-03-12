@@ -34,7 +34,7 @@ msg = st.builds(
     ),
     recipient=st.builds(
         Recipient,
-        username=st.text(),
+        lms_user_id=st.integers(min_value=1),
     ),
     send_uuid=st.one_of(st.uuids(), st.none()),
 )
@@ -56,7 +56,7 @@ class TestMessage(TestCase):
                 'key2': 'value2',
             },
             'recipient': Recipient(
-                username='me',
+                lms_user_id=123,
             )
         }
 

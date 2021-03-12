@@ -3,31 +3,18 @@
 delivery channel for ACE.
 """
 import logging
-import re
 from smtplib import SMTPException
 
-from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 
-from edx_ace.channel import Channel, ChannelType
+from edx_ace.channel import Channel
+from edx_ace.channel.mixins import EmailChannelMixin
 from edx_ace.errors import FatalChannelDeliveryError
 
 LOG = logging.getLogger(__name__)
 
-TEMPLATE = """\
-<!DOCTYPE html>
-<html>
-    <head>
-        {head_html}
-    </head>
-    <body>
-        {body_html}
-    </body>
-</html>
-"""
 
-
-class DjangoEmailChannel(Channel):
+class DjangoEmailChannel(EmailChannelMixin, Channel):
     """
     A `send_mail()` channel for edX ACE.
 
@@ -55,8 +42,6 @@ class DjangoEmailChannel(Channel):
             .. settings_end
     """
 
-    channel_type = ChannelType.EMAIL
-
     @classmethod
     def enabled(cls):
         """
@@ -65,20 +50,11 @@ class DjangoEmailChannel(Channel):
         return True
 
     def deliver(self, message, rendered_message):
-        # Compress spaces and remove newlines to make it easier to author templates.
-        subject = re.sub('\\s+', ' ', rendered_message.subject, re.UNICODE).strip()
-        default_from_address = getattr(settings, 'DEFAULT_FROM_EMAIL', None)
+        subject = self.get_subject(rendered_message)
+        from_address = self.get_from_address(message)
         reply_to = message.options.get('reply_to', None)
-        from_address = message.options.get('from_address', default_from_address)
-        if not from_address:
-            raise FatalChannelDeliveryError(
-                'from_address must be included in message delivery options or as the DEFAULT_FROM_EMAIL settings'
-            )
 
-        rendered_template = TEMPLATE.format(
-            head_html=rendered_message.head_html,
-            body_html=rendered_message.body_html,
-        )
+        rendered_template = self.make_simple_html_template(rendered_message.head_html, rendered_message.body_html)
         try:
             mail = EmailMultiAlternatives(
                 subject=subject,

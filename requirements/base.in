@@ -2,9 +2,9 @@
 
 -c constraints.txt
 Django>=2.2,<2.3                  # Web application framework
+edx-toggles
 python-dateutil                   # Python Date Utilities
 attrs>=17.2.0                     # Attributes without boilerplate
 sailthru-client==2.2.3
 six
 stevedore>=1.10.0
-

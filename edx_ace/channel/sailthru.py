@@ -11,10 +11,12 @@ from gettext import gettext as _
 
 import attr
 from dateutil.tz import tzutc
+from edx_toggles.toggles import WaffleFlag
 
 from django.conf import settings
 
 from edx_ace.channel import Channel, ChannelType
+from edx_ace.channel.braze import BrazeEmailChannel
 from edx_ace.errors import FatalChannelDeliveryError, InvalidMessageError, RecoverableChannelDeliveryError
 from edx_ace.utils.date import get_current_time
 
@@ -27,6 +29,16 @@ try:
 except ImportError:
     LOG.warning('Sailthru client not installed. The Sailthru delivery channel is disabled.')
     CLIENT_LIBRARY_INSTALLED = False
+
+
+# .. toggle_name: edx_ace.braze_rollout
+# .. toggle_implementation: WaffleFlag
+# .. toggle_default: False
+# .. toggle_description: Redirects sailthru traffic to braze, to help test the new braze backend.
+# .. toggle_use_cases: temporary
+# .. toggle_creation_date: 2021-03-11
+# .. toggle_target_removal_date: 2021-04-31
+BRAZE_ROLLOUT_FLAG = WaffleFlag('edx_ace.braze_rollout', __name__)
 
 
 class RecoverableErrorCodes(IntEnum):
@@ -172,6 +184,10 @@ class SailthruEmailChannel(Channel):
         self.template_name = settings.ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME
 
     def deliver(self, message, rendered_message):
+        if BRAZE_ROLLOUT_FLAG.is_enabled() and BrazeEmailChannel.enabled():
+            BrazeEmailChannel().deliver(message, rendered_message)
+            return
+
         if message.recipient.email_address is None:
             raise InvalidMessageError(
                 'No email address specified for recipient {} while sending message {}'.format(

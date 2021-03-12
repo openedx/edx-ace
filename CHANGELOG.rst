@@ -6,7 +6,7 @@ Change Log
    in this file.  It adheres to the structure of http://keepachangelog.com/ ,
    but in reStructuredText instead of Markdown (for ease of incorporation into
    Sphinx documentation and the PyPI description).
-   
+
    This project adheres to Semantic Versioning (http://semver.org/).
 
 .. There should always be an "Unreleased" section for changes pending release.
@@ -15,6 +15,17 @@ Unreleased
 ~~~~~~~~~~
 
 *
+
+[1.0.0] - 2021-03-11
+~~~~~~~~~~~~~~~~~~~~
+
+* BREAKING: Recipient objects now take `lms_user_id` instead of `username`
+* New `braze_email` backend, needing the following new configuration:
+
+  * ACE_CHANNEL_BRAZE_API_KEY
+  * ACE_CHANNEL_BRAZE_APP_ID
+  * ACE_CHANNEL_BRAZE_REST_ENDPOINT (like `rest.iad-01.braze.com`)
+  * ACE_CHANNEL_BRAZE_CAMPAIGNS (an optional dictionary of ACE message names to Braze campaign identifiers)
 
 [0.1.18] - 2020-11-19
 ~~~~~~~~~~~~~~~~~~~~~

@@ -13,7 +13,7 @@ from edx_ace.channel import Channel, ChannelType
 LOG = logging.getLogger(__name__)
 
 PATH_OVERRIDE_KEY = 'output_file_path'
-DEFAULT_OUTPUT_FILE_PATH_TPL = '/edx/src/ace_messages/{recipient.username}.{date:%Y%m%d-%H%M%S}.html'
+DEFAULT_OUTPUT_FILE_PATH_TPL = '/edx/src/ace_messages/{recipient.lms_user_id}.{date:%Y%m%d-%H%M%S}.html'
 TEMPLATE = """
 <!DOCTYPE html>
 <html>

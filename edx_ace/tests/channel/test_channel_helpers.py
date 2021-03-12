@@ -29,7 +29,7 @@ class TestChannelMap(TestCase):
                 'key2': 'value2',
             },
             'recipient': Recipient(
-                username='me',
+                lms_user_id=123,
             )
         }
 

@@ -22,7 +22,7 @@ class TestDelivery(TestCase):  # pylint: disable=missing-class-docstring
             channel_type=ChannelType.EMAIL
         )
         self.recipient = Recipient(
-            username=str(sentinel.username)
+            lms_user_id=123
         )
         self.message = Message(
             app_label=str(sentinel.app_label),
