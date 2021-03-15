@@ -160,6 +160,10 @@ class SailthruEmailChannel(Channel):
 
     @property
     def action_links(self):
+        """Provides list of action links, called by templates directly"""
+        if self._should_use_braze():
+            return BrazeEmailChannel().action_links
+
         # Note that these variables are evaluated by Sailthru, not the Django template engine
         return [
             ('{view_url}', _('View on Web')),
@@ -168,6 +172,10 @@ class SailthruEmailChannel(Channel):
 
     @property
     def tracker_image_sources(self):
+        """Provides list of trackers, called by templates directly"""
+        if self._should_use_braze():
+            return BrazeEmailChannel().tracker_image_sources
+
         # Note {beacon_src} is not a template variable that is evaluated by the Django template engine.
         # It is evaluated by Sailthru when the email is sent.
         return ['{beacon_src}']
@@ -184,7 +192,7 @@ class SailthruEmailChannel(Channel):
         self.template_name = settings.ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME
 
     def deliver(self, message, rendered_message):
-        if BRAZE_ROLLOUT_FLAG.is_enabled() and BrazeEmailChannel.enabled():
+        if self._should_use_braze():
             BrazeEmailChannel().deliver(message, rendered_message)
             return
 
@@ -332,3 +340,6 @@ class SailthruEmailChannel(Channel):
             return datetime.utcfromtimestamp(reset_timestamp).replace(tzinfo=tzutc())
         except ValueError:
             return None
+
+    def _should_use_braze(self):
+        return BRAZE_ROLLOUT_FLAG.is_enabled() and BrazeEmailChannel.enabled()

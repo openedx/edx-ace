@@ -4,6 +4,7 @@
 import logging
 import random
 from datetime import timedelta
+from gettext import gettext as _
 
 import requests
 
@@ -78,6 +79,18 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
 
         return ok
 
+    @property
+    def action_links(self):
+        """Provides list of action links, called by templates directly"""
+        return [
+            ('{{${set_user_to_unsubscribed_url}}}', _('Unsubscribe from this list')),
+        ]
+
+    @property
+    def tracker_image_sources(self):
+        """Provides list of trackers, called by templates directly"""
+        return []  # not needed
+
     def deliver(self, message, rendered_message):
         if not self.enabled():
             raise FatalChannelDeliveryError('Braze channel is disabled, unable to send')
@@ -97,6 +110,7 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
         logger.debug('Sending to Braze')
 
         # https://www.braze.com/docs/api/endpoints/messaging/send_messages/post_send_messages/
+        # https://www.braze.com/docs/api/objects_filters/email_object/
         response = requests.post(
             self._send_url(),
             headers=self._auth_headers(),
@@ -113,6 +127,7 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
                         'body': body_html,
                         'plaintext_body': rendered_message.body,
                         'message_variation_id': self._variation_id(message.name),
+                        'should_inline_css': False,  # this feature messes with inline CSS already in ACE templates
                     },
                 },
             },
