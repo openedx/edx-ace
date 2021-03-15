@@ -103,3 +103,9 @@ The **Presentation** tools render the message templates using the Django templat
 Each :class:`~edx_ace.channel.Channel` has exactly one implementation that is called in sequence to transmit the
 message to the user over the appropriate channel if and only if the policy has allowed communication over that channel.
 An example is the :class:`edx_ace.channel.sailthru.SailthruEmailChannel`.
+
+
+Decisions
+---------
+.. toctree::
+    Braze Event Delivery <decisions/0001-braze-event-delivery>
