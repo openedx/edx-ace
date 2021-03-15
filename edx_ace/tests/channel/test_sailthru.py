@@ -80,3 +80,14 @@ class TestSailthruChannel(TestCase):
                     deliver(self.channel, rendered_email, message)
                     assert mock_braze.call_count == (1 if enabled else 0)
                     assert mock_send.call_count == (0 if enabled else 1)
+
+    @override_settings(
+        ACE_CHANNEL_BRAZE_API_KEY='test-api-key',
+        ACE_CHANNEL_BRAZE_APP_ID='test-app-id',
+        ACE_CHANNEL_BRAZE_REST_ENDPOINT='rest.braze.com',
+        ACE_CHANNEL_SAILTHRU_DEBUG=False,
+    )
+    @override_waffle_flag(BRAZE_ROLLOUT_FLAG, active=True)
+    def test_braze_rollout_properties(self):
+        assert self.channel.action_links == [('{{${set_user_to_unsubscribed_url}}}', 'Unsubscribe from this list')]
+        assert self.channel.tracker_image_sources == []

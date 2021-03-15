@@ -16,6 +16,12 @@ Unreleased
 
 *
 
+[1.0.1] - 2021-03-15
+~~~~~~~~~~~~~~~~~~~~
+
+* Braze: Add an unsubscribe action link
+* Braze: Don't ask Braze to inline css, as ACE templates already have inline css
+
 [1.0.0] - 2021-03-11
 ~~~~~~~~~~~~~~~~~~~~
 

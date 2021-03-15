@@ -71,11 +71,24 @@ class TestBrazeChannel(TestCase):
     template head.html\n
   </head>
   <body>
-    template body.html\n\n\n\n\n
+    template body.html\n\n\n\n
+<tr>
+    <!-- Actions -->
+    <td style="padding-bottom: 20px;">
+        
+            <p>
+                <a href="{{${set_user_to_unsubscribed_url}}}" style="color: #960909">
+                    <font color="#960909"><b>Unsubscribe from this list</b></font>
+                </a>
+            </p>
+        
+    </td>
+</tr>\n\n
   </body>
-</html>""",
+</html>""",  # noqa
                         'plaintext_body': 'template body.txt',
                         'message_variation_id': None,
+                        'should_inline_css': False,
                     },
                 },
             },
