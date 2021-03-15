@@ -11,12 +11,10 @@ from gettext import gettext as _
 
 import attr
 from dateutil.tz import tzutc
-from edx_toggles.toggles import WaffleFlag
 
 from django.conf import settings
 
 from edx_ace.channel import Channel, ChannelType
-from edx_ace.channel.braze import BrazeEmailChannel
 from edx_ace.errors import FatalChannelDeliveryError, InvalidMessageError, RecoverableChannelDeliveryError
 from edx_ace.utils.date import get_current_time
 
@@ -29,16 +27,6 @@ try:
 except ImportError:
     LOG.warning('Sailthru client not installed. The Sailthru delivery channel is disabled.')
     CLIENT_LIBRARY_INSTALLED = False
-
-
-# .. toggle_name: edx_ace.braze_rollout
-# .. toggle_implementation: WaffleFlag
-# .. toggle_default: False
-# .. toggle_description: Redirects sailthru traffic to braze, to help test the new braze backend.
-# .. toggle_use_cases: temporary
-# .. toggle_creation_date: 2021-03-11
-# .. toggle_target_removal_date: 2021-04-31
-BRAZE_ROLLOUT_FLAG = WaffleFlag('edx_ace.braze_rollout', __name__)
 
 
 class RecoverableErrorCodes(IntEnum):
@@ -161,9 +149,6 @@ class SailthruEmailChannel(Channel):
     @property
     def action_links(self):
         """Provides list of action links, called by templates directly"""
-        if self._should_use_braze():
-            return BrazeEmailChannel().action_links
-
         # Note that these variables are evaluated by Sailthru, not the Django template engine
         return [
             ('{view_url}', _('View on Web')),
@@ -173,9 +158,6 @@ class SailthruEmailChannel(Channel):
     @property
     def tracker_image_sources(self):
         """Provides list of trackers, called by templates directly"""
-        if self._should_use_braze():
-            return BrazeEmailChannel().tracker_image_sources
-
         # Note {beacon_src} is not a template variable that is evaluated by the Django template engine.
         # It is evaluated by Sailthru when the email is sent.
         return ['{beacon_src}']
@@ -192,10 +174,6 @@ class SailthruEmailChannel(Channel):
         self.template_name = settings.ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME
 
     def deliver(self, message, rendered_message):
-        if self._should_use_braze():
-            BrazeEmailChannel().deliver(message, rendered_message)
-            return
-
         if message.recipient.email_address is None:
             raise InvalidMessageError(
                 'No email address specified for recipient {} while sending message {}'.format(
@@ -340,6 +318,3 @@ class SailthruEmailChannel(Channel):
             return datetime.utcfromtimestamp(reset_timestamp).replace(tzinfo=tzutc())
         except ValueError:
             return None
-
-    def _should_use_braze(self):
-        return BRAZE_ROLLOUT_FLAG.is_enabled() and BrazeEmailChannel.enabled()
