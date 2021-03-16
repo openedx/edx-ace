@@ -14,7 +14,7 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
-*
+* Sailthru: Remove Braze rollout waffle flag
 
 [1.0.1] - 2021-03-15
 ~~~~~~~~~~~~~~~~~~~~
