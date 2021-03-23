@@ -4,7 +4,7 @@ Allow for In-Braze Message Templating
 Status
 ------
 
-Draft
+Rejected
 
 Context
 -------
@@ -38,3 +38,10 @@ named based on the name of the ACE email being sent.
 We will also add the ability to disable specific Braze-channel emails from being sent via
 the API, so that we can control which emails will be sent via event trigger Braze campaigns,
 and which will be sent via the direct email API.
+
+Rejection
+---------
+
+As of March 2021, Braze event properties cannot contain nested data. As a result, we cannot
+emit events that parallel the current message context attributes into Braze effectively. Instead,
+we will emit events into Segment for dynamic pacing outside of ACE entirely.
