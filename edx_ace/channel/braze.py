@@ -49,6 +49,7 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
             .. settings_start
             ACE_CHANNEL_BRAZE_API_KEY = "1c304d0d-c800-4da3-bfaa-41b1189b34cb"
             ACE_CHANNEL_BRAZE_APP_ID = "f6232495-6ad6-4310-bab5-5673768856aa"
+            ACE_CHANNEL_BRAZE_FROM_EMAIL = "Open edX <openedx@example.com>"
             ACE_CHANNEL_BRAZE_REST_ENDPOINT = "rest.iad-01.braze.com"
             ACE_CHANNEL_BRAZE_CAMPAIGNS = {
                 "deletionnotificationmessage": "campaign_id:variation_id"
@@ -60,6 +61,7 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
     _APP_ID_SETTING = 'ACE_CHANNEL_BRAZE_APP_ID'
     _CAMPAIGNS_SETTING = 'ACE_CHANNEL_BRAZE_CAMPAIGNS'  # optional
     _ENDPOINT_SETTING = 'ACE_CHANNEL_BRAZE_REST_ENDPOINT'
+    _FROM_EMAIL_SETTING = 'ACE_CHANNEL_BRAZE_FROM_EMAIL'  # optional
 
     @classmethod
     def enabled(cls):
@@ -106,6 +108,11 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
         transactional = message.options.get('transactional', False)
         body_html = self.make_simple_html_template(rendered_message.head_html, rendered_message.body_html)
 
+        # Allow our settings to override the from address, because Braze requires specific configured from addresses,
+        # which are tied to specific ip addresses that are "ip warmed" to help delivery of the emails not get sent
+        # to promotional/spam inboxes.
+        from_address = getattr(settings, self._FROM_EMAIL_SETTING, None) or self.get_from_address(message)
+
         logger = message.get_message_specific_logger(LOG)
         logger.debug('Sending to Braze')
 
@@ -122,7 +129,7 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
                     'email': {
                         'app_id': getattr(settings, self._APP_ID_SETTING),
                         'subject': self.get_subject(rendered_message),
-                        'from': self.get_from_address(message),
+                        'from': from_address,
                         'reply_to': message.options.get('reply_to'),
                         'body': body_html,
                         'plaintext_body': rendered_message.body,

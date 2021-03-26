@@ -14,6 +14,10 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[1.1.0] - 2021-03-26
+~~~~~~~~~~~~~~~~~~~~
+
+* Braze: Add ACE_CHANNEL_BRAZE_FROM_EMAIL setting to override the normal from address
 * Sailthru: Remove Braze rollout waffle flag
 
 [1.0.1] - 2021-03-15

@@ -116,10 +116,16 @@ class TestBrazeChannel(TestCase):
         mock_post = self.deliver_email(options={'transactional': True})
         assert mock_post.call_args[1]['json']['recipient_subscription_state'] == 'all'
 
-    def test_from_address(self):
-        """Can set a from address in options"""
+    def test_from_address_in_message(self):
+        """Can set a from address in message options"""
         mock_post = self.deliver_email(options={'from_address': 'testing@example.com'})
         assert mock_post.call_args[1]['json']['messages']['email']['from'] == 'testing@example.com'
+
+    @override_settings(ACE_CHANNEL_BRAZE_FROM_EMAIL='settings@example.com')
+    def test_from_address_in_settings(self):
+        """Can set a from address in settings, which will be preferred over the message options"""
+        mock_post = self.deliver_email(options={'from_address': 'message@example.com'})
+        assert mock_post.call_args[1]['json']['messages']['email']['from'] == 'settings@example.com'
 
     def test_reply_to(self):
         """Can set a reply-to address in options"""
