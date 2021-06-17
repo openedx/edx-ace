@@ -4,55 +4,61 @@
 #
 #    make upgrade
 #
-attrs==20.3.0
+attrs==21.2.0
     # via
     #   -r requirements/base.in
     #   hypothesis
     #   pytest
-certifi==2020.12.5
+certifi==2021.5.30
     # via requests
 chardet==4.0.0
     # via requests
-coverage==5.4
+coverage==5.5
     # via pytest-cov
-ddt==1.4.1
+ddt==1.4.2
     # via -r requirements/test.in
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
 hypothesis-pytest==0.19.0
     # via -r requirements/test.in
-hypothesis[pytz]==6.0.4
+hypothesis[pytz]==6.14.0
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
 idna==2.10
     # via requests
+importlib-metadata==4.5.0
+    # via pytest-randomly
 iniconfig==1.1.1
     # via pytest
+jedi==0.18.0
+    # via pudb
 mock==4.0.3
     # via -r requirements/test.in
-packaging==20.8
+packaging==20.9
     # via pytest
-pbr==5.5.1
+parso==0.8.2
+    # via jedi
+pbr==5.6.0
     # via stevedore
 pluggy==0.13.1
     # via pytest
-pudb==2020.1
+pudb==2021.1
     # via -r requirements/test.in
 py==1.10.0
     # via pytest
-pygments==2.7.4
+pygments==2.9.0
     # via pudb
 pyparsing==2.4.7
     # via packaging
-pytest-cov==2.11.1
+pytest-cov==2.12.1
     # via -r requirements/test.in
-pytest-django==4.1.0
+pytest-django==4.4.0
     # via -r requirements/test.in
-pytest-randomly==3.5.0
+pytest-randomly==3.8.0
     # via -r requirements/test.in
-pytest==6.2.2
+pytest==6.2.4
     # via
     #   hypothesis-pytest
     #   pytest-cov
@@ -60,7 +66,7 @@ pytest==6.2.2
     #   pytest-randomly
 python-dateutil==2.8.1
     # via -r requirements/base.in
-pytz==2020.5
+pytz==2021.1
     # via
     #   django
     #   hypothesis
@@ -70,19 +76,23 @@ sailthru-client==2.2.3
     # via -r requirements/base.in
 simplejson==3.17.2
     # via sailthru-client
-six==1.15.0
+six==1.16.0
     # via
     #   -r requirements/base.in
     #   python-dateutil
-sortedcontainers==2.3.0
+sortedcontainers==2.4.0
     # via hypothesis
 sqlparse==0.4.1
     # via django
 stevedore==3.3.0
     # via -r requirements/base.in
 toml==0.10.2
-    # via pytest
-urllib3==1.26.3
+    # via
+    #   pytest
+    #   pytest-cov
+urllib3==1.26.5
     # via requests
 urwid==2.1.2
     # via pudb
+zipp==3.4.1
+    # via importlib-metadata
