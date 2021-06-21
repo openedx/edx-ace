@@ -41,7 +41,7 @@ jobs:
         run: |
           git clone https://github.com/edx/testeng-ci.git
           cd $GITHUB_WORKSPACE/testeng-ci
-          pip install -r requirements/dev.txt
+          pip install -r requirements/base.txt
       - name: create pull request
         env:
           GITHUB_TOKEN: ${{ secrets.REQUIREMENTS_BOT_GITHUB_TOKEN }}
