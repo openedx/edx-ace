@@ -14,6 +14,11 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[1.1.1] - 2021-07-09
+~~~~~~~~~~~~~~~~~~~~
+
+* Removed upper constraint from Django
+
 [1.1.0] - 2021-03-26
 ~~~~~~~~~~~~~~~~~~~~
 
