@@ -10,10 +10,10 @@ import attr
 
 from django.apps import apps
 
-import edx_ace.utils.date as date
 from edx_ace.monitoring import report as monitoring_report
 from edx_ace.recipient import Recipient
 from edx_ace.serialization import MessageAttributeSerializationMixin
+from edx_ace.utils import date
 
 
 @attr.s
