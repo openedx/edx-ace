@@ -62,6 +62,17 @@ class Channel(metaclass=abc.ABCMeta):
         """
         raise NotImplementedError()
 
+    def overrides_delivery_for_message(self, message):  # pylint: disable=unused-argument
+        """
+        Returns true if this channel specifically wants to handle this message, outside normal channel delivery rules.
+
+        For example, say you use a django transactional email channel, but with a default channel of braze.
+        Then if the braze channel is configured with a campaign for a certain transactional message id specifically, it
+        will claim that message via this method and end up delivering it via braze instead of the normal transactional
+        django channel.
+        """
+        return False
+
 
 class ChannelMap:
     """
@@ -162,12 +173,24 @@ def get_channel_for_message(channel_type, message):
 
     if channel_type == ChannelType.EMAIL:
         if message.options.get('transactional'):
-            channel_name = settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL
+            channel_names = [settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL, settings.ACE_CHANNEL_DEFAULT_EMAIL]
         else:
-            channel_name = settings.ACE_CHANNEL_DEFAULT_EMAIL
+            channel_names = [settings.ACE_CHANNEL_DEFAULT_EMAIL]
+
         try:
-            return channels_map.get_channel_by_name(channel_type, channel_name)
+            possible_channels = [
+                channels_map.get_channel_by_name(channel_type, channel_name)
+                for channel_name in channel_names
+            ]
         except KeyError:
-            pass
+            return channels_map.get_default_channel(channel_type)
+
+        # First see if any channel specifically demands to deliver this message
+        for channel in possible_channels:
+            if channel.overrides_delivery_for_message(message):
+                return channel
+
+        # Else the normal path: use the preferred channel for this message type
+        return possible_channels[0]
 
     return channels_map.get_default_channel(channel_type)
