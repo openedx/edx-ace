@@ -150,7 +150,7 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
             logger.debug('Failed to send to Braze: %s', message)
             self._handle_error_response(response, message, exc)
 
-    def handles_delivery_for_message(self, message):
+    def overrides_delivery_for_message(self, message):
         # If we have a campaign configured for this message, let's deliver it ourselves, even if it's a transactional
         # message. Presumably that campaign is set up to ignore global delivery caps so that we don't drop such a
         # transactional message on the floor. This kind of configuration could be done to get nice email metrics.
