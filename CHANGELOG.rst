@@ -14,13 +14,18 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[1.3.1] - 2021-08-17
+~~~~~~~~~~~~~~~~~~~~
+
+* Adjust name ``handles_delivery_for_message`` to ``overrides_delivery_for_message``
+
 [1.3.0] - 2021-08-16
 ~~~~~~~~~~~~~~~~~~~~
 
 * New channel method ``handles_delivery_for_message`` for allowing a default channel
   to claim a message, even if it would normally be delivered to the configured
   transactional channel.
-* Braze: Will handle any message defined in ACE_CHANNEL_BRAZE_CAMPAIGNS (using the
+* Braze: Will handle any message defined in ``ACE_CHANNEL_BRAZE_CAMPAIGNS`` (using the
   above new feature) to steal campaign messages from the transactional channel as
   needed.
 

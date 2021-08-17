@@ -62,7 +62,7 @@ class Channel(metaclass=abc.ABCMeta):
         """
         raise NotImplementedError()
 
-    def handles_delivery_for_message(self, message):  # pylint: disable=unused-argument
+    def overrides_delivery_for_message(self, message):  # pylint: disable=unused-argument
         """
         Returns true if this channel specifically wants to handle this message, outside normal channel delivery rules.
 
@@ -187,7 +187,7 @@ def get_channel_for_message(channel_type, message):
 
         # First see if any channel specifically demands to deliver this message
         for channel in possible_channels:
-            if channel.handles_delivery_for_message(message):
+            if channel.overrides_delivery_for_message(message):
                 return channel
 
         # Else the normal path: use the preferred channel for this message type
