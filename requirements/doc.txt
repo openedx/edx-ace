@@ -40,7 +40,7 @@ idna==3.2
     # via requests
 imagesize==1.2.0
     # via sphinx
-importlib-metadata==4.6.3
+importlib-metadata==4.6.4
     # via
     #   keyring
     #   twine
@@ -50,7 +50,7 @@ jeepney==0.7.1
     #   secretstorage
 jinja2==3.0.1
     # via sphinx
-keyring==23.0.1
+keyring==23.1.0
     # via twine
 markupsafe==2.0.1
     # via jinja2
@@ -64,7 +64,7 @@ pkginfo==1.7.1
     # via twine
 pycparser==2.20
     # via cffi
-pygments==2.9.0
+pygments==2.10.0
     # via
     #   doc8
     #   readme-renderer
@@ -130,7 +130,7 @@ stevedore==3.3.0
     # via
     #   -r requirements/base.in
     #   doc8
-tqdm==4.62.0
+tqdm==4.62.1
     # via twine
 twine==3.4.2
     # via -r requirements/doc.in
