@@ -124,7 +124,7 @@ class TestBrazeChannel(TestCase):
     @override_settings(ACE_CHANNEL_BRAZE_FROM_EMAIL='settings@example.com')
     def test_from_address_in_settings(self):
         """Can set a from address in settings, which will be preferred over the message options"""
-        mock_post = self.deliver_email(options={'from_address': 'message@example.com'})
+        mock_post = self.deliver_email(options={'from_address': 'settings@example.com'})
         assert mock_post.call_args[1]['json']['messages']['email']['from'] == 'settings@example.com'
 
     def test_reply_to(self):
@@ -140,6 +140,14 @@ class TestBrazeChannel(TestCase):
 
         assert mock_post.call_count == 0
         assert mock_django.call_count == 1
+
+    @override_settings(
+        ACE_CHANNEL_BRAZE_FROM_EMAIL=None,
+        DEFAULT_FROM_EMAIL=None,
+    )
+    def test_with_no_from_address_without_default(self):
+        with self.assertRaisesRegex(FatalChannelDeliveryError, 'from_address must be included'):
+            self.deliver_email(options={'from_address': None})
 
     @ddt.data(
         (400, FatalChannelDeliveryError),

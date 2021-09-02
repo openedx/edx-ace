@@ -93,6 +93,18 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
         """Provides list of trackers, called by templates directly"""
         return []  # not needed
 
+    def get_from_address(self, message):
+        """Grabs the from_address from the message with fallback and error handling"""
+        default_from_address = getattr(settings, 'DEFAULT_FROM_EMAIL', None)
+        default_braze_from_address = getattr(settings, self._FROM_EMAIL_SETTING, default_from_address)
+        from_address = message.options.get('from_address', default_braze_from_address)
+
+        if not from_address:
+            raise FatalChannelDeliveryError(
+                'from_address must be included in message delivery options or as the DEFAULT_FROM_EMAIL settings'
+            )
+        return from_address
+
     def deliver(self, message, rendered_message):
         if not self.enabled():
             raise FatalChannelDeliveryError('Braze channel is disabled, unable to send')
@@ -111,7 +123,7 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
         # Allow our settings to override the from address, because Braze requires specific configured from addresses,
         # which are tied to specific ip addresses that are "ip warmed" to help delivery of the emails not get sent
         # to promotional/spam inboxes.
-        from_address = getattr(settings, self._FROM_EMAIL_SETTING, None) or self.get_from_address(message)
+        from_address = self.get_from_address(message)
 
         logger = message.get_message_specific_logger(LOG)
         logger.debug('Sending to Braze')
