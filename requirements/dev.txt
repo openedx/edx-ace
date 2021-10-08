@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.6.6
+astroid==2.8.2
     # via
     #   pylint
     #   pylint-celery
@@ -12,7 +12,7 @@ attrs==21.2.0
     # via -r requirements/base.in
 backports.entry-points-selectable==1.1.0
     # via virtualenv
-bleach==4.0.0
+bleach==4.1.0
     # via readme-renderer
 certifi==2021.5.30
     # via requests
@@ -20,7 +20,7 @@ cffi==1.14.6
     # via cryptography
 chardet==4.0.0
     # via diff-cover
-charset-normalizer==2.0.4
+charset-normalizer==2.0.6
     # via requests
 click==8.0.1
     # via
@@ -34,33 +34,32 @@ code-annotations==1.2.0
     # via edx-lint
 colorama==0.4.4
     # via twine
-cryptography==3.4.7
+cryptography==35.0.0
     # via secretstorage
-diff-cover==6.2.1
+diff-cover==6.4.2
     # via -r requirements/dev.in
-distlib==0.3.2
+distlib==0.3.3
     # via virtualenv
 django==2.2.24
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
     #   edx-i18n-tools
-    #   edx-lint
 docutils==0.17.1
     # via readme-renderer
-edx-i18n-tools==0.7.0
+edx-i18n-tools==0.8.1
     # via -r requirements/dev.in
-edx-lint==5.0.0
+edx-lint==5.2.0
     # via
     #   -r requirements/dev.in
     #   -r requirements/quality.in
-filelock==3.0.12
+filelock==3.3.0
     # via
     #   tox
     #   virtualenv
 idna==3.2
     # via requests
-importlib-metadata==4.6.3
+importlib-metadata==4.8.1
     # via
     #   keyring
     #   twine
@@ -74,14 +73,14 @@ jeepney==0.7.1
     # via
     #   keyring
     #   secretstorage
-jinja2==3.0.1
+jinja2==3.0.2
     # via
     #   code-annotations
     #   diff-cover
     #   jinja2-pluralize
 jinja2-pluralize==0.3.0
     # via diff-cover
-keyring==23.0.1
+keyring==23.2.1
     # via twine
 lazy-object-proxy==1.6.0
     # via astroid
@@ -99,13 +98,15 @@ pbr==5.6.0
     # via stevedore
 pep517==0.11.0
     # via pip-tools
-pip-tools==6.2.0
+pip-tools==6.3.0
     # via -r requirements/dev.in
 pkginfo==1.7.1
     # via twine
-platformdirs==2.2.0
-    # via virtualenv
-pluggy==0.13.1
+platformdirs==2.4.0
+    # via
+    #   pylint
+    #   virtualenv
+pluggy==1.0.0
     # via
     #   diff-cover
     #   tox
@@ -119,11 +120,11 @@ pycparser==2.20
     # via cffi
 pydocstyle==6.1.1
     # via -r requirements/quality.in
-pygments==2.9.0
+pygments==2.10.0
     # via
     #   diff-cover
     #   readme-renderer
-pylint==2.9.6
+pylint==2.11.1
     # via
     #   edx-lint
     #   pylint-celery
@@ -143,13 +144,13 @@ python-dateutil==2.8.2
     # via -r requirements/base.in
 python-slugify==5.0.2
     # via code-annotations
-pytz==2021.1
+pytz==2021.3
     # via django
 pyyaml==5.4.1
     # via
     #   code-annotations
     #   edx-i18n-tools
-readme-renderer==29.0
+readme-renderer==30.0
     # via twine
 requests==2.26.0
     # via
@@ -164,23 +165,21 @@ sailthru-client==2.2.3
     # via -r requirements/base.in
 secretstorage==3.3.1
     # via keyring
-simplejson==3.17.3
+simplejson==3.17.5
     # via sailthru-client
 six==1.16.0
     # via
     #   -r requirements/base.in
     #   bleach
-    #   edx-i18n-tools
     #   edx-lint
     #   python-dateutil
-    #   readme-renderer
     #   tox
     #   virtualenv
 snowballstemmer==2.1.0
     # via pydocstyle
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via django
-stevedore==3.3.0
+stevedore==3.4.0
     # via
     #   -r requirements/base.in
     #   code-annotations
@@ -190,27 +189,31 @@ toml==0.10.2
     # via
     #   pylint
     #   tox
-tomli==1.2.0
+tomli==1.2.1
     # via pep517
-tox==3.24.1
+tox==3.24.4
     # via -r requirements/dev.in
-tqdm==4.62.0
+tqdm==4.62.3
     # via twine
 twine==3.4.2
     # via -r requirements/dev.in
-urllib3==1.26.6
+typing-extensions==3.10.0.2
+    # via
+    #   astroid
+    #   pylint
+urllib3==1.26.7
     # via requests
-virtualenv==20.7.0
+virtualenv==20.8.1
     # via tox
 webencodings==0.5.1
     # via bleach
-wheel==0.36.2
+wheel==0.37.0
     # via
     #   -r requirements/dev.in
     #   pip-tools
 wrapt==1.12.1
     # via astroid
-zipp==3.5.0
+zipp==3.6.0
     # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
