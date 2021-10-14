@@ -134,7 +134,8 @@ class MessageLoggingAdapter(logging.LoggerAdapter):
     contain the :class:`.Message` being logged for.
     """
     def process(self, msg, kwargs):
-        return '[%s] %s' % (self.extra['message'].log_id, msg), kwargs
+        log_id = self.extra['message'].log_id
+        return f'[{log_id}] {msg}', kwargs
 
     def debug(self, msg, *args, **kwargs):
         log_level = self.extra['message'].log_level

@@ -33,7 +33,7 @@ class EmailChannelMixin:
 
     @staticmethod
     def make_simple_html_template(head_html, body_html):
-        return """<!DOCTYPE html>
+        return f"""<!DOCTYPE html>
 <html>
   <head>
     {head_html}
@@ -41,4 +41,4 @@ class EmailChannelMixin:
   <body>
     {body_html}
   </body>
-</html>""".format(head_html=head_html, body_html=body_html)
+</html>"""

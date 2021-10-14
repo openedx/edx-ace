@@ -176,10 +176,7 @@ class SailthruEmailChannel(Channel):
     def deliver(self, message, rendered_message):
         if message.recipient.email_address is None:
             raise InvalidMessageError(
-                'No email address specified for recipient {} while sending message {}'.format(
-                    message.recipient,
-                    message.log_id
-                )
+                f'No email address specified for recipient {message.recipient} while sending message {message.log_id}'
             )
 
         template_vars, options = {}, {}
@@ -275,22 +272,12 @@ class SailthruEmailChannel(Channel):
                 )
 
             raise RecoverableChannelDeliveryError(
-                'Recoverable Sailthru error (error_code={error_code} status_code={http_status_code}): '
-                '{message}'.format(
-                    error_code=error_code,
-                    http_status_code=http_status_code,
-                    message=error_message
-                ),
+                f'Recoverable Sailthru error (error_code={error_code} status_code={http_status_code}): {error_message}',
                 next_attempt_time
             )
 
         raise FatalChannelDeliveryError(
-            'Fatal Sailthru error (error_code={error_code} status_code={http_status_code}): '
-            '{message}'.format(
-                error_code=error_code,
-                http_status_code=http_status_code,
-                message=error_message
-            )
+            f'Fatal Sailthru error (error_code={error_code} status_code={http_status_code}): {error_message}'
         )
 
     @staticmethod

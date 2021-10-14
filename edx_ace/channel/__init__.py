@@ -124,13 +124,13 @@ class ChannelMap:
         try:
             return next(itertools.islice(self.channel_type_to_channel_impl[channel_type].values(), 0, 1))
         except (StopIteration, KeyError) as error:
-            raise UnsupportedChannelError((
-                'No implementation for channel {channel_type} is registered. '
-                'Available channels are: {channels}'
-            ).format(channel_type=channel_type, channels=channels())) from error
+            raise UnsupportedChannelError(
+                f'No implementation for channel {channel_type} is registered. '
+                f'Available channels are: {channels()}'
+            ) from error
 
     def __str__(self):
-        return 'ChannelMap {channels}'.format(channels=repr(self.channel_type_to_channel_impl))
+        return f'ChannelMap {self.channel_type_to_channel_impl!r}'
 
 
 @once
