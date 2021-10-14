@@ -171,18 +171,12 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
                 seconds=NEXT_ATTEMPT_DELAY_SECONDS + random.uniform(-2, 2)
             )
             raise RecoverableChannelDeliveryError(
-                'Recoverable Braze error (status_code={http_status_code}): {message}'.format(
-                    http_status_code=response.status_code,
-                    message=message
-                ),
+                f'Recoverable Braze error (status_code={response.status_code}): {message}',
                 next_attempt_time
             ) from exception
 
         raise FatalChannelDeliveryError(
-            'Fatal Braze error (status_code={http_status_code}): {message}'.format(
-                http_status_code=response.status_code,
-                message=message
-            )
+            f'Fatal Braze error (status_code={response.status_code}): {message}'
         ) from exception
 
     @classmethod
@@ -195,7 +189,8 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
     @classmethod
     def _send_url(cls):
         """Returns the send-message API URL"""
-        return 'https://{url}/messages/send'.format(url=getattr(settings, cls._ENDPOINT_SETTING))
+        endpoint = getattr(settings, cls._ENDPOINT_SETTING)
+        return f'https://{endpoint}/messages/send'
 
     @classmethod
     def _campaign_id(cls, name):

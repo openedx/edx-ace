@@ -82,7 +82,7 @@ class FileEmailChannel(Channel):
             date=datetime.now()
         ))
         make_parent_directories(output_file_path)
-        with open(output_file_path, 'w') as output_file:
+        with open(output_file_path, 'w', encoding='utf-8') as output_file:
             output_file.write(self._encode(rendered_template))
 
         print(self._encode(STDOUT_TEMPLATE.format(**template_vars)))

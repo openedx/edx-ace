@@ -59,12 +59,7 @@ class AbstractRenderer:
         Returns:
             The full template path to the template to render.
         """
-        template_path = '{app_label}/edx_ace/{name}/{channel_type}/{filename}'.format(
-            app_label=message.app_label,
-            name=message.name,
-            channel_type=channel.channel_type.value,
-            filename=filename,
-        )
+        template_path = f'{message.app_label}/edx_ace/{message.name}/{channel.channel_type.value}/{filename}'
         return loader.get_template(template_path)
 
 
