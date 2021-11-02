@@ -5,6 +5,7 @@ channel for ACE.
 import logging
 import random
 import textwrap
+import warnings
 from datetime import datetime, timedelta
 from enum import Enum, IntEnum
 from gettext import gettext as _
@@ -148,12 +149,28 @@ class SailthruEmailChannel(Channel):
 
     @property
     def action_links(self):
-        """Provides list of action links, called by templates directly"""
+        """
+        This method is now deprecated in favor of get_action_links,
+        but will continue to work for the time being as it calls get_action_links under the hood.
+        """
+        warnings.warn("This method is now deprecated in favor of get_action_links")
+        return self.get_action_links()
+
+    def get_action_links(self, **kwargs):
+        """
+        Provides list of action links, called by templates directly.
+        Supported kwargs:
+            omit_unsubscribe_link (bool): Removes the unsubscribe link from the email.
+            DO NOT send emails with no unsubscribe link unless you are sure it will not violate the CANSPAM act.
+        """
         # Note that these variables are evaluated by Sailthru, not the Django template engine
-        return [
+        omit_unsubscribe_link = kwargs.get('omit_unsubscribe_link')
+        action_links_list = [
             ('{view_url}', _('View on Web')),
-            ('{optout_confirm_url}', _('Unsubscribe from this list')),
         ]
+        if not omit_unsubscribe_link:
+            action_links_list.append(('{optout_confirm_url}', _('Unsubscribe from this list')),)
+        return action_links_list
 
     @property
     def tracker_image_sources(self):

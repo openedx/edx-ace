@@ -70,3 +70,22 @@ class TestSailthruChannel(TestCase):
 
         with self.assertRaisesRegex(InvalidMessageError, 'No email address'):
             deliver(self.channel, rendered_email, message)
+
+    def test_get_action_links_omit_unsubscribe_link(self):
+        """Some emails use a setting that omits the unsubscribe action link"""
+        assert len(self.channel.action_links) == 2
+        assert len(self.channel.get_action_links(omit_unsubscribe_link=True)) == 1
+
+    def test_email_omits_unsubscribe_link(self):
+        """Basic email send, no special settings"""
+        message = Message(
+            app_label='testapp',
+            name='testmessage',
+            options={},
+            context={'omit_unsubscribe_link': True},
+            recipient=Recipient(lms_user_id=123, email_address='mr@robot.io'),
+        )
+
+        rendered_email = render(self.channel, message)
+
+        assert '{optout_confirm_url}' not in rendered_email.body_html

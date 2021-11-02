@@ -26,12 +26,14 @@ class TestBrazeChannel(TestCase):
     def setUp(self):
         self.channel = BrazeEmailChannel()
 
-    def deliver_email(self, lms_user_id=123, options=None, response_code=200, response_message='Success!'):
+    def deliver_email(self, lms_user_id=123, options=None, context=None,
+                      response_code=200, response_message='Success!'):
         """Sets up all the mocks for a single email"""
         message = Message(
             app_label='testapp',
             name='testmessage',
             options=options or {},
+            context=context or {},
             recipient=Recipient(lms_user_id=lms_user_id, email_address='mr@robot.io'),
         )
         rendered_message = render(self.channel, message)
@@ -50,7 +52,6 @@ class TestBrazeChannel(TestCase):
     def test_happy_path(self):
         """Basic email send, no special settings"""
         mock_post = self.deliver_email()
-
         assert mock_post.call_count == 1
         assert mock_post.call_args[0] == ('https://rest.braze.com/messages/send',)
         assert mock_post.call_args[1] == {
@@ -115,6 +116,21 @@ class TestBrazeChannel(TestCase):
         """Transactional emails have different subscriber settings"""
         mock_post = self.deliver_email(options={'transactional': True})
         assert mock_post.call_args[1]['json']['recipient_subscription_state'] == 'all'
+
+    def test_get_action_links_omit_unsubscribe_link(self):
+        """Some emails use a setting that omits the unsubscribe action link"""
+        assert len(self.channel.action_links) == 1
+        assert len(self.channel.get_action_links(omit_unsubscribe_link=True)) == 0
+
+    def test_email_omits_unsubscribe_link(self):
+        """Basic email send, no special settings"""
+        mock_post = self.deliver_email(context={'omit_unsubscribe_link': False})
+        assert 'Unsubscribe from this list' in \
+            mock_post.call_args[1]['json']['messages']['email']['body']
+
+        mock_post = self.deliver_email(context={'omit_unsubscribe_link': True})
+        assert 'Unsubscribe from this list' not in \
+            mock_post.call_args[1]['json']['messages']['email']['body']
 
     def test_from_address_in_message(self):
         """Can set a from address in message options"""

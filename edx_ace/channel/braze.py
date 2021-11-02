@@ -3,6 +3,7 @@
 """
 import logging
 import random
+import warnings
 from datetime import timedelta
 from gettext import gettext as _
 
@@ -83,10 +84,25 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
 
     @property
     def action_links(self):
-        """Provides list of action links, called by templates directly"""
-        return [
-            ('{{${set_user_to_unsubscribed_url}}}', _('Unsubscribe from this list')),
-        ]
+        """
+        This method is now deprecated in favor of get_action_links,
+        but will continue to work for the time being as it calls get_action_links under the hood.
+        """
+        warnings.warn("This method is now deprecated in favor of get_action_links")
+        return self.get_action_links()
+
+    def get_action_links(self, **kwargs):
+        """
+        Provides list of action links, called by templates directly.
+        Supported kwargs:
+            omit_unsubscribe_link (bool): Removes the unsubscribe link from the email.
+                DO NOT send emails with no unsubscribe link unless you are sure it will not violate the CANSPAM act.
+        """
+        omit_unsubscribe_link = kwargs.get('omit_unsubscribe_link')
+        action_links = []
+        if not omit_unsubscribe_link:
+            action_links += [('{{${set_user_to_unsubscribed_url}}}', _('Unsubscribe from this list'))]
+        return action_links
 
     @property
     def tracker_image_sources(self):
