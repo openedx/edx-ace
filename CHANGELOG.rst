@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[1.4.0] - 2021-11-08
+~~~~~~~~~~~~~~~~~~~~
+
+* Deprecate the action_links property
+* Add a get_action_links method and template tag to allow passing arguments to action links
+
 [1.3.1] - 2021-08-17
 ~~~~~~~~~~~~~~~~~~~~
 

@@ -23,6 +23,7 @@ class TestAce(TestCase):
         mock_channel = Mock(
             channel_type=ChannelType.EMAIL,
             action_links=[],
+            get_action_links=[],
             tracker_image_sources=[],
         )
 
