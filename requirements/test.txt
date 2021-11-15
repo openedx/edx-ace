@@ -13,14 +13,14 @@ certifi==2021.10.8
     # via requests
 charset-normalizer==2.0.7
     # via requests
-coverage[toml]==6.0.2
+coverage[toml]==6.1.2
     # via pytest-cov
 ddt==1.4.4
     # via -r requirements/test.in
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
-hypothesis[pytz]==6.23.2
+hypothesis[pytz]==6.24.2
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
@@ -28,7 +28,7 @@ hypothesis-pytest==0.19.0
     # via -r requirements/test.in
 idna==3.3
     # via requests
-importlib-metadata==4.8.1
+importlib-metadata==4.8.2
     # via pytest-randomly
 iniconfig==1.1.1
     # via pytest
@@ -36,17 +36,17 @@ jedi==0.18.0
     # via pudb
 mock==4.0.3
     # via -r requirements/test.in
-packaging==21.0
+packaging==21.2
     # via pytest
 parso==0.8.2
     # via jedi
-pbr==5.6.0
+pbr==5.7.0
     # via stevedore
 pluggy==1.0.0
     # via pytest
-pudb==2021.1
+pudb==2021.2.2
     # via -r requirements/test.in
-py==1.10.0
+py==1.11.0
     # via pytest
 pygments==2.10.0
     # via pudb
@@ -62,7 +62,7 @@ pytest-cov==3.0.0
     # via -r requirements/test.in
 pytest-django==4.4.0
     # via -r requirements/test.in
-pytest-randomly==3.10.1
+pytest-randomly==3.10.2
     # via -r requirements/test.in
 python-dateutil==2.8.2
     # via -r requirements/base.in
@@ -84,15 +84,19 @@ sortedcontainers==2.4.0
     # via hypothesis
 sqlparse==0.4.2
     # via django
-stevedore==3.4.0
+stevedore==3.5.0
     # via -r requirements/base.in
 toml==0.10.2
     # via pytest
-tomli==1.2.1
+tomli==1.2.2
     # via coverage
 urllib3==1.26.7
     # via requests
 urwid==2.1.2
+    # via
+    #   pudb
+    #   urwid-readline
+urwid-readline==0.13
     # via pudb
 zipp==3.6.0
     # via importlib-metadata

@@ -4,13 +4,13 @@
 #
 #    make upgrade
 #
-astroid==2.8.2
+astroid==2.8.4
     # via
     #   pylint
     #   pylint-celery
 attrs==21.2.0
     # via -r requirements/base.in
-backports.entry-points-selectable==1.1.0
+backports.entry-points-selectable==1.1.1
     # via virtualenv
 bleach==4.1.0
     # via readme-renderer
@@ -45,27 +45,27 @@ django==2.2.24
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
     #   edx-i18n-tools
-docutils==0.17.1
+docutils==0.18
     # via readme-renderer
 edx-i18n-tools==0.8.1
     # via -r requirements/dev.in
-edx-lint==5.2.0
+edx-lint==5.2.1
     # via
     #   -r requirements/dev.in
     #   -r requirements/quality.in
-filelock==3.3.0
+filelock==3.3.2
     # via
     #   tox
     #   virtualenv
 idna==3.3
     # via requests
-importlib-metadata==4.8.1
+importlib-metadata==4.8.2
     # via
     #   keyring
     #   twine
 inflect==5.3.0
     # via jinja2-pluralize
-isort==5.9.3
+isort==5.10.1
     # via
     #   -r requirements/quality.in
     #   pylint
@@ -73,7 +73,7 @@ jeepney==0.7.1
     # via
     #   keyring
     #   secretstorage
-jinja2==3.0.2
+jinja2==3.0.3
     # via
     #   code-annotations
     #   diff-cover
@@ -88,15 +88,15 @@ markupsafe==2.0.1
     # via jinja2
 mccabe==0.6.1
     # via pylint
-packaging==21.0
+packaging==21.2
     # via
     #   bleach
     #   tox
 path==16.2.0
     # via edx-i18n-tools
-pbr==5.6.0
+pbr==5.7.0
     # via stevedore
-pep517==0.11.0
+pep517==0.12.0
     # via pip-tools
 pip-tools==6.4.0
     # via -r requirements/dev.in
@@ -112,11 +112,11 @@ pluggy==1.0.0
     #   tox
 polib==1.1.1
     # via edx-i18n-tools
-py==1.10.0
+py==1.11.0
     # via tox
 pycodestyle==2.8.0
     # via -r requirements/quality.in
-pycparser==2.20
+pycparser==2.21
     # via cffi
 pydocstyle==6.1.1
     # via -r requirements/quality.in
@@ -179,7 +179,7 @@ snowballstemmer==2.1.0
     # via pydocstyle
 sqlparse==0.4.2
     # via django
-stevedore==3.4.0
+stevedore==3.5.0
     # via
     #   -r requirements/base.in
     #   code-annotations
@@ -189,13 +189,13 @@ toml==0.10.2
     # via
     #   pylint
     #   tox
-tomli==1.2.1
+tomli==1.2.2
     # via pep517
 tox==3.24.4
     # via -r requirements/dev.in
 tqdm==4.62.3
     # via twine
-twine==3.4.2
+twine==3.6.0
     # via -r requirements/dev.in
 typing-extensions==3.10.0.2
     # via
@@ -203,7 +203,7 @@ typing-extensions==3.10.0.2
     #   pylint
 urllib3==1.26.7
     # via requests
-virtualenv==20.8.1
+virtualenv==20.10.0
     # via tox
 webencodings==0.5.1
     # via bleach
@@ -211,7 +211,7 @@ wheel==0.37.0
     # via
     #   -r requirements/dev.in
     #   pip-tools
-wrapt==1.12.1
+wrapt==1.13.3
     # via astroid
 zipp==3.6.0
     # via importlib-metadata
