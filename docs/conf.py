@@ -20,7 +20,6 @@ import edx_theme
 
 import django
 from django.conf import settings
-from django.utils import six
 
 
 def get_version(*file_paths):

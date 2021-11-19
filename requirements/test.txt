@@ -4,6 +4,8 @@
 #
 #    make upgrade
 #
+asgiref==3.4.1
+    # via django
 attrs==21.2.0
     # via
     #   -r requirements/base.in
@@ -20,7 +22,7 @@ ddt==1.4.4
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
-hypothesis[pytz]==6.24.2
+hypothesis[pytz]==6.25.0
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
@@ -32,15 +34,15 @@ importlib-metadata==4.8.2
     # via pytest-randomly
 iniconfig==1.1.1
     # via pytest
-jedi==0.18.0
+jedi==0.18.1
     # via pudb
 mock==4.0.3
     # via -r requirements/test.in
-packaging==21.2
+packaging==21.3
     # via pytest
 parso==0.8.2
     # via jedi
-pbr==5.7.0
+pbr==5.8.0
     # via stevedore
 pluggy==1.0.0
     # via pytest
@@ -50,7 +52,7 @@ py==1.11.0
     # via pytest
 pygments==2.10.0
     # via pudb
-pyparsing==2.4.7
+pyparsing==3.0.6
     # via packaging
 pytest==6.2.5
     # via
@@ -74,7 +76,7 @@ requests==2.26.0
     # via sailthru-client
 sailthru-client==2.2.3
     # via -r requirements/base.in
-simplejson==3.17.5
+simplejson==3.17.6
     # via sailthru-client
 six==1.16.0
     # via
