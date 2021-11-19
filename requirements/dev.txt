@@ -4,7 +4,9 @@
 #
 #    make upgrade
 #
-astroid==2.8.4
+asgiref==3.4.1
+    # via django
+astroid==2.8.5
     # via
     #   pylint
     #   pylint-celery
@@ -40,7 +42,7 @@ diff-cover==6.4.2
     # via -r requirements/dev.in
 distlib==0.3.3
     # via virtualenv
-django==2.2.24
+django==3.2.9
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -53,7 +55,7 @@ edx-lint==5.2.1
     # via
     #   -r requirements/dev.in
     #   -r requirements/quality.in
-filelock==3.3.2
+filelock==3.4.0
     # via
     #   tox
     #   virtualenv
@@ -88,19 +90,19 @@ markupsafe==2.0.1
     # via jinja2
 mccabe==0.6.1
     # via pylint
-packaging==21.2
+packaging==21.3
     # via
     #   bleach
     #   tox
 path==16.2.0
     # via edx-i18n-tools
-pbr==5.7.0
+pbr==5.8.0
     # via stevedore
 pep517==0.12.0
     # via pip-tools
 pip-tools==6.4.0
     # via -r requirements/dev.in
-pkginfo==1.7.1
+pkginfo==1.8.0
     # via twine
 platformdirs==2.4.0
     # via
@@ -138,7 +140,7 @@ pylint-plugin-utils==0.6
     # via
     #   pylint-celery
     #   pylint-django
-pyparsing==2.4.7
+pyparsing==3.0.6
     # via packaging
 python-dateutil==2.8.2
     # via -r requirements/base.in
@@ -165,7 +167,7 @@ sailthru-client==2.2.3
     # via -r requirements/base.in
 secretstorage==3.3.1
     # via keyring
-simplejson==3.17.5
+simplejson==3.17.6
     # via sailthru-client
 six==1.16.0
     # via
@@ -175,7 +177,7 @@ six==1.16.0
     #   python-dateutil
     #   tox
     #   virtualenv
-snowballstemmer==2.1.0
+snowballstemmer==2.2.0
     # via pydocstyle
 sqlparse==0.4.2
     # via django
@@ -197,7 +199,7 @@ tqdm==4.62.3
     # via twine
 twine==3.6.0
     # via -r requirements/dev.in
-typing-extensions==3.10.0.2
+typing-extensions==4.0.0
     # via
     #   astroid
     #   pylint
