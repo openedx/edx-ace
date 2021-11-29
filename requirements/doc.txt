@@ -18,11 +18,11 @@ certifi==2021.10.8
     # via requests
 cffi==1.15.0
     # via cryptography
-charset-normalizer==2.0.7
+charset-normalizer==2.0.8
     # via requests
 colorama==0.4.4
     # via twine
-cryptography==35.0.0
+cryptography==36.0.0
     # via secretstorage
 django==3.2.9
     # via
@@ -52,7 +52,7 @@ jeepney==0.7.1
     #   secretstorage
 jinja2==3.0.3
     # via sphinx
-keyring==23.2.1
+keyring==23.3.0
     # via twine
 markupsafe==2.0.1
     # via jinja2
@@ -62,7 +62,7 @@ packaging==21.3
     #   sphinx
 pbr==5.8.0
     # via stevedore
-pkginfo==1.8.0
+pkginfo==1.8.1
     # via twine
 pycparser==2.21
     # via cffi

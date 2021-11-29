@@ -13,7 +13,7 @@ attrs==21.2.0
     #   pytest
 certifi==2021.10.8
     # via requests
-charset-normalizer==2.0.7
+charset-normalizer==2.0.8
     # via requests
 coverage[toml]==6.1.2
     # via pytest-cov
@@ -22,7 +22,7 @@ ddt==1.4.4
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
-hypothesis[pytz]==6.25.0
+hypothesis[pytz]==6.27.1
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest

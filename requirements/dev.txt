@@ -6,7 +6,7 @@
 #
 asgiref==3.4.1
     # via django
-astroid==2.8.5
+astroid==2.9.0
     # via
     #   pylint
     #   pylint-celery
@@ -22,7 +22,7 @@ cffi==1.15.0
     # via cryptography
 chardet==4.0.0
     # via diff-cover
-charset-normalizer==2.0.7
+charset-normalizer==2.0.8
     # via requests
 click==8.0.3
     # via
@@ -36,7 +36,7 @@ code-annotations==1.2.0
     # via edx-lint
 colorama==0.4.4
     # via twine
-cryptography==35.0.0
+cryptography==36.0.0
     # via secretstorage
 diff-cover==6.4.2
     # via -r requirements/dev.in
@@ -47,7 +47,7 @@ django==3.2.9
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
     #   edx-i18n-tools
-docutils==0.18
+docutils==0.18.1
     # via readme-renderer
 edx-i18n-tools==0.8.1
     # via -r requirements/dev.in
@@ -82,7 +82,7 @@ jinja2==3.0.3
     #   jinja2-pluralize
 jinja2-pluralize==0.3.0
     # via diff-cover
-keyring==23.2.1
+keyring==23.3.0
     # via twine
 lazy-object-proxy==1.6.0
     # via astroid
@@ -102,7 +102,7 @@ pep517==0.12.0
     # via pip-tools
 pip-tools==6.4.0
     # via -r requirements/dev.in
-pkginfo==1.8.0
+pkginfo==1.8.1
     # via twine
 platformdirs==2.4.0
     # via
@@ -126,7 +126,7 @@ pygments==2.10.0
     # via
     #   diff-cover
     #   readme-renderer
-pylint==2.11.1
+pylint==2.12.1
     # via
     #   edx-lint
     #   pylint-celery
