@@ -52,7 +52,7 @@ jeepney==0.7.1
     #   secretstorage
 jinja2==3.0.3
     # via sphinx
-keyring==23.3.0
+keyring==23.4.0
     # via twine
 markupsafe==2.0.1
     # via jinja2
@@ -62,7 +62,7 @@ packaging==21.3
     #   sphinx
 pbr==5.8.0
     # via stevedore
-pkginfo==1.8.1
+pkginfo==1.8.2
     # via twine
 pycparser==2.21
     # via cffi
@@ -109,7 +109,7 @@ six==1.16.0
     #   python-dateutil
 snowballstemmer==2.2.0
     # via sphinx
-sphinx==4.3.0
+sphinx==4.3.1
     # via
     #   -r requirements/doc.in
     #   edx-sphinx-theme
@@ -133,7 +133,7 @@ stevedore==3.5.0
     #   doc8
 tqdm==4.62.3
     # via twine
-twine==3.6.0
+twine==3.7.0
     # via -r requirements/doc.in
 urllib3==1.26.7
     # via requests
