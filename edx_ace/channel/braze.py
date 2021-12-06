@@ -122,6 +122,7 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
             return
 
         transactional = message.options.get('transactional', False)
+        override_frequency_capping = message.options.get('override_frequency_capping', transactional)
         body_html = self.make_simple_html_template(rendered_message.head_html, rendered_message.body_html)
 
         # Allow our settings to override the from address, because Braze requires specific configured from addresses,
@@ -141,6 +142,7 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
                 'external_user_ids': [str(message.recipient.lms_user_id)],
                 'recipient_subscription_state': 'all' if transactional else 'subscribed',
                 'campaign_id': self._campaign_id(message.name),
+                'override_frequency_capping': override_frequency_capping,
                 'messages': {
                     'email': {
                         'app_id': getattr(settings, self._APP_ID_SETTING),

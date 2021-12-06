@@ -60,6 +60,7 @@ class TestBrazeChannel(TestCase):
                 'external_user_ids': ['123'],
                 'recipient_subscription_state': 'subscribed',
                 'campaign_id': None,
+                'override_frequency_capping': False,
                 'messages': {
                     'email': {
                         'app_id': 'test-app-id',
@@ -116,6 +117,7 @@ class TestBrazeChannel(TestCase):
         """Transactional emails have different subscriber settings"""
         mock_post = self.deliver_email(options={'transactional': True})
         assert mock_post.call_args[1]['json']['recipient_subscription_state'] == 'all'
+        assert mock_post.call_args[1]['json']['override_frequency_capping']
 
     def test_get_action_links_omit_unsubscribe_link(self):
         """Some emails use a setting that omits the unsubscribe action link"""

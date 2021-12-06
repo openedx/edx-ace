@@ -14,6 +14,13 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[1.4.1] - 2021-12-06
+~~~~~~~~~~~~~~~~~~~~
+
+* Adds in the ability to override frequency caps for Braze emails. Can be accessed via
+  Message options using the key ``override_frequency_capping``. All emails containing the
+  ``transactional`` Message option will also override frequency caps.
+
 [1.4.0] - 2021-11-08
 ~~~~~~~~~~~~~~~~~~~~
 
