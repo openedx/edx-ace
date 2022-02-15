@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[1.5.0] - 2022-02-15
+~~~~~~~~~~~~~~~~~~~~
+
+* Added support for Django40
+* Removed support for Django22, 30 and 31
+
 [1.4.1] - 2021-12-06
 ~~~~~~~~~~~~~~~~~~~~
 
