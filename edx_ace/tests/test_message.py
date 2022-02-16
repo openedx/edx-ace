@@ -11,7 +11,7 @@ from hypothesis import given
 from hypothesis import strategies as st
 from hypothesis.extra.pytz import timezones
 
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 
 from edx_ace.message import Message, MessageType
 from edx_ace.recipient import Recipient
@@ -80,7 +80,7 @@ class TestMessage(TestCase):
 
     def test_serialization_lazy_text(self):
         unicode_text = "A 𝓾𝓷𝓲𝓬𝓸𝓭𝓮 Text"
-        lazy_text = ugettext_lazy(unicode_text)                    # pylint: disable=translation-of-non-string
+        lazy_text = gettext_lazy(unicode_text)                    # pylint: disable=translation-of-non-string
         self.assertEqual(self.encoder.default(lazy_text), unicode_text)
 
     @given(msg)
