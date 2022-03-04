@@ -59,7 +59,7 @@ filelock==3.6.0
     #   virtualenv
 idna==3.3
     # via requests
-importlib-metadata==4.11.1
+importlib-metadata==4.11.2
     # via
     #   keyring
     #   twine
@@ -87,7 +87,7 @@ packaging==21.3
     # via
     #   bleach
     #   tox
-path==16.3.0
+path==16.4.0
     # via edx-i18n-tools
 pbr==5.8.1
     # via stevedore
@@ -137,7 +137,7 @@ pyparsing==3.0.7
     # via packaging
 python-dateutil==2.8.2
     # via -r requirements/base.in
-python-slugify==6.1.0
+python-slugify==6.1.1
     # via code-annotations
 pytz==2021.3
     # via django
@@ -188,7 +188,7 @@ tomli==2.0.1
     # via pep517
 tox==3.24.5
     # via -r requirements/dev.in
-tqdm==4.62.3
+tqdm==4.63.0
     # via twine
 twine==3.8.0
     # via -r requirements/dev.in
