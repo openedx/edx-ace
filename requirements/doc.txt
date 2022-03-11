@@ -80,7 +80,7 @@ pytz==2021.3
     # via
     #   babel
     #   django
-readme-renderer==32.0
+readme-renderer==33.0
     # via
     #   -r requirements/doc.in
     #   twine

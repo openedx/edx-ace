@@ -22,7 +22,7 @@ ddt==1.4.4
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
-hypothesis[pytz]==6.39.1
+hypothesis[pytz]==6.39.3
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
