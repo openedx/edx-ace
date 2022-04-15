@@ -42,7 +42,7 @@ dill==0.3.4
     # via pylint
 distlib==0.3.4
     # via virtualenv
-django==3.2.12
+django==3.2.13
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -134,7 +134,7 @@ pylint-plugin-utils==0.7
     # via
     #   pylint-celery
     #   pylint-django
-pyparsing==3.0.7
+pyparsing==3.0.8
     # via packaging
 python-dateutil==2.8.2
     # via -r requirements/base.in
@@ -189,7 +189,7 @@ tomli==2.0.1
     # via
     #   pep517
     #   pylint
-tox==3.24.5
+tox==3.25.0
     # via -r requirements/dev.in
 twine==4.0.0
     # via -r requirements/dev.in
@@ -202,7 +202,7 @@ urllib3==1.26.9
     # via
     #   requests
     #   twine
-virtualenv==20.14.0
+virtualenv==20.14.1
     # via tox
 webencodings==0.5.1
     # via bleach

@@ -22,7 +22,7 @@ ddt==1.4.4
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
-hypothesis[pytz]==6.41.0
+hypothesis[pytz]==6.43.1
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
@@ -54,7 +54,7 @@ py==1.11.0
     # via pytest
 pygments==2.11.2
     # via pudb
-pyparsing==3.0.7
+pyparsing==3.0.8
     # via packaging
 pytest==7.1.1
     # via
