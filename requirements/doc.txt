@@ -71,7 +71,7 @@ pygments==2.12.0
     #   readme-renderer
     #   rich
     #   sphinx
-pyparsing==3.0.8
+pyparsing==3.0.9
     # via packaging
 python-dateutil==2.8.2
     # via -r requirements/base.in
@@ -95,7 +95,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==12.3.0
+rich==12.4.1
     # via twine
 sailthru-client==2.2.3
     # via -r requirements/base.in
