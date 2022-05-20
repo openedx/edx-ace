@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.5.1
+asgiref==3.5.2
     # via django
 astroid==2.11.5
     # via
@@ -14,7 +14,7 @@ attrs==21.4.0
     # via -r requirements/base.in
 bleach==5.0.0
     # via readme-renderer
-certifi==2021.10.8
+certifi==2022.5.18.1
     # via requests
 cffi==1.15.0
     # via cryptography
@@ -38,7 +38,7 @@ cryptography==37.0.2
     # via secretstorage
 diff-cover==6.5.0
     # via -r requirements/dev.in
-dill==0.3.4
+dill==0.3.5
     # via pylint
 distlib==0.3.4
     # via virtualenv
@@ -55,7 +55,7 @@ edx-lint==5.2.2
     # via
     #   -r requirements/dev.in
     #   -r requirements/quality.in
-filelock==3.6.0
+filelock==3.7.0
     # via
     #   tox
     #   virtualenv
@@ -93,7 +93,7 @@ pbr==5.9.0
     # via stevedore
 pep517==0.12.0
     # via pip-tools
-pip-tools==6.6.0
+pip-tools==6.6.1
     # via -r requirements/dev.in
 pkginfo==1.8.2
     # via twine
@@ -120,7 +120,7 @@ pygments==2.12.0
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.13.8
+pylint==2.13.9
     # via
     #   edx-lint
     #   pylint-celery

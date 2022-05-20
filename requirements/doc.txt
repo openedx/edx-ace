@@ -6,7 +6,7 @@
 #
 alabaster==0.7.12
     # via sphinx
-asgiref==3.5.1
+asgiref==3.5.2
     # via django
 attrs==21.4.0
     # via -r requirements/base.in
@@ -14,7 +14,7 @@ babel==2.10.1
     # via sphinx
 bleach==5.0.0
     # via readme-renderer
-certifi==2021.10.8
+certifi==2022.5.18.1
     # via requests
 cffi==1.15.0
     # via cryptography
@@ -28,7 +28,7 @@ django==3.2.13
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
-doc8==0.11.1
+doc8==0.11.2
     # via -r requirements/doc.in
 docutils==0.17.1
     # via
