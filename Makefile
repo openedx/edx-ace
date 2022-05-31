@@ -42,7 +42,10 @@ docs: ## generate Sphinx HTML documentation, including API docs
 
 upgrade: export CUSTOM_COMPILE_COMMAND=make upgrade
 upgrade: ## update the requirements/*.txt files with the latest packages satisfying requirements/*.in
-	pip install -q pip-tools
+	pip-compile --allow-unsafe --rebuild --upgrade -o requirements/pip.txt requirements/pip.in
+	pip-compile --upgrade -o requirements/pip-tools.txt requirements/pip-tools.in
+	pip install -qr requirements/pip.txt
+	pip install -qr requirements/pip-tools.txt
 	pip-compile --rebuild --upgrade -o requirements/dev.txt requirements/base.in requirements/dev.in requirements/quality.in
 	pip-compile --rebuild --upgrade -o requirements/doc.txt requirements/base.in requirements/doc.in
 	pip-compile --rebuild --upgrade -o requirements/quality.txt requirements/quality.in
