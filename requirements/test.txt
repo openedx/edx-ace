@@ -15,7 +15,7 @@ certifi==2022.6.15
     # via requests
 charset-normalizer==2.1.0
     # via requests
-coverage[toml]==6.4.1
+coverage[toml]==6.4.2
     # via pytest-cov
 ddt==1.5.0
     # via -r requirements/test.in
@@ -24,7 +24,7 @@ ddt==1.5.0
     #   -r requirements/base.in
 exceptiongroup==1.0.0rc8
     # via hypothesis
-hypothesis[pytz]==6.49.1
+hypothesis[pytz]==6.50.1
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
@@ -90,7 +90,7 @@ sortedcontainers==2.4.0
     # via hypothesis
 sqlparse==0.4.2
     # via django
-stevedore==3.5.0
+stevedore==4.0.0
     # via -r requirements/base.in
 tomli==2.0.1
     # via
@@ -104,5 +104,5 @@ urwid==2.1.2
     #   urwid-readline
 urwid-readline==0.13
     # via pudb
-zipp==3.8.0
+zipp==3.8.1
     # via importlib-metadata
