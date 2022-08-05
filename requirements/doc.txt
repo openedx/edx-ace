@@ -8,7 +8,7 @@ alabaster==0.7.12
     # via sphinx
 asgiref==3.5.2
     # via django
-attrs==21.4.0
+attrs==22.1.0
     # via -r requirements/base.in
 babel==2.10.3
     # via sphinx
@@ -24,13 +24,13 @@ commonmark==0.9.1
     # via rich
 cryptography==37.0.4
     # via secretstorage
-django==3.2.14
+django==3.2.15
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
-doc8==0.11.2
+doc8==1.0.0
     # via -r requirements/doc.in
-docutils==0.18.1
+docutils==0.19
     # via
     #   doc8
     #   readme-renderer
@@ -53,7 +53,7 @@ jeepney==0.8.0
     #   secretstorage
 jinja2==3.1.2
     # via sphinx
-keyring==23.6.0
+keyring==23.7.0
     # via twine
 markupsafe==2.1.1
     # via jinja2
@@ -95,7 +95,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==12.4.4
+rich==12.5.1
     # via twine
 sailthru-client==2.2.3
     # via -r requirements/base.in
@@ -111,7 +111,7 @@ six==1.16.0
     #   python-dateutil
 snowballstemmer==2.2.0
     # via sphinx
-sphinx==5.0.2
+sphinx==5.1.1
     # via
     #   -r requirements/doc.in
     #   edx-sphinx-theme
@@ -129,19 +129,21 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 sqlparse==0.4.2
     # via django
-stevedore==3.5.0
+stevedore==4.0.0
     # via
     #   -r requirements/base.in
     #   doc8
+tomli==2.0.1
+    # via doc8
 twine==4.0.1
     # via -r requirements/doc.in
 typing-extensions==4.3.0
     # via rich
-urllib3==1.26.10
+urllib3==1.26.11
     # via
     #   requests
     #   twine
 webencodings==0.5.1
     # via bleach
-zipp==3.8.0
+zipp==3.8.1
     # via importlib-metadata
