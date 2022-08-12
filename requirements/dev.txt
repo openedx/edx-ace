@@ -6,11 +6,11 @@
 #
 asgiref==3.5.2
     # via django
-astroid==2.11.6
+astroid==2.11.7
     # via
     #   pylint
     #   pylint-celery
-attrs==21.4.0
+attrs==22.1.0
     # via -r requirements/base.in
 bleach==5.0.1
     # via readme-renderer
@@ -42,9 +42,9 @@ diff-cover==6.5.1
     # via -r requirements/dev.in
 dill==0.3.5.1
     # via pylint
-distlib==0.3.4
+distlib==0.3.5
     # via virtualenv
-django==3.2.14
+django==3.2.15
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -57,7 +57,7 @@ edx-lint==5.2.4
     # via
     #   -r requirements/dev.in
     #   -r requirements/quality.in
-filelock==3.7.1
+filelock==3.8.0
     # via
     #   tox
     #   virtualenv
@@ -79,7 +79,7 @@ jinja2==3.1.2
     # via
     #   code-annotations
     #   diff-cover
-keyring==23.6.0
+keyring==23.8.2
     # via twine
 lazy-object-proxy==1.7.1
     # via astroid
@@ -93,9 +93,9 @@ packaging==21.3
     #   tox
 path==16.4.0
     # via edx-i18n-tools
-pbr==5.9.0
+pbr==5.10.0
     # via stevedore
-pep517==0.12.0
+pep517==0.13.0
     # via build
 pip-tools==6.8.0
     # via -r requirements/dev.in
@@ -113,7 +113,7 @@ polib==1.1.1
     # via edx-i18n-tools
 py==1.11.0
     # via tox
-pycodestyle==2.8.0
+pycodestyle==2.9.1
     # via -r requirements/quality.in
 pycparser==2.21
     # via cffi
@@ -124,7 +124,7 @@ pygments==2.12.0
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.14.4
+pylint==2.14.5
     # via
     #   edx-lint
     #   pylint-celery
@@ -144,13 +144,13 @@ python-dateutil==2.8.2
     # via -r requirements/base.in
 python-slugify==6.1.2
     # via code-annotations
-pytz==2022.1
+pytz==2022.2
     # via django
 pyyaml==6.0
     # via
     #   code-annotations
     #   edx-i18n-tools
-readme-renderer==35.0
+readme-renderer==36.0
     # via twine
 requests==2.28.1
     # via
@@ -161,7 +161,7 @@ requests-toolbelt==0.9.1
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==12.4.4
+rich==12.5.1
     # via twine
 sailthru-client==2.2.3
     # via -r requirements/base.in
@@ -176,12 +176,11 @@ six==1.16.0
     #   edx-lint
     #   python-dateutil
     #   tox
-    #   virtualenv
 snowballstemmer==2.2.0
     # via pydocstyle
 sqlparse==0.4.2
     # via django
-stevedore==3.5.0
+stevedore==4.0.0
     # via
     #   -r requirements/base.in
     #   code-annotations
@@ -194,7 +193,7 @@ tomli==2.0.1
     #   build
     #   pep517
     #   pylint
-tomlkit==0.11.1
+tomlkit==0.11.3
     # via pylint
 tox==3.25.1
     # via -r requirements/dev.in
@@ -205,11 +204,11 @@ typing-extensions==4.3.0
     #   astroid
     #   pylint
     #   rich
-urllib3==1.26.10
+urllib3==1.26.11
     # via
     #   requests
     #   twine
-virtualenv==20.15.1
+virtualenv==20.16.3
     # via tox
 webencodings==0.5.1
     # via bleach
@@ -219,7 +218,7 @@ wheel==0.37.1
     #   pip-tools
 wrapt==1.14.1
     # via astroid
-zipp==3.8.0
+zipp==3.8.1
     # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
