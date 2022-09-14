@@ -1,0 +1,21 @@
+# This file records information about this repo. Its use is described in OEP-55:
+# https://open-edx-proposals.readthedocs.io/en/latest/processes/oep-0055-proc-project-maintainers.html
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: 'edx-ace'
+  description: "Utility library for messaging learners using Sailthru or Django Email delivery channels."
+  links:
+    - url: "https://edx-ace.readthedocs.org"
+      title: "Documentation"
+      icon: "Article"
+    - url: "https://github.com/openedx/edx-ace"
+      title: "Source Code"
+      icon: "Code"
+  annotations:
+    openedx.org/arch-interest-groups: ""
+spec:
+  owner: group:openedx/vanguards
+  type: 'library'
+  lifecycle: 'production'
