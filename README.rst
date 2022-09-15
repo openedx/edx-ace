@@ -28,17 +28,17 @@ How To Contribute
 
 Contributions are very welcome.
 
-Please read `How To Contribute <https://github.com/edx/edx-platform/blob/master/CONTRIBUTING.rst>`_ for details.
+Please read `How To Contribute <https://github.com/openedx/edx-platform/blob/master/CONTRIBUTING.rst>`_ for details.
 
 Even though they were written with ``edx-platform`` in mind, the guidelines
 should be followed for Open edX code in general.
 
 PR description template should be automatically applied if you are sending PR from github interface; otherwise you
 can find it
-at `PULL_REQUEST_TEMPLATE.md <https://github.com/edx/edx-ace/blob/master/.github/PULL_REQUEST_TEMPLATE.md>`_
+at `PULL_REQUEST_TEMPLATE.md <https://github.com/openedx/edx-ace/blob/master/.github/PULL_REQUEST_TEMPLATE.md>`_
 
 Issue report template should be automatically applied if you are sending it from github UI as well; otherwise you
-can find it at `ISSUE_TEMPLATE.md <https://github.com/edx/edx-ace/blob/master/.github/ISSUE_TEMPLATE.md>`_
+can find it at `ISSUE_TEMPLATE.md <https://github.com/openedx/edx-ace/blob/master/.github/ISSUE_TEMPLATE.md>`_
 
 Reporting Security Issues
 -------------------------
@@ -74,5 +74,5 @@ refer to this `list of resources <https://open.edx.org/getting-help>`_ if you ne
     :alt: Supported Python versions
 
 .. |license-badge| image:: https://img.shields.io/github/license/edx/edx-ace.svg
-    :target: https://github.com/edx/edx-ace/blob/master/LICENSE.txt
+    :target: https://github.com/openedx/edx-ace/blob/master/LICENSE.txt
     :alt: License

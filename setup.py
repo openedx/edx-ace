@@ -105,7 +105,7 @@ setup(
     long_description_content_type='text/x-rst',
     author='edX',
     author_email='oscm@edx.org',
-    url='https://github.com/edx/edx-ace',
+    url='https://github.com/openedx/edx-ace',
     packages=[
         'edx_ace',
     ],
