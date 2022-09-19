@@ -10,12 +10,9 @@ metadata:
     - url: "https://edx-ace.readthedocs.org"
       title: "Documentation"
       icon: "Article"
-    - url: "https://github.com/openedx/edx-ace"
-      title: "Source Code"
-      icon: "Code"
   annotations:
     openedx.org/arch-interest-groups: ""
 spec:
-  owner: group:openedx/vanguards
+  owner: group:vanguards
   type: 'library'
   lifecycle: 'production'
