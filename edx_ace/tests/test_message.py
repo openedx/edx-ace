@@ -21,7 +21,7 @@ from edx_ace.utils.date import get_current_time
 LOG = logging.getLogger(__name__)
 
 context_values = st.one_of(st.text(), st.booleans(), st.floats(allow_nan=False))
-dates = st.datetimes(timezones=st.none() | timezones() | st.none())
+dates = st.datetimes(timezones=st.one_of(st.one_of(st.none(), timezones()), st.none()))
 
 msg = st.builds(
     Message,
@@ -80,7 +80,7 @@ class TestMessage(TestCase):
 
     def test_serialization_lazy_text(self):
         unicode_text = "A 𝓾𝓷𝓲𝓬𝓸𝓭𝓮 Text"
-        lazy_text = gettext_lazy(unicode_text)                    # pylint: disable=translation-of-non-string
+        lazy_text = gettext_lazy(unicode_text)
         self.assertEqual(self.encoder.default(lazy_text), unicode_text)
 
     @given(msg)

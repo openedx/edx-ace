@@ -20,6 +20,7 @@ from edx_ace.utils.date import get_current_time
 LOG = logging.getLogger(__name__)
 
 NEXT_ATTEMPT_DELAY_SECONDS = 30
+BRAZE_API_TIMEOUT = 5
 
 
 class BrazeEmailChannel(EmailChannelMixin, Channel):
@@ -156,6 +157,7 @@ class BrazeEmailChannel(EmailChannelMixin, Channel):
                     },
                 },
             },
+            timeout=getattr(settings, 'ACE_DEFAULT_API_TIMEOUT', BRAZE_API_TIMEOUT)
         )
 
         try:
