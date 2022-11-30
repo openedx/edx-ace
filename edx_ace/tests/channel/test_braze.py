@@ -94,6 +94,7 @@ class TestBrazeChannel(TestCase):
                     },
                 },
             },
+            'timeout': 5
         }
 
     @ddt.data(
