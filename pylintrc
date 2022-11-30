@@ -261,7 +261,6 @@ disable =
 	no-else-return,
 	invalid-name,
 	fixme,
-	no-self-use,
 	too-few-public-methods,
 	too-many-instance-attributes,
 	unnecessary-pass,
