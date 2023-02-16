@@ -14,6 +14,13 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[1.6.1] - 2023-02-07
+~~~~~~~~~~~~~~~~~~~~
+
+* Updated code coverage target in https://github.com/openedx/edx-ace/pull/189
+* Updated Python Requirements in https://github.com/openedx/edx-ace/pull/199
+* **Full Changelog**: https://github.com/openedx/edx-ace/compare/v1.6.0...v1.6.1
+
 [1.5.0] - 2022-02-15
 ~~~~~~~~~~~~~~~~~~~~
 
