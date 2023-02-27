@@ -22,7 +22,7 @@ charset-normalizer==3.0.1
     # via requests
 cryptography==39.0.1
     # via secretstorage
-django==3.2.17
+django==3.2.18
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -45,7 +45,7 @@ importlib-metadata==6.0.0
     #   keyring
     #   sphinx
     #   twine
-importlib-resources==5.10.2
+importlib-resources==5.12.0
     # via keyring
 jaraco-classes==3.2.3
     # via keyring
@@ -57,7 +57,7 @@ jinja2==3.1.2
     # via sphinx
 keyring==23.13.1
     # via twine
-markdown-it-py==2.1.0
+markdown-it-py==2.2.0
     # via rich
 markupsafe==2.1.2
     # via jinja2
@@ -144,7 +144,7 @@ tomli==2.0.1
     # via doc8
 twine==4.0.2
     # via -r requirements/doc.in
-typing-extensions==4.4.0
+typing-extensions==4.5.0
     # via rich
 urllib3==1.26.14
     # via
@@ -152,7 +152,7 @@ urllib3==1.26.14
     #   twine
 webencodings==0.5.1
     # via bleach
-zipp==3.13.0
+zipp==3.15.0
     # via
     #   importlib-metadata
     #   importlib-resources
