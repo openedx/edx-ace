@@ -30,6 +30,7 @@ instructions.
 
 **Post merge:**
 - [ ] Create a tag
+- [ ] Create a new release (can be done here https://github.com/edx/edx-ace/releases)
 - [ ] Check new version is pushed to PyPI after tag-triggered build is 
       finished.
 - [ ] Delete working branch (if not needed anymore)
