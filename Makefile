@@ -88,14 +88,14 @@ write-pylintrc:
 
 extract_translations: ## extract strings to be translated, outputting .mo files
 	rm -rf docs/_build
-	cd edx-ace && ../manage.py makemessages -l en -v1 -d django
-	cd edx-ace && ../manage.py makemessages -l en -v1 -d djangojs
+	cd edx_ace && django-admin makemessages -l en -v1 -d django
+	cd edx_ace && django-admin makemessages -l en -v1 -d djangojs
 
 compile_translations: ## compile translation files, outputting .po files for each supported language
-	cd edx-ace && ../manage.py compilemessages
+	cd edx_ace && django-admin compilemessages
 
 detect_changed_source_translations:
-	cd edx-ace && i18n_tool changed
+	cd edx_ace && i18n_tool changed
 
 pull_translations: ## pull translations from Transifex
 	tx pull -t -a -f --mode reviewed

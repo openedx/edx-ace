@@ -71,3 +71,6 @@ edx_ace/tests/__init__.py
 default.db
 
 .hypothesis
+
+# Translation
+edx_ace/conf/locale/*/LC_MESSAGES/*
