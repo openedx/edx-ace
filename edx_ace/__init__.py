@@ -15,7 +15,6 @@ from .recipient_resolver import RecipientResolver
 
 __version__ = '1.6.1'
 
-default_app_config = 'edx_ace.apps.EdxAceConfig'
 
 __all__ = [
     'send',
