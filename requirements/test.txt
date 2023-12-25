@@ -14,7 +14,7 @@ certifi==2023.11.17
     # via requests
 charset-normalizer==3.3.2
     # via requests
-coverage[toml]==7.3.2
+coverage[toml]==7.3.4
     # via
     #   coverage
     #   pytest-cov
@@ -27,7 +27,7 @@ exceptiongroup==1.2.0
     # via
     #   hypothesis
     #   pytest
-hypothesis[pytz]==6.91.1
+hypothesis[pytz]==6.92.1
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
@@ -35,7 +35,7 @@ hypothesis-pytest==0.19.0
     # via -r requirements/test.in
 idna==3.6
     # via requests
-importlib-metadata==7.0.0
+importlib-metadata==7.0.1
     # via pytest-randomly
 iniconfig==2.0.0
     # via pytest
@@ -95,7 +95,7 @@ tomli==2.0.1
     # via
     #   coverage
     #   pytest
-typing-extensions==4.8.0
+typing-extensions==4.9.0
     # via asgiref
 urllib3==2.1.0
     # via requests
