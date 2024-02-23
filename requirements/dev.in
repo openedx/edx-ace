@@ -9,3 +9,4 @@ pip-tools                 # Requirements file management
 tox                       # virtualenv management for tests
 twine                     # Utility for PyPI package uploads
 wheel                     # For generation of wheels for PyPI
+backports.zoneinfo; python_version<'3.9'  # Needed for Python 3.12 compatibility

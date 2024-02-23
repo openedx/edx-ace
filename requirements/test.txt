@@ -10,8 +10,11 @@ attrs==23.2.0
     # via
     #   -r requirements/base.in
     #   hypothesis
-backports-zoneinfo==0.2.1
-    # via django
+backports-zoneinfo==0.2.1 ; python_version < "3.9"
+    # via
+    #   -c requirements/constraints.txt
+    #   -r requirements/test.in
+    #   django
 certifi==2024.2.2
     # via requests
 charset-normalizer==3.3.2
@@ -57,7 +60,7 @@ pudb==2024.1
     # via -r requirements/test.in
 pygments==2.17.2
     # via pudb
-pytest==8.1.0
+pytest==8.0.2
     # via
     #   hypothesis-pytest
     #   pytest-cov
@@ -99,7 +102,7 @@ typing-extensions==4.10.0
     #   urwid
 urllib3==2.2.1
     # via requests
-urwid==2.6.7
+urwid==2.6.8
     # via
     #   pudb
     #   urwid-readline

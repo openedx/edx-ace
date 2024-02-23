@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[1.8.0] - 2024-03-06
+~~~~~~~~~~~~~~~~~~~~
+* Added support for ``Python 3.12``
+* Dropped support for ``Django 3.2``
+
+
 [1.7.0] - 2023-07-21
 ~~~~~~~~~~~~~~~~~~~~
 
