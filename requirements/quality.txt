@@ -8,6 +8,10 @@ astroid==3.1.0
     # via
     #   pylint
     #   pylint-celery
+backports-zoneinfo==0.2.1 ; python_version < "3.9"
+    # via
+    #   -c requirements/constraints.txt
+    #   -r requirements/quality.in
 click==8.1.7
     # via
     #   click-log
