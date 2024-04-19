@@ -78,6 +78,7 @@ class ChannelMap:
     """
     A class that represents a channel map, usually as described in Django settings and `setup.py` files.
     """
+
     def __init__(self, channels_list):
         """
         Initialize a ChannelMap.
@@ -170,6 +171,7 @@ def get_channel_for_message(channel_type, message):
         Channel: The selected channel object.
     """
     channels_map = channels()
+    channel_names = []
 
     if channel_type == ChannelType.EMAIL:
         if message.options.get('transactional'):
@@ -177,20 +179,21 @@ def get_channel_for_message(channel_type, message):
         else:
             channel_names = [settings.ACE_CHANNEL_DEFAULT_EMAIL]
 
-        try:
-            possible_channels = [
-                channels_map.get_channel_by_name(channel_type, channel_name)
-                for channel_name in channel_names
-            ]
-        except KeyError:
-            return channels_map.get_default_channel(channel_type)
+    if channel_type == ChannelType.PUSH:
+        channel_names = [settings.ACE_CHANNEL_DEFAULT_PUSH]
 
-        # First see if any channel specifically demands to deliver this message
-        for channel in possible_channels:
-            if channel.overrides_delivery_for_message(message):
-                return channel
+    try:
+        possible_channels = [
+            channels_map.get_channel_by_name(channel_type, channel_name)
+            for channel_name in channel_names
+        ]
+    except KeyError:
+        return channels_map.get_default_channel(channel_type)
 
-        # Else the normal path: use the preferred channel for this message type
-        return possible_channels[0]
+    # First see if any channel specifically demands to deliver this message
+    for channel in possible_channels:
+        if channel.overrides_delivery_for_message(message):
+            return channel
 
-    return channels_map.get_default_channel(channel_type)
+    # Else the normal path: use the preferred channel for this message type
+    return possible_channels[0] if possible_channels else channels_map.get_default_channel(channel_type)

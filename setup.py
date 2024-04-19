@@ -112,7 +112,8 @@ setup(
     include_package_data=True,
     install_requires=load_requirements('requirements/base.in'),
     extras_require={
-        'sailthru':  ["sailthru-client>2.2,<2.3"]
+        'sailthru':  ["sailthru-client>2.2,<2.3"],
+        'push_notifications':  ["django-push-notifications[FCM]>3.0.2"]
     },
     license="AGPL 3.0",
     zip_safe=False,
@@ -134,6 +135,7 @@ setup(
             'sailthru_email = edx_ace.channel.sailthru:SailthruEmailChannel',
             'file_email = edx_ace.channel.file:FileEmailChannel',
             'django_email = edx_ace.channel.django_email:DjangoEmailChannel',
+            'push_notification = edx_ace.channel.push_notification:PushNotificationChannel',
         ]
     }
 )

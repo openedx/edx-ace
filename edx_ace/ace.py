@@ -19,12 +19,14 @@ Usage:
     )
     ace.send(msg)
 """
+from django.template import TemplateDoesNotExist
+
 from edx_ace import delivery, policy, presentation
 from edx_ace.channel import get_channel_for_message
 from edx_ace.errors import ChannelError, UnsupportedChannelError
 
 
-def send(msg):
+def send(msg, limit_to_channels=None):
     """
     Send a message to a recipient.
 
@@ -37,12 +39,21 @@ def send(msg):
 
     Args:
         msg (Message): The message to send.
+        limit_to_channels (list of ChannelType, optional): If provided, only send the message over the specified
+            channels. If not provided, the message will be sent over all channels that the policies allow.
     """
     msg.report_basics()
 
     channels_for_message = policy.channels_for(msg)
 
     for channel_type in channels_for_message:
+        if limit_to_channels and channel_type not in limit_to_channels:
+            msg.report(
+                'channel_skipped',
+                f'Skipping channel {channel_type}'
+            )
+            continue
+
         try:
             channel = get_channel_for_message(channel_type, msg)
         except UnsupportedChannelError:
@@ -50,6 +61,14 @@ def send(msg):
 
         try:
             rendered_message = presentation.render(channel, msg)
+        except TemplateDoesNotExist as error:
+            msg.report(
+                'template_error',
+                str(error)
+            )
+            continue
+
+        try:
             delivery.deliver(channel, rendered_message, msg)
         except ChannelError as error:
             msg.report(
