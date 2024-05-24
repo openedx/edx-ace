@@ -10,9 +10,9 @@ Context
 ------
 
 The goal of ACE framework is to provide extensible mechanism for extending delivery channels and policies.
-However, as of May 2024, edx-ace supports various email delivery channelslike django and Sailthru as well as third party API integration for Braze, but lacks support for direct mobile push notifications.
-Adding push notifications delivery channel willenable real-time communication with users through their mobile devices, enhancing userengagement and ensuring timely delivery of important information.
-Flexibility and seamless integration with the existing framework are prioritiesfor this new notification channel.
+However, as of May 2024, edx-ace supports various email delivery channels like django and Sailthru as well as third party API integration for Braze, but lacks support for direct mobile push notifications.
+Adding push notifications delivery channel will enable real-time communication with users through their mobile devices, enhancing user engagement and ensuring timely delivery of important information.
+Flexibility and seamless integration with the existing framework are priorities for this new notification channel.
 
 Decision
 ------
@@ -37,14 +37,17 @@ This will involve:
     authenticated communication with the Firebase Cloud Messaging (FCM) service.
 
 To create a new push notification, on edx-platform side the following steps are required:
-  - Create a new message type class that extends `BaseMessageType`, defining the
-    message type and its associated renderer.
+  - Create a new message type class that extends existing `BaseMessageType` from
+    `openedx.core.djangoapps.ace_common.message`, defining the message type and its associated renderer.
+    This will also allow you to use the existing classes like `EnrollEnrolled`, `AllowedEnroll`, etc.
+    to send push notifications by simply extending the context where necessary and creating
+    new templates with notification body.
   - Create new body.txt and subject.txt templates for the push notification content like how it is done for email.
     Example path: `lms/templates/instructor/edx_ace/enrollenrolled/push/body.txt`.
   - Collect the necessary context for the notifications.
   - Setup Firebase Cloud Messaging (FCM) credentials and configure the edx-platform
     to communicate with the FCM service.
-  - Add PushNotificationChannel to the enabled channels in the setting.
+  - Add `PushNotificationChannel` to the enabled channels in the setting.
   - Call the `ace.send` method to send the push notification.
 
 Consequences
