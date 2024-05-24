@@ -25,6 +25,9 @@ Integration with django-push-notifications_ to simplify the process of sending n
 Use the existing `GCMDevice` model and `GCMDeviceViewSet` view from django-push-notifications_ to manage user device tokens.
 Provide secure and authenticated communication with Firebase Cloud Messaging (FCM).
 
+It should also be noted that django-push-notifications_ does not currently implement sending notifications to IOS devices using the FCM channel, although the FCM service itself supports it.
+This means that support for IOS devices should be added on the edx-ace side.
+
 This will involve:
   - PushNotificationRenderer: Responsible for formatting and structuring the content
     of a push notification. This includes setting the notification's title, body,
@@ -35,6 +38,8 @@ This will involve:
     to streamline the process of dispatching notifications. The core edx-platform
     will handle authorization and manage Firebase credentials, ensuring secure and
     authenticated communication with the Firebase Cloud Messaging (FCM) service.
+    Also, context collection for IOS devices using APNSConfig will be added to the channel
+    for correct notification rendering.
 
 To create a new push notification, on edx-platform side the following steps are required:
   - Create a new message type class that extends existing `BaseMessageType` from
