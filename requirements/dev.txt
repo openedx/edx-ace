@@ -4,26 +4,30 @@
 #
 #    make upgrade
 #
-asgiref==3.7.2
+asgiref==3.8.1
     # via django
-astroid==3.1.0
+astroid==3.2.2
     # via
     #   pylint
     #   pylint-celery
 attrs==23.2.0
     # via -r requirements/base.in
+backports-tarfile==1.1.1
+    # via jaraco-context
 backports-zoneinfo==0.2.1 ; python_version < "3.9"
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/dev.in
     #   -r requirements/quality.in
     #   django
-build==1.1.1
+build==1.2.1
     # via pip-tools
 cachetools==5.3.3
     # via tox
 certifi==2024.2.2
     # via requests
+cffi==1.16.0
+    # via cryptography
 chardet==5.2.0
     # via
     #   diff-cover
@@ -38,56 +42,71 @@ click==8.1.7
     #   pip-tools
 click-log==0.4.0
     # via edx-lint
-code-annotations==1.6.0
+code-annotations==1.8.0
     # via edx-lint
 colorama==0.4.6
     # via tox
-diff-cover==8.0.3
+cryptography==42.0.7
+    # via secretstorage
+diff-cover==9.0.0
     # via -r requirements/dev.in
 dill==0.3.8
     # via pylint
 distlib==0.3.8
     # via virtualenv
-django==4.2.11
+django==4.2.13
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
     #   edx-i18n-tools
 docutils==0.20.1
     # via readme-renderer
-edx-i18n-tools==1.3.0
+edx-i18n-tools==1.6.0
     # via -r requirements/dev.in
 edx-lint==5.3.6
     # via
     #   -r requirements/dev.in
     #   -r requirements/quality.in
-filelock==3.13.1
+filelock==3.14.0
     # via
     #   tox
     #   virtualenv
-idna==3.6
+idna==3.7
     # via requests
-importlib-metadata==7.0.1
+importlib-metadata==6.11.0
     # via
+    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   build
     #   keyring
     #   twine
-importlib-resources==6.1.2
+importlib-resources==6.4.0
     # via keyring
 isort==5.13.2
     # via
     #   -r requirements/quality.in
     #   pylint
-jaraco-classes==3.3.1
+jaraco-classes==3.4.0
     # via keyring
-jinja2==3.1.3
+jaraco-context==5.3.0
+    # via keyring
+jaraco-functools==4.0.1
+    # via keyring
+jeepney==0.8.0
+    # via
+    #   keyring
+    #   secretstorage
+jinja2==3.1.4
     # via
     #   code-annotations
     #   diff-cover
-keyring==24.3.1
+keyring==25.2.1
     # via twine
-lxml==5.1.0
-    # via edx-i18n-tools
+lxml[html-clean,html_clean]==5.2.2
+    # via
+    #   edx-i18n-tools
+    #   lxml-html-clean
+lxml-html-clean==0.1.1
+    # via lxml
 markdown-it-py==3.0.0
     # via rich
 markupsafe==2.1.5
@@ -97,15 +116,17 @@ mccabe==0.7.0
 mdurl==0.1.2
     # via markdown-it-py
 more-itertools==10.2.0
-    # via jaraco-classes
-nh3==0.2.15
+    # via
+    #   jaraco-classes
+    #   jaraco-functools
+nh3==0.2.17
     # via readme-renderer
-packaging==23.2
+packaging==24.0
     # via
     #   build
     #   pyproject-api
     #   tox
-path==16.10.0
+path==16.14.0
     # via edx-i18n-tools
 pbr==6.0.0
     # via stevedore
@@ -113,12 +134,12 @@ pip-tools==7.4.1
     # via -r requirements/dev.in
 pkginfo==1.10.0
     # via twine
-platformdirs==4.2.0
+platformdirs==4.2.2
     # via
     #   pylint
     #   tox
     #   virtualenv
-pluggy==1.4.0
+pluggy==1.5.0
     # via
     #   diff-cover
     #   tox
@@ -126,14 +147,16 @@ polib==1.2.0
     # via edx-i18n-tools
 pycodestyle==2.11.1
     # via -r requirements/quality.in
+pycparser==2.22
+    # via cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.in
-pygments==2.17.2
+pygments==2.18.0
     # via
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==3.1.0
+pylint==3.2.2
     # via
     #   edx-lint
     #   pylint-celery
@@ -149,7 +172,7 @@ pylint-plugin-utils==0.8.2
     #   pylint-django
 pyproject-api==1.6.1
     # via tox
-pyproject-hooks==1.0.0
+pyproject-hooks==1.1.0
     # via
     #   build
     #   pip-tools
@@ -163,7 +186,7 @@ pyyaml==6.0.1
     #   edx-i18n-tools
 readme-renderer==43.0
     # via twine
-requests==2.31.0
+requests==2.32.2
     # via
     #   requests-toolbelt
     #   sailthru-client
@@ -176,6 +199,8 @@ rich==13.7.1
     # via twine
 sailthru-client==2.2.3
     # via -r requirements/base.in
+secretstorage==3.3.3
+    # via keyring
 simplejson==3.19.2
     # via sailthru-client
 six==1.16.0
@@ -185,7 +210,7 @@ six==1.16.0
     #   python-dateutil
 snowballstemmer==2.2.0
     # via pydocstyle
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via django
 stevedore==5.2.0
     # via
@@ -199,15 +224,14 @@ tomli==2.0.1
     #   pip-tools
     #   pylint
     #   pyproject-api
-    #   pyproject-hooks
     #   tox
-tomlkit==0.12.4
+tomlkit==0.12.5
     # via pylint
-tox==4.14.0
+tox==4.15.0
     # via -r requirements/dev.in
-twine==5.0.0
+twine==5.1.0
     # via -r requirements/dev.in
-typing-extensions==4.10.0
+typing-extensions==4.12.0
     # via
     #   asgiref
     #   astroid
@@ -217,13 +241,13 @@ urllib3==2.2.1
     # via
     #   requests
     #   twine
-virtualenv==20.25.1
+virtualenv==20.26.2
     # via tox
-wheel==0.42.0
+wheel==0.43.0
     # via
     #   -r requirements/dev.in
     #   pip-tools
-zipp==3.17.0
+zipp==3.19.0
     # via
     #   importlib-metadata
     #   importlib-resources
