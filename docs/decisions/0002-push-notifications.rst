@@ -2,30 +2,37 @@ Implement Push Notification Channel
 ==================================================
 
 Status
-------
+--------
 
 Proposed
 
 Context
-------
+--------
 
 The goal of ACE framework is to provide extensible mechanism for extending delivery channels and policies.
-However, as of May 2024, edx-ace supports various email delivery channels like django and Sailthru as well as third party API integration for Braze, but lacks support for direct mobile push notifications.
-Adding push notifications delivery channel will enable real-time communication with users through their mobile devices, enhancing user engagement and ensuring timely delivery of important information.
+However, as of May 2024, edx-ace supports various email delivery channels like
+django and Sailthru as well as third party API integration for Braze, but lacks
+support for direct mobile push notifications.
+Adding push notifications delivery channel will enable real-time communication
+with users through their mobile devices, enhancing user engagement and
+ensuring timely delivery of important information.
 Flexibility and seamless integration with the existing framework are priorities for this new notification channel.
 
 Decision
-------
+--------
 
 Implement a new push notification system.
 Data for push notifications must be formatted according to mobile push notification requirements.
 It should be possible to add optional payloads for advanced functionality (e.g. data for notification actions).
 Send formatted push notifications using the firebase_admin_ SDK.
 Integration with django-push-notifications_ to simplify the process of sending notifications.
-Use the existing `GCMDevice` model and `GCMDeviceViewSet` view from django-push-notifications_ to manage user device tokens.
+Use the existing `GCMDevice` model and `GCMDeviceViewSet` view from
+django-push-notifications_ to manage user device tokens.
 Provide secure and authenticated communication with Firebase Cloud Messaging (FCM).
 
-It should also be noted that django-push-notifications_ does not currently implement sending notifications to IOS devices using the FCM channel, although the FCM service itself supports it.
+It should also be noted that django-push-notifications_ does not currently
+implement sending notifications to IOS devices using the FCM channel,
+although the FCM service itself supports it.
 This means that support for IOS devices should be added on the edx-ace side.
 
 This will involve:
@@ -56,12 +63,13 @@ To create a new push notification, on edx-platform side the following steps are 
   - Call the `ace.send` method to send the push notification.
 
 Consequences
-------
+------------
 
 1. Adds a new push notification channel, enhancing the notification system's capabilities.
 2. Allows real-time communication with users, improving engagement and user experience.
 3. Seamless integration with existing edx-ace framework, maintaining consistency and reliability.
-4. Utilizes django-push-notifications_ and firebase_admin_, leveraging robust and widely-used technologies for push notifications.
+4. Utilizes django-push-notifications_ and firebase_admin_, leveraging robust
+   and widely-used technologies for push notifications.
 5. Additional complexity in the notification system, requiring maintenance and potential updates.
 6. Dependency on Firebase Cloud Messaging (FCM) service, which might introduce external service dependency risks.
 
