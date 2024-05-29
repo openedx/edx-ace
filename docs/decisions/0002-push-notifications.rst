@@ -18,6 +18,13 @@ with users through their mobile devices, enhancing user engagement and
 ensuring timely delivery of important information.
 Flexibility and seamless integration with the existing framework are priorities for this new notification channel.
 
+`ace.send` already supports sending via multiple channels.
+It turns out that in order to send both push and email notifications,
+you need to add a new channel `push_notifications` to the `ACE_ENABLED_CHANNELS`.
+In this case, `ace.send` will send both push and email notifications,
+but it is worth noting that the necessary templates must also be present,
+otherwise we will get the `TemplateDoesNotExist` exception at the rendering stage.
+
 Decision
 --------
 
@@ -30,10 +37,56 @@ Use the existing `GCMDevice` model and `GCMDeviceViewSet` view from
 django-push-notifications_ to manage user device tokens.
 Provide secure and authenticated communication with Firebase Cloud Messaging (FCM).
 
+It is proposed to add a new optional argument `limit_to_channels=None` to the
+`ace.send` method, which can specify the list of channels through which
+messages should be sent. This will allow more flexibility,
+for example in cases with discussion notifications, where we need to send
+a push for each new reply, while an email is sent only for the first reply.
+
+In this case, the code will look like this:
+
+.. code-block:: python
+
+    message_context = _build_message_context(context, notification_type='forum_response')
+    message = ResponseNotification().personalize(
+        Recipient(thread_author.id, thread_author.email),
+        _get_course_language(context['course_id']),
+        message_context
+    )
+    log.info('Sending forum comment notification with context %s', message_context)
+    if _is_first_comment(context['comment_id'], context['thread_id']):
+        limit_to_channels = None
+    else:
+        limit_to_channels = [ChannelType.PUSH]
+    ace.send(message, limit_to_channels=limit_to_channels)
+
+
+For the first response (as it is currently implemented), both notifications
+will be sent, and for all other replies, only push notifications will be sent.
+
+The `_build_message_context` method should also be extended:
+
+.. code-block:: python
+
+    push_notification_extra_context': {
+        'notification_type': 'notification_type',
+        'thread_id': context['thread_id'],
+        'comment_id': context['comment_id'],
+    }
+
+
+The presence of `push_notification_extra_context` will be checked in the
+`CoursePushNotificationOptout`, and based on this, it will be determined
+whether the `PushNotificationChannel` is allowed.
+
 It should also be noted that django-push-notifications_ does not currently
 implement sending notifications to IOS devices using the FCM channel,
 although the FCM service itself supports it.
 This means that support for IOS devices should be added on the edx-ace side.
+At the moment, we didn't plan to add this directly to the
+django-push-notifications_ package, but to limit it to an additional method
+in `PushNotificationChannel` that implements the collection of the necessary
+context for iOS devices to send notifications to them as well.
 
 This will involve:
   - PushNotificationRenderer: Responsible for formatting and structuring the content
@@ -47,6 +100,13 @@ This will involve:
     authenticated communication with the Firebase Cloud Messaging (FCM) service.
     Also, context collection for IOS devices using APNSConfig will be added to the channel
     for correct notification rendering.
+
+To configure push notification from platform side, you will need to add/update the following settings in edx-platform:
+  - `FIREBASE_CREDENTIALS` — add the Firebase credentials for the FCM service;
+  - `ACE_ENABLED_CHANNELS` — add the 'push_notification' channel to the list;
+  - `ACE_ENABLED_POLICIES` — add policies for 'push_notification' to the list;
+  - `PUSH_NOTIFICATIONS_SETTINGS` — settings required for the `django-push-notifications` module;
+  - Add `push_notifications` to the INSTALLED_APPS.
 
 To create a new push notification, on edx-platform side the following steps are required:
   - Create a new message type class that extends existing `BaseMessageType` from
