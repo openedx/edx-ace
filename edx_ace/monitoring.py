@@ -2,16 +2,17 @@
 :mod:`edx_ace.monitoring` exposes functions that are useful for reporting ACE
 message delivery stats to monitoring services.
 """
+from edx_django_utils.monitoring import DatadogBackend
 try:
-    import newrelic.agent
+    import ddtrace.auto
 except ImportError:
-    newrelic = None  # pylint: disable=invalid-name
+    ddtrace = None  # pylint: disable=invalid-name
 
 
 def report(key, value):
-    report_to_newrelic(key, value)
+    report_to_datadog(key, value)
 
 
-def report_to_newrelic(key, value):
-    if newrelic:
-        newrelic.agent.add_custom_parameter(key, value)
+def report_to_datadog(key, value):
+    if ddtrace:
+        DatadogBackend().set_attribute(key, value)
