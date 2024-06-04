@@ -7,3 +7,5 @@ attrs>=17.2.0                     # Attributes without boilerplate
 sailthru-client==2.2.3
 six
 stevedore>=1.10.0
+ddtrace==2.8.5
+edx-django-utils==5.14.2

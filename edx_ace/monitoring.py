@@ -2,11 +2,11 @@
 :mod:`edx_ace.monitoring` exposes functions that are useful for reporting ACE
 message delivery stats to monitoring services.
 """
-from edx_django_utils.monitoring import DatadogBackend
 try:
     import ddtrace.auto
 except ImportError:
     ddtrace = None  # pylint: disable=invalid-name
+from edx_django_utils.monitoring import DatadogBackend
 
 
 def report(key, value):
