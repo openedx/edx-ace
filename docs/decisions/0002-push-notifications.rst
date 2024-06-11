@@ -21,9 +21,6 @@ Flexibility and seamless integration with the existing framework are priorities 
 `ace.send` already supports sending via multiple channels.
 It turns out that in order to send both push and email notifications,
 you need to add a new channel `push_notifications` to the `ACE_ENABLED_CHANNELS`.
-In this case, `ace.send` will send both push and email notifications,
-but it is worth noting that the necessary templates must also be present,
-otherwise we will get the `TemplateDoesNotExist` exception at the rendering stage.
 
 Decision
 --------
