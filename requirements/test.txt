@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.7.2
+asgiref==3.8.1
     # via django
 attrs==23.2.0
     # via
@@ -15,58 +15,60 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   -c requirements/constraints.txt
     #   -r requirements/test.in
     #   django
-certifi==2024.2.2
+certifi==2024.6.2
     # via requests
 charset-normalizer==3.3.2
     # via requests
-coverage[toml]==7.4.3
+coverage[toml]==7.5.3
     # via pytest-cov
 ddt==1.7.2
     # via -r requirements/test.in
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
-exceptiongroup==1.2.0
+exceptiongroup==1.2.1
     # via
     #   hypothesis
     #   pytest
-hypothesis[pytz]==6.98.17
+hypothesis[pytz]==6.103.2
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
 hypothesis-pytest==0.19.0
     # via -r requirements/test.in
-idna==3.6
+idna==3.7
     # via requests
-importlib-metadata==7.0.1
-    # via pytest-randomly
+importlib-metadata==6.11.0
+    # via
+    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
+    #   pytest-randomly
 iniconfig==2.0.0
     # via pytest
 jedi==0.19.1
     # via pudb
 mock==5.1.0
     # via -r requirements/test.in
-packaging==23.2
+packaging==24.1
     # via
     #   pudb
     #   pytest
-parso==0.8.3
+parso==0.8.4
     # via jedi
 pbr==6.0.0
     # via stevedore
-pluggy==1.4.0
+pluggy==1.5.0
     # via pytest
 pudb==2024.1
     # via -r requirements/test.in
-pygments==2.17.2
+pygments==2.18.0
     # via pudb
-pytest==8.0.2
+pytest==8.2.2
     # via
     #   hypothesis-pytest
     #   pytest-cov
     #   pytest-django
     #   pytest-randomly
-pytest-cov==4.1.0
+pytest-cov==5.0.0
     # via -r requirements/test.in
 pytest-django==4.8.0
     # via -r requirements/test.in
@@ -76,7 +78,7 @@ python-dateutil==2.9.0.post0
     # via -r requirements/base.in
 pytz==2024.1
     # via hypothesis
-requests==2.31.0
+requests==2.32.3
     # via sailthru-client
 sailthru-client==2.2.3
     # via -r requirements/base.in
@@ -88,7 +90,7 @@ six==1.16.0
     #   python-dateutil
 sortedcontainers==2.4.0
     # via hypothesis
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via django
 stevedore==5.2.0
     # via -r requirements/base.in
@@ -96,13 +98,13 @@ tomli==2.0.1
     # via
     #   coverage
     #   pytest
-typing-extensions==4.10.0
+typing-extensions==4.12.2
     # via
     #   asgiref
     #   urwid
 urllib3==2.2.1
     # via requests
-urwid==2.6.8
+urwid==2.6.14
     # via
     #   pudb
     #   urwid-readline
@@ -110,5 +112,5 @@ urwid-readline==0.14
     # via pudb
 wcwidth==0.2.13
     # via urwid
-zipp==3.17.0
+zipp==3.19.2
     # via importlib-metadata
