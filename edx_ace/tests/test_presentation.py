@@ -16,7 +16,7 @@ class TestRender(TestCase):
 
     def test_missing_renderer(self):
         channel = Mock(
-            channel_type=ChannelType.PUSH,
+            channel_type='unsupported_channel_type'
         )
 
         message = Mock()

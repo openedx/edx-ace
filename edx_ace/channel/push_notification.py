@@ -69,8 +69,8 @@ class PushNotificationChannel(Channel):
         try:
             send_message(token, message, settings.FCM_APP_NAME)
         except Exception as e:
-            LOG.exception(f'Failed to send push notification to %s', token)
-            raise FatalChannelDeliveryError(f'Failed to send push notification to {token}') from e
+            LOG.exception('Failed to send push notification to %s', token)
+            raise FatalChannelDeliveryError('Failed to send push notification to {token}') from e
 
     @staticmethod
     def collect_apns_config(notification_data: dict) -> APNSConfig:

@@ -29,6 +29,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'edx_ace',
+    'push_notifications',
 )
 
 LOCALE_PATHS = [

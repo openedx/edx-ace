@@ -39,6 +39,7 @@ class TestChannelMap(TestCase):
         },
         ACE_CHANNEL_DEFAULT_EMAIL='braze_email',
         ACE_CHANNEL_TRANSACTIONAL_EMAIL='file_email',
+        ACE_CHANNEL_DEFAULT_PUSH='push_notification',
     )
     def test_get_channel_for_message(self):
         channel_map = ChannelMap([
