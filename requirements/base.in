@@ -9,5 +9,5 @@ six
 stevedore>=1.10.0
 edx-django-utils>=5.14.2
 
-firebase-admin==6.5.0
-django-push-notifications==3.1.0
+firebase-admin
+django-push-notifications
