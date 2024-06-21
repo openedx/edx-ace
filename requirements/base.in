@@ -10,5 +10,4 @@ stevedore>=1.10.0
 edx-django-utils>=5.14.2
 
 firebase-admin==6.5.0
-
--e git+https://github.com/jazzband/django-push-notifications.git@0f7918136b5e6a9aec83d6513aad5b0f12143a9f#egg=django_push_notifications
+django-push-notifications==3.1.0

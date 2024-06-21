@@ -113,7 +113,7 @@ setup(
     install_requires=load_requirements('requirements/base.in'),
     extras_require={
         'sailthru':  ["sailthru-client>2.2,<2.3"],
-        'push_notifications':  ["django-push-notifications[FCM]>3.0.2"]
+        'push_notifications':  ["django-push-notifications[FCM]>=3.1.0"]
     },
     license="AGPL 3.0",
     zip_safe=False,

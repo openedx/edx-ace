@@ -45,7 +45,7 @@ class PushNotificationChannel(Channel):
         """
         device_tokens = self.get_user_device_tokens(message.recipient.lms_user_id)
         if not device_tokens:
-            LOG.info(f'Recipient {message.recipient.email_address} has no push token. Skipping push notification.')
+            LOG.info('Recipient %s has no push token. Skipping push notification.', message.recipient.email_address)
             return
 
         for token in device_tokens:
@@ -69,8 +69,8 @@ class PushNotificationChannel(Channel):
         try:
             send_message(token, message, settings.FCM_APP_NAME)
         except Exception as e:
-            LOG.exception(f'Failed to send push notification to {token}')
-            raise FatalChannelDeliveryError(f'Failed to send push notification to {token}')
+            LOG.exception(f'Failed to send push notification to %s', token)
+            raise FatalChannelDeliveryError(f'Failed to send push notification to {token}') from e
 
     @staticmethod
     def collect_apns_config(notification_data: dict) -> APNSConfig:
