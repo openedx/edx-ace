@@ -19,11 +19,14 @@ Usage:
     )
     ace.send(msg)
 """
+import logging
 from django.template import TemplateDoesNotExist
 
 from edx_ace import delivery, policy, presentation
 from edx_ace.channel import get_channel_for_message
 from edx_ace.errors import ChannelError, UnsupportedChannelError
+
+log = logging.getLogger(__name__)
 
 
 def send(msg, limit_to_channels=None):
@@ -48,11 +51,7 @@ def send(msg, limit_to_channels=None):
 
     for channel_type in channels_for_message:
         if limit_to_channels and channel_type not in limit_to_channels:
-            msg.report(
-                'channel_skipped',
-                f'Skipping channel {channel_type}'
-            )
-            continue
+            log.info(f'Skipping channel {channel_type}')
 
         try:
             channel = get_channel_for_message(channel_type, msg)
@@ -64,7 +63,7 @@ def send(msg, limit_to_channels=None):
         except TemplateDoesNotExist as error:
             msg.report(
                 'template_error',
-                str(error)
+                'Unable to send message because template not found\n' + str(error)
             )
             continue
 

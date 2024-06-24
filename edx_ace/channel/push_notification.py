@@ -32,7 +32,7 @@ class PushNotificationChannel(Channel):
         """
         Returns true if the push notification settings are configured.
         """
-        return getattr(settings, 'PUSH_NOTIFICATIONS_SETTINGS', None)
+        return bool(getattr(settings, 'PUSH_NOTIFICATIONS_SETTINGS', None))
 
     def deliver(self, message: Message, rendered_message: RenderedPushNotification) -> None:
         """
@@ -45,7 +45,10 @@ class PushNotificationChannel(Channel):
         """
         device_tokens = self.get_user_device_tokens(message.recipient.lms_user_id)
         if not device_tokens:
-            LOG.info('Recipient %s has no push token. Skipping push notification.', message.recipient.email_address)
+            LOG.info(
+                'Recipient with ID %s has no push token. Skipping push notification.',
+                message.recipient.lms_user_id
+            )
             return
 
         for token in device_tokens:
@@ -56,8 +59,8 @@ class PushNotificationChannel(Channel):
         Send a push notification to a device by token.
         """
         notification_data = {
-            'title': self.sanitize_html(rendered_message.subject),
-            'body': self.sanitize_html(rendered_message.body),
+            'title': self.compress_spaces(rendered_message.title),
+            'body': self.compress_spaces(rendered_message.body),
             'notification_key': token,
             **message.context.get('push_notification_extra_context', {}),
         }
@@ -70,7 +73,7 @@ class PushNotificationChannel(Channel):
             send_message(token, message, settings.FCM_APP_NAME)
         except Exception as e:
             LOG.exception('Failed to send push notification to %s', token)
-            raise FatalChannelDeliveryError('Failed to send push notification to {token}') from e
+            raise FatalChannelDeliveryError('Failed to send push notification to %s', token) from e
 
     @staticmethod
     def collect_apns_config(notification_data: dict) -> APNSConfig:
@@ -100,7 +103,7 @@ class PushNotificationChannel(Channel):
         ).values_list('registration_id', flat=True))
 
     @staticmethod
-    def sanitize_html(html_str: str) -> str:
+    def compress_spaces(html_str: str) -> str:
         """
         Compress spaces and remove newlines to make it easier to author templates.
         """

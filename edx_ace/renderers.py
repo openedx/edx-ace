@@ -90,7 +90,7 @@ class RenderedPushNotification:
     over an :attr:`.ChannelType.PUSH`.
     """
 
-    subject = attr.ib()
+    title = attr.ib()
     body = attr.ib()
 
 
