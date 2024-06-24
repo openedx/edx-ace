@@ -4,7 +4,7 @@ Implement Push Notification Channel
 Status
 --------
 
-Proposed
+Accepted
 
 Context
 --------
