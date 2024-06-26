@@ -20,6 +20,7 @@ Usage:
     ace.send(msg)
 """
 import logging
+
 from django.template import TemplateDoesNotExist
 
 from edx_ace import delivery, policy, presentation

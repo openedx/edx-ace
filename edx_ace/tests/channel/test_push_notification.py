@@ -2,10 +2,11 @@
 
 """
 from unittest import TestCase
-from unittest.mock import patch, MagicMock
-from django.test import override_settings
+from unittest.mock import MagicMock, patch
 
 from firebase_admin.messaging import APNSConfig
+
+from django.test import override_settings
 
 from edx_ace.channel.push_notification import PushNotificationChannel
 from edx_ace.errors import FatalChannelDeliveryError

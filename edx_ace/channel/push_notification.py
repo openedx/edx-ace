@@ -4,11 +4,11 @@ Channel for sending push notifications.
 import logging
 import re
 
-from django.conf import settings
-
-from firebase_admin.messaging import Aps, ApsAlert, APNSConfig, APNSPayload
-from push_notifications.gcm import send_message, dict_to_fcm_message
+from firebase_admin.messaging import APNSConfig, APNSPayload, Aps, ApsAlert
+from push_notifications.gcm import dict_to_fcm_message, send_message
 from push_notifications.models import GCMDevice
+
+from django.conf import settings
 
 from edx_ace.channel import Channel, ChannelType
 from edx_ace.errors import FatalChannelDeliveryError
