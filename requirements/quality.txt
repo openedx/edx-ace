@@ -39,11 +39,11 @@ pbr==6.0.0
     # via stevedore
 platformdirs==4.2.2
     # via pylint
-pycodestyle==2.11.1
+pycodestyle==2.12.0
     # via -r requirements/quality.in
 pydocstyle==6.3.0
     # via -r requirements/quality.in
-pylint==3.2.2
+pylint==3.2.4
     # via
     #   edx-lint
     #   pylint-celery
@@ -73,7 +73,7 @@ tomli==2.0.1
     # via pylint
 tomlkit==0.12.5
     # via pylint
-typing-extensions==4.12.1
+typing-extensions==4.12.2
     # via
     #   astroid
     #   pylint

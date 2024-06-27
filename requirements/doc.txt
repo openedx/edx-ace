@@ -11,10 +11,7 @@ alabaster==0.7.13
 asgiref==3.8.1
     # via django
 attrs==23.2.0
-    # via
-    #   -r requirements/base.in
-    #   cattrs
-    #   ddtrace
+    # via -r requirements/base.in
 babel==2.15.0
     # via
     #   pydata-sphinx-theme
@@ -28,10 +25,6 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   django
 beautifulsoup4==4.12.3
     # via pydata-sphinx-theme
-bytecode==0.15.1
-    # via ddtrace
-cattrs==23.2.3
-    # via ddtrace
 certifi==2024.6.2
     # via requests
 cffi==1.16.0
@@ -40,12 +33,6 @@ charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via edx-django-utils
-ddsketch==3.0.1
-    # via ddtrace
-ddtrace==2.8.5
-    # via -r requirements/base.in
-deprecated==1.2.14
-    # via opentelemetry-api
 django==4.2.13
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
@@ -68,10 +55,6 @@ docutils==0.19
     #   sphinx
 edx-django-utils==5.14.2
     # via -r requirements/base.in
-envier==0.5.1
-    # via ddtrace
-exceptiongroup==1.2.1
-    # via cattrs
 idna==3.7
     # via requests
 imagesize==1.4.1
@@ -80,7 +63,6 @@ importlib-metadata==6.11.0
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   keyring
-    #   opentelemetry-api
     #   sphinx
     #   twine
 importlib-resources==6.4.0
@@ -101,27 +83,23 @@ markupsafe==2.1.5
     # via jinja2
 mdurl==0.1.2
     # via markdown-it-py
-more-itertools==10.2.0
+more-itertools==10.3.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-newrelic==9.10.0
+newrelic==9.11.0
     # via edx-django-utils
 nh3==0.2.17
     # via readme-renderer
-opentelemetry-api==1.25.0
-    # via ddtrace
-packaging==24.0
+packaging==24.1
     # via
     #   pydata-sphinx-theme
     #   sphinx
 pbr==6.0.0
     # via stevedore
-pkginfo==1.11.0
+pkginfo==1.10.0
     # via twine
-protobuf==5.27.0
-    # via ddtrace
-psutil==5.9.8
+psutil==6.0.0
     # via edx-django-utils
 pycparser==2.22
     # via cffi
@@ -166,8 +144,6 @@ simplejson==3.19.2
 six==1.16.0
     # via
     #   -r requirements/base.in
-    #   ddsketch
-    #   ddtrace
     #   python-dateutil
 snowballstemmer==2.2.0
     # via sphinx
@@ -193,9 +169,7 @@ sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 sqlparse==0.5.0
-    # via
-    #   ddtrace
-    #   django
+    # via django
 stevedore==5.2.0
     # via
     #   -r requirements/base.in
@@ -203,25 +177,18 @@ stevedore==5.2.0
     #   edx-django-utils
 tomli==2.0.1
     # via doc8
-twine==5.1.0
+twine==5.1.1
     # via -r requirements/doc.in
-typing-extensions==4.12.1
+typing-extensions==4.12.2
     # via
     #   asgiref
-    #   bytecode
-    #   cattrs
-    #   ddtrace
     #   pydata-sphinx-theme
     #   rich
-urllib3==2.2.1
+urllib3==2.2.2
     # via
     #   requests
     #   twine
-wrapt==1.16.0
-    # via deprecated
-xmltodict==0.13.0
-    # via ddtrace
-zipp==3.19.1
+zipp==3.19.2
     # via
     #   importlib-metadata
     #   importlib-resources
