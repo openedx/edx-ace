@@ -62,6 +62,7 @@ class DjangoEmailChannel(EmailChannelMixin, Channel):
                 from_email=from_address,
                 to=[message.recipient.email_address],
                 reply_to=reply_to,
+                headers=message.headers,
             )
 
             mail.attach_alternative(rendered_template, 'text/html')
