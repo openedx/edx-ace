@@ -43,7 +43,7 @@ exceptiongroup==1.2.1
     # via
     #   hypothesis
     #   pytest
-hypothesis[pytz]==6.104.1
+hypothesis[pytz]==6.104.2
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
