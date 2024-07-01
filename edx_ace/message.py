@@ -73,6 +73,9 @@ class Message(MessageAttributeSerializationMixin, metaclass=ABCMeta):
         default=None
     )
     options = attr.ib()
+
+    # headers are only supported for DjangoEmailChannel
+    headers = attr.ib()
     language = attr.ib(default=None)
     log_level = attr.ib(default=None)
 
@@ -82,6 +85,10 @@ class Message(MessageAttributeSerializationMixin, metaclass=ABCMeta):
 
     @options.default
     def default_options_value(self):
+        return {}
+
+    @headers.default
+    def default_headers_value(self):
         return {}
 
     @uuid.default
