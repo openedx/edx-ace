@@ -1,10 +1,10 @@
 """
-
+Tests for the PushNotificationChannel class.
 """
-import pytest
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
+import pytest
 from firebase_admin.messaging import APNSConfig
 from push_notifications.models import GCMDevice
 
