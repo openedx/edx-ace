@@ -3,6 +3,7 @@ Tests of :mod:`edx_ace.ace`.
 """
 from unittest.mock import Mock, patch
 
+from django.template import TemplateDoesNotExist
 from django.test import TestCase
 
 from edx_ace import ace
@@ -63,3 +64,36 @@ class TestAce(TestCase):
         )
 
         ace.send(msg)  # UnsupportedChannelError shouldn't throw UnsupportedChannelError
+
+    @patch('edx_ace.ace.log')
+    @patch('edx_ace.ace.policy.channels_for', return_value=[ChannelType.PUSH])
+    def test_ace_send_skip_limited_channel(self, mock_channels_for, mock_log):
+        recipient = Recipient(lms_user_id=123)
+        msg = Message(
+            app_label='testapp',
+            name='testmessage',
+            recipient=recipient,
+        )
+
+        ace.send(msg, limit_to_channels=[ChannelType.EMAIL])
+
+        mock_channels_for.assert_called_once_with(msg)
+        mock_log.info.assert_called_once_with('Skipping channel %s', ChannelType.PUSH)
+
+    @patch('edx_ace.ace.presentation.render', side_effect=TemplateDoesNotExist('template not found'))
+    def test_ace_send_template_does_not_exists(self, *_args):
+        recipient = Recipient(lms_user_id=123)
+        report_mock = Mock()
+
+        msg = Mock(
+            app_label='testapp',
+            name='testmessage',
+            recipient=recipient,
+            context={},
+            report=report_mock,
+        )
+        ace.send(msg)
+        report_mock.assert_called_with(
+            'template_error',
+            'Unable to send message because template not found\ntemplate not found'
+        )

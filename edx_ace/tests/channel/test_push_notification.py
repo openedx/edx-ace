@@ -1,11 +1,14 @@
 """
 
 """
+import pytest
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
 from firebase_admin.messaging import APNSConfig
+from push_notifications.models import GCMDevice
 
+from django.contrib.auth import get_user_model
 from django.test import override_settings
 
 from edx_ace.channel.push_notification import PushNotificationChannel
@@ -15,7 +18,10 @@ from edx_ace.recipient import Recipient
 from edx_ace.renderers import RenderedPushNotification
 from edx_ace.utils.date import get_current_time
 
+User = get_user_model()
 
+
+@pytest.mark.django_db
 class TestPushNotificationChannel(TestCase):
     """
     Tests for the PushNotificationChannel class.
@@ -23,7 +29,8 @@ class TestPushNotificationChannel(TestCase):
 
     def setUp(self):
         super().setUp()
-        self.lms_user_id = 123
+        self.user = User.objects.create(username='username', email='email@example.com')
+        self.lms_user_id = self.user.id
         self.msg_kwargs = {
             'app_label': 'test_app_label',
             'name': 'test_message',
@@ -146,3 +153,21 @@ class TestPushNotificationChannel(TestCase):
         """
         compressed = PushNotificationChannel.compress_spaces('This   is a \n\n test.')
         self.assertEqual(compressed, 'This is a test.')
+
+    def test_get_user_device_tokens(self):
+        """
+        Test that the get_user_device_tokens method returns the device tokens for a user.
+        """
+        gcm_device = GCMDevice.objects.create(user=self.user, registration_id='token1')
+
+        channel = PushNotificationChannel()
+        tokens = channel.get_user_device_tokens(self.lms_user_id)
+        self.assertEqual(tokens, [gcm_device.registration_id])
+
+    def test_get_user_device_tokens_no_tokens(self):
+        """
+        Test that the get_user_device_tokens method returns an empty list when the user has no device tokens.
+        """
+        channel = PushNotificationChannel()
+        tokens = channel.get_user_device_tokens(self.lms_user_id)
+        self.assertEqual(tokens, [])
