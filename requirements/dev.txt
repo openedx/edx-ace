@@ -24,10 +24,12 @@ build==1.2.1
     # via pip-tools
 cachetools==5.3.3
     # via tox
-certifi==2024.6.2
+certifi==2024.7.4
     # via requests
 cffi==1.16.0
-    # via pynacl
+    # via
+    #   cryptography
+    #   pynacl
 chardet==5.2.0
     # via
     #   diff-cover
@@ -47,6 +49,8 @@ code-annotations==1.8.0
     # via edx-lint
 colorama==0.4.6
     # via tox
+cryptography==42.0.8
+    # via secretstorage
 diff-cover==9.1.0
     # via -r requirements/dev.in
 dill==0.3.8
@@ -99,6 +103,10 @@ jaraco-context==5.3.0
     # via keyring
 jaraco-functools==4.0.1
     # via keyring
+jeepney==0.8.0
+    # via
+    #   keyring
+    #   secretstorage
 jinja2==3.1.4
     # via
     #   code-annotations
@@ -125,7 +133,7 @@ more-itertools==10.3.0
     #   jaraco-functools
 newrelic==9.11.0
     # via edx-django-utils
-nh3==0.2.17
+nh3==0.2.18
     # via readme-renderer
 packaging==24.1
     # via
@@ -164,7 +172,7 @@ pygments==2.18.0
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==3.2.4
+pylint==3.2.5
     # via
     #   edx-lint
     #   pylint-celery
@@ -209,6 +217,8 @@ rich==13.7.1
     # via twine
 sailthru-client==2.2.3
     # via -r requirements/base.in
+secretstorage==3.3.3
+    # via keyring
 simplejson==3.19.2
     # via sailthru-client
 six==1.16.0
@@ -236,7 +246,7 @@ tomli==2.0.1
     #   tox
 tomlkit==0.12.5
     # via pylint
-tox==4.15.1
+tox==4.16.0
     # via -r requirements/dev.in
 twine==5.1.1
     # via -r requirements/dev.in
