@@ -15,7 +15,7 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   -c requirements/constraints.txt
     #   -r requirements/test.in
     #   django
-certifi==2024.6.2
+certifi==2024.7.4
     # via requests
 cffi==1.16.0
     # via pynacl
@@ -23,7 +23,7 @@ charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via edx-django-utils
-coverage[toml]==7.5.4
+coverage[toml]==7.6.0
     # via pytest-cov
 ddt==1.7.2
     # via -r requirements/test.in
@@ -39,11 +39,11 @@ django-waffle==4.1.0
     # via edx-django-utils
 edx-django-utils==5.14.2
     # via -r requirements/base.in
-exceptiongroup==1.2.1
+exceptiongroup==1.2.2
     # via
     #   hypothesis
     #   pytest
-hypothesis[pytz]==6.104.1
+hypothesis[pytz]==6.108.2
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
@@ -61,7 +61,7 @@ jedi==0.19.1
     # via pudb
 mock==5.1.0
     # via -r requirements/test.in
-newrelic==9.11.0
+newrelic==9.12.0
     # via edx-django-utils
 packaging==24.1
     # via
@@ -75,7 +75,7 @@ pluggy==1.5.0
     # via pytest
 psutil==6.0.0
     # via edx-django-utils
-pudb==2024.1
+pudb==2024.1.1
     # via -r requirements/test.in
 pycparser==2.22
     # via cffi
@@ -127,7 +127,7 @@ typing-extensions==4.12.2
     #   urwid
 urllib3==2.2.2
     # via requests
-urwid==2.6.14
+urwid==2.6.15
     # via
     #   pudb
     #   urwid-readline
