@@ -52,7 +52,7 @@ def send(msg, limit_to_channels=None):
 
     for channel_type in channels_for_message:
         if limit_to_channels and channel_type not in limit_to_channels:
-            log.info('Skipping channel %s', channel_type)
+            log.debug('Skipping channel %s', channel_type)
 
         try:
             channel = get_channel_for_message(channel_type, msg)

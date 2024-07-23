@@ -49,14 +49,14 @@ class TestPushNotificationChannel(TestCase):
         """
         Test that the channel is enabled when the settings are configured.
         """
-        self.assertTrue(PushNotificationChannel.enabled())
+        assert PushNotificationChannel.enabled()
 
     @override_settings(PUSH_NOTIFICATIONS_SETTINGS=None)
     def test_disabled(self):
         """
         Test that the channel is disabled when the settings are not configured.
         """
-        self.assertFalse(PushNotificationChannel.enabled())
+        assert not PushNotificationChannel.enabled()
 
     @patch('edx_ace.channel.push_notification.LOG')
     @patch('edx_ace.channel.push_notification.PushNotificationChannel.send_message')
@@ -89,7 +89,7 @@ class TestPushNotificationChannel(TestCase):
             channel = PushNotificationChannel()
             channel.deliver(message, rendered_message)
 
-            self.assertEqual(mock_send_message.call_count, 2)
+            assert mock_send_message.call_count == 2
 
     @override_settings(FCM_APP_NAME='test_app')
     @patch('edx_ace.channel.push_notification.send_message')
@@ -129,7 +129,7 @@ class TestPushNotificationChannel(TestCase):
 
         channel = PushNotificationChannel()
 
-        with self.assertRaises(FatalChannelDeliveryError):
+        with pytest.raises(FatalChannelDeliveryError):
             channel.send_message(message, 'token', rendered_message)
 
         mock_send_message.assert_called_with('token', mock_dict_to_fcm_message.return_value, 'test_app')
@@ -143,16 +143,16 @@ class TestPushNotificationChannel(TestCase):
 
         apns_config = PushNotificationChannel.collect_apns_config(notification_data)
 
-        self.assertIsInstance(apns_config, APNSConfig)
-        self.assertEqual(apns_config.headers['apns-priority'], '5')
-        self.assertEqual(apns_config.headers['apns-push-type'], 'alert')
+        assert isinstance(apns_config, APNSConfig)
+        assert apns_config.headers['apns-priority'] == '5'
+        assert apns_config.headers['apns-push-type'] == 'alert'
 
     def test_compress_spaces(self):
         """
         Test that the compress_spaces method removes extra spaces and newlines from a string.
         """
         compressed = PushNotificationChannel.compress_spaces('This   is a \n\n test.')
-        self.assertEqual(compressed, 'This is a test.')
+        assert compressed == 'This is a test.'
 
     def test_get_user_device_tokens(self):
         """
@@ -162,7 +162,7 @@ class TestPushNotificationChannel(TestCase):
 
         channel = PushNotificationChannel()
         tokens = channel.get_user_device_tokens(self.lms_user_id)
-        self.assertEqual(tokens, [gcm_device.registration_id])
+        assert tokens == [gcm_device.registration_id]
 
     def test_get_user_device_tokens_no_tokens(self):
         """
@@ -170,4 +170,4 @@ class TestPushNotificationChannel(TestCase):
         """
         channel = PushNotificationChannel()
         tokens = channel.get_user_device_tokens(self.lms_user_id)
-        self.assertEqual(tokens, [])
+        assert tokens == []

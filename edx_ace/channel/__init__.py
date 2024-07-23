@@ -178,8 +178,7 @@ def get_channel_for_message(channel_type, message):
             channel_names = [settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL, settings.ACE_CHANNEL_DEFAULT_EMAIL]
         else:
             channel_names = [settings.ACE_CHANNEL_DEFAULT_EMAIL]
-
-    if channel_type == ChannelType.PUSH:
+    elif channel_type == ChannelType.PUSH:
         channel_names = [settings.ACE_CHANNEL_DEFAULT_PUSH]
 
     try:

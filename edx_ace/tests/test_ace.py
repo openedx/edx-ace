@@ -78,7 +78,7 @@ class TestAce(TestCase):
         ace.send(msg, limit_to_channels=[ChannelType.EMAIL])
 
         mock_channels_for.assert_called_once_with(msg)
-        mock_log.info.assert_called_once_with('Skipping channel %s', ChannelType.PUSH)
+        mock_log.debug.assert_called_once_with('Skipping channel %s', ChannelType.PUSH)
 
     @patch('edx_ace.ace.presentation.render', side_effect=TemplateDoesNotExist('template not found'))
     def test_ace_send_template_does_not_exists(self, *_args):
