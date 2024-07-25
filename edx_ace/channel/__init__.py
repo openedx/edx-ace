@@ -195,4 +195,7 @@ def get_channel_for_message(channel_type, message):
             return channel
 
     # Else the normal path: use the preferred channel for this message type
-    return possible_channels[0] if possible_channels else channels_map.get_default_channel(channel_type)
+    if possible_channels:
+        return possible_channels[0]
+    else:
+        return channels_map.get_default_channel(channel_type)
