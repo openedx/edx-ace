@@ -15,26 +15,37 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   -c requirements/constraints.txt
     #   -r requirements/test.in
     #   django
+cachecontrol==0.14.0
+    # via firebase-admin
+cachetools==5.3.3
+    # via google-auth
 certifi==2024.6.2
     # via requests
 cffi==1.16.0
-    # via pynacl
+    # via
+    #   cryptography
+    #   pynacl
 charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via edx-django-utils
 coverage[toml]==7.5.4
     # via pytest-cov
+cryptography==42.0.8
+    # via pyjwt
 ddt==1.7.2
     # via -r requirements/test.in
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
     #   django-crum
+    #   django-push-notifications
     #   django-waffle
     #   edx-django-utils
 django-crum==0.7.9
     # via edx-django-utils
+django-push-notifications==3.1.0
+    # via -r requirements/base.in
 django-waffle==4.1.0
     # via edx-django-utils
 edx-django-utils==5.14.2
@@ -43,7 +54,56 @@ exceptiongroup==1.2.1
     # via
     #   hypothesis
     #   pytest
-hypothesis[pytz]==6.104.1
+firebase-admin==6.5.0
+    # via -r requirements/base.in
+google-api-core[grpc]==2.19.1
+    # via
+    #   firebase-admin
+    #   google-api-python-client
+    #   google-cloud-core
+    #   google-cloud-firestore
+    #   google-cloud-storage
+google-api-python-client==2.135.0
+    # via firebase-admin
+google-auth==2.30.0
+    # via
+    #   google-api-core
+    #   google-api-python-client
+    #   google-auth-httplib2
+    #   google-cloud-core
+    #   google-cloud-firestore
+    #   google-cloud-storage
+google-auth-httplib2==0.2.0
+    # via google-api-python-client
+google-cloud-core==2.4.1
+    # via
+    #   google-cloud-firestore
+    #   google-cloud-storage
+google-cloud-firestore==2.16.1
+    # via firebase-admin
+google-cloud-storage==2.17.0
+    # via firebase-admin
+google-crc32c==1.5.0
+    # via
+    #   google-cloud-storage
+    #   google-resumable-media
+google-resumable-media==2.7.1
+    # via google-cloud-storage
+googleapis-common-protos==1.63.2
+    # via
+    #   google-api-core
+    #   grpcio-status
+grpcio==1.64.1
+    # via
+    #   google-api-core
+    #   grpcio-status
+grpcio-status==1.62.2
+    # via google-api-core
+httplib2==0.22.0
+    # via
+    #   google-api-python-client
+    #   google-auth-httplib2
+hypothesis[pytz]==6.104.2
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
@@ -61,6 +121,8 @@ jedi==0.19.1
     # via pudb
 mock==5.1.0
     # via -r requirements/test.in
+msgpack==1.0.8
+    # via cachecontrol
 newrelic==9.11.0
     # via edx-django-utils
 packaging==24.1
@@ -73,16 +135,37 @@ pbr==6.0.0
     # via stevedore
 pluggy==1.5.0
     # via pytest
+proto-plus==1.24.0
+    # via
+    #   google-api-core
+    #   google-cloud-firestore
+protobuf==4.25.3
+    # via
+    #   google-api-core
+    #   google-cloud-firestore
+    #   googleapis-common-protos
+    #   grpcio-status
+    #   proto-plus
 psutil==6.0.0
     # via edx-django-utils
 pudb==2024.1
     # via -r requirements/test.in
+pyasn1==0.6.0
+    # via
+    #   pyasn1-modules
+    #   rsa
+pyasn1-modules==0.4.0
+    # via google-auth
 pycparser==2.22
     # via cffi
 pygments==2.18.0
     # via pudb
+pyjwt[crypto]==2.8.0
+    # via firebase-admin
 pynacl==1.5.0
     # via edx-django-utils
+pyparsing==3.1.2
+    # via httplib2
 pytest==8.2.2
     # via
     #   hypothesis-pytest
@@ -100,7 +183,13 @@ python-dateutil==2.9.0.post0
 pytz==2024.1
     # via hypothesis
 requests==2.32.3
-    # via sailthru-client
+    # via
+    #   cachecontrol
+    #   google-api-core
+    #   google-cloud-storage
+    #   sailthru-client
+rsa==4.9
+    # via google-auth
 sailthru-client==2.2.3
     # via -r requirements/base.in
 simplejson==3.19.2
@@ -125,6 +214,8 @@ typing-extensions==4.12.2
     # via
     #   asgiref
     #   urwid
+uritemplate==4.1.1
+    # via google-api-python-client
 urllib3==2.2.2
     # via requests
 urwid==2.6.14

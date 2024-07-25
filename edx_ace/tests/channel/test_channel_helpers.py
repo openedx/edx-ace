@@ -8,6 +8,7 @@ from django.test import TestCase, override_settings
 from edx_ace.channel import ChannelMap, ChannelType, get_channel_for_message
 from edx_ace.channel.braze import BrazeEmailChannel
 from edx_ace.channel.file import FileEmailChannel
+from edx_ace.channel.push_notification import PushNotificationChannel
 from edx_ace.errors import UnsupportedChannelError
 from edx_ace.message import Message
 from edx_ace.recipient import Recipient
@@ -39,11 +40,13 @@ class TestChannelMap(TestCase):
         },
         ACE_CHANNEL_DEFAULT_EMAIL='braze_email',
         ACE_CHANNEL_TRANSACTIONAL_EMAIL='file_email',
+        ACE_CHANNEL_DEFAULT_PUSH='push_notification',
     )
     def test_get_channel_for_message(self):
         channel_map = ChannelMap([
             ['file_email', FileEmailChannel()],
             ['braze_email', BrazeEmailChannel()],
+            ['push_notifications', PushNotificationChannel()],
         ])
 
         transactional_msg = Message(options={'transactional': True}, **self.msg_kwargs)
@@ -57,9 +60,10 @@ class TestChannelMap(TestCase):
             assert isinstance(get_channel_for_message(ChannelType.EMAIL, transactional_msg), FileEmailChannel)
             assert isinstance(get_channel_for_message(ChannelType.EMAIL, transactional_campaign_msg), BrazeEmailChannel)
             assert isinstance(get_channel_for_message(ChannelType.EMAIL, info_msg), BrazeEmailChannel)
+            assert isinstance(get_channel_for_message(ChannelType.PUSH, info_msg), PushNotificationChannel)
 
             with self.assertRaises(UnsupportedChannelError):
-                assert get_channel_for_message(ChannelType.PUSH, transactional_msg)
+                assert get_channel_for_message('unsupported_channel_type', transactional_msg)
 
     @override_settings(
         ACE_CHANNEL_DEFAULT_EMAIL='braze_email',

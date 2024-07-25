@@ -8,3 +8,6 @@ sailthru-client==2.2.3
 six
 stevedore>=1.10.0
 edx-django-utils>=5.14.2
+
+firebase-admin
+django-push-notifications
