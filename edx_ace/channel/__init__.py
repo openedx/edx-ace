@@ -5,6 +5,7 @@ to add new delivery :class:`Channel` instances to an ACE application.
 Developers wanting to add a new deliver channel should subclass :class:`Channel`,
 and then add an entry to the ``openedx.ace.channel`` entrypoint in their ``setup.py``.
 """
+
 import abc
 import itertools
 from collections import OrderedDict, defaultdict
@@ -24,6 +25,7 @@ class ChannelType(Enum):
     """
     All supported communication channels.
     """
+
     EMAIL = 'email'
     PUSH = 'push'
 
@@ -127,7 +129,7 @@ class ChannelMap:
         except (StopIteration, KeyError) as error:
             raise UnsupportedChannelError(
                 f'No implementation for channel {channel_type} is registered. '
-                f'Available channels are: {channels()}'
+                f'Available channels are: {channels()}',
             ) from error
 
     def __str__(self):
@@ -178,7 +180,7 @@ def get_channel_for_message(channel_type, message):
             channel_names = [settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL, settings.ACE_CHANNEL_DEFAULT_EMAIL]
         else:
             channel_names = [settings.ACE_CHANNEL_DEFAULT_EMAIL]
-    elif channel_type == ChannelType.PUSH:
+    elif channel_type == ChannelType.PUSH and getattr(settings, "ACE_CHANNEL_DEFAULT_PUSH", None):
         channel_names = [settings.ACE_CHANNEL_DEFAULT_PUSH]
 
     try:
