@@ -70,7 +70,6 @@ def send(msg, limit_to_channels=None):
 
         try:
             delivery.deliver(channel, rendered_message, msg)
-
         except ChannelError as error:
             msg.report(
                 f'{channel_type}_error',
