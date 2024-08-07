@@ -67,4 +67,3 @@ def deliver(channel, rendered_message, message):
     delivery_expired_report = f'{channel_type}_delivery_expired'
     logger.debug(delivery_expired_report)
     message.report(delivery_expired_report, get_current_time() - start_time)
-    ACE_MESSAGE_SENT.send(sender=channel, message=message)
