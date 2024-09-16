@@ -10,8 +10,8 @@ import time
 from django.conf import settings
 
 from edx_ace.errors import RecoverableChannelDeliveryError
-from edx_ace.signals import ACE_MESSAGE_SENT
 from edx_ace.utils.date import get_current_time
+from edx_ace.utils.signals import send_ace_message_sent_signal
 
 LOG = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ def deliver(channel, rendered_message, message):
             message.report(f'{channel_type}_delivery_retried', num_seconds)
         else:
             message.report(f'{channel_type}_delivery_succeeded', True)
-            ACE_MESSAGE_SENT.send(sender=channel, message=message)
+            send_ace_message_sent_signal(channel, message)
             return
 
     delivery_expired_report = f'{channel_type}_delivery_expired'
