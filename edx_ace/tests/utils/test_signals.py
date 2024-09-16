@@ -1,4 +1,8 @@
+"""
+Tests for the utils/signals module.
+"""
 from django.test import TestCase
+
 from edx_ace.utils.signals import make_serializable_object
 
 
