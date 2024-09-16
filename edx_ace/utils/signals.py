@@ -9,12 +9,15 @@ def make_serializable_object(obj):
     Takes a dictionary/list and returns a dictionary/list with all the values converted
     to JSON serializable objects.
     """
-    if isinstance(obj, (int, float, str, bool)) or obj is None:
-        return obj
-    elif isinstance(obj, dict):
-        return {key: make_serializable_object(value) for key, value in obj.items()}
-    elif isinstance(obj, list):
-        return [make_serializable_object(element) for element in obj]
+    try:
+        if isinstance(obj, (int, float, str, bool)) or obj is None:
+            return obj
+        elif isinstance(obj, dict):
+            return {key: make_serializable_object(value) for key, value in obj.items()}
+        elif isinstance(obj, list):
+            return [make_serializable_object(element) for element in obj]
+    except:        # pylint: disable=bare-except
+        pass
     return str(obj)
 
 
