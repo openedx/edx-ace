@@ -1,6 +1,7 @@
 from django.test import TestCase
 from edx_ace.utils.signals import make_serializable_object
 
+
 class TestMakeSerializableObject(TestCase):
     def test_primitive_types(self):
         self.assertEqual(make_serializable_object(42), 42)

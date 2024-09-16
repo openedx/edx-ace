@@ -16,7 +16,7 @@ def make_serializable_object(obj):
             return {key: make_serializable_object(value) for key, value in obj.items()}
         elif isinstance(obj, list):
             return [make_serializable_object(element) for element in obj]
-    except:        # pylint: disable=bare-except
+    except Exception:    # pylint: disable=broad-except
         pass
     return str(obj)
 
