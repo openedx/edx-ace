@@ -176,7 +176,9 @@ def get_channel_for_message(channel_type, message):
     channel_names = []
 
     if channel_type == ChannelType.EMAIL:
-        if message.options.get('transactional'):
+        if message.options.get('override_default_channel'):
+            channel_names = [message.options.get('override_default_channel')]
+        elif message.options.get('transactional'):
             channel_names = [settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL, settings.ACE_CHANNEL_DEFAULT_EMAIL]
         else:
             channel_names = [settings.ACE_CHANNEL_DEFAULT_EMAIL]
