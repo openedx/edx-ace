@@ -5,6 +5,7 @@ to add new delivery :class:`Channel` instances to an ACE application.
 Developers wanting to add a new deliver channel should subclass :class:`Channel`,
 and then add an entry to the ``openedx.ace.channel`` entrypoint in their ``setup.py``.
 """
+
 import abc
 import itertools
 from collections import OrderedDict, defaultdict
@@ -24,6 +25,7 @@ class ChannelType(Enum):
     """
     All supported communication channels.
     """
+
     EMAIL = 'email'
     PUSH = 'push'
 
@@ -78,6 +80,7 @@ class ChannelMap:
     """
     A class that represents a channel map, usually as described in Django settings and `setup.py` files.
     """
+
     def __init__(self, channels_list):
         """
         Initialize a ChannelMap.
@@ -126,7 +129,7 @@ class ChannelMap:
         except (StopIteration, KeyError) as error:
             raise UnsupportedChannelError(
                 f'No implementation for channel {channel_type} is registered. '
-                f'Available channels are: {channels()}'
+                f'Available channels are: {channels()}',
             ) from error
 
     def __str__(self):
@@ -170,27 +173,33 @@ def get_channel_for_message(channel_type, message):
         Channel: The selected channel object.
     """
     channels_map = channels()
+    channel_names = []
 
     if channel_type == ChannelType.EMAIL:
-        if message.options.get('transactional'):
+        if message.options.get('override_default_channel'):
+            channel_names = [message.options.get('override_default_channel')]
+        elif message.options.get('transactional'):
             channel_names = [settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL, settings.ACE_CHANNEL_DEFAULT_EMAIL]
         else:
             channel_names = [settings.ACE_CHANNEL_DEFAULT_EMAIL]
+    elif channel_type == ChannelType.PUSH and getattr(settings, "ACE_CHANNEL_DEFAULT_PUSH", None):
+        channel_names = [settings.ACE_CHANNEL_DEFAULT_PUSH]
 
-        try:
-            possible_channels = [
-                channels_map.get_channel_by_name(channel_type, channel_name)
-                for channel_name in channel_names
-            ]
-        except KeyError:
-            return channels_map.get_default_channel(channel_type)
+    try:
+        possible_channels = [
+            channels_map.get_channel_by_name(channel_type, channel_name)
+            for channel_name in channel_names
+        ]
+    except KeyError:
+        return channels_map.get_default_channel(channel_type)
 
-        # First see if any channel specifically demands to deliver this message
-        for channel in possible_channels:
-            if channel.overrides_delivery_for_message(message):
-                return channel
+    # First see if any channel specifically demands to deliver this message
+    for channel in possible_channels:
+        if channel.overrides_delivery_for_message(message):
+            return channel
 
-        # Else the normal path: use the preferred channel for this message type
+    # Else the normal path: use the preferred channel for this message type
+    if possible_channels:
         return possible_channels[0]
-
-    return channels_map.get_default_channel(channel_type)
+    else:
+        return channels_map.get_default_channel(channel_type)

@@ -81,3 +81,21 @@ class EmailRenderer(AbstractRenderer):
     A renderer for :attr:`.ChannelType.EMAIL` channels.
     """
     rendered_message_cls = RenderedEmail
+
+
+@attr.s
+class RenderedPushNotification:
+    """
+    Encapsulates all values needed to send a :class:`.Message`
+    over an :attr:`.ChannelType.PUSH`.
+    """
+
+    title = attr.ib()
+    body = attr.ib()
+
+
+class PushNotificationRenderer(AbstractRenderer):
+    """
+    A renderer for :attr:`.ChannelType.PUSH` channels.
+    """
+    rendered_message_cls = RenderedPushNotification

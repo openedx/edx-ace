@@ -10,3 +10,4 @@ mock
 pudb                      # For easier test debugging
 hypothesis[pytz]          # For property-based testing
 hypothesis-pytest
+backports.zoneinfo; python_version<'3.9'  # Needed for Python 3.12 compatibility

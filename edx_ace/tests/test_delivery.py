@@ -34,21 +34,26 @@ class TestDelivery(TestCase):  # pylint: disable=missing-class-docstring
         )
         self.current_time = datetime.datetime.utcnow().replace(tzinfo=tzutc())
 
-    def test_happy_path(self):
+    @patch('edx_ace.delivery.send_ace_message_sent_signal')
+    def test_happy_path(self, mock_ace_message_sent):
         deliver(self.mock_channel, sentinel.rendered_email, self.message)
         self.mock_channel.deliver.assert_called_once_with(self.message, sentinel.rendered_email)
+        # check if ACE_MESSAGE_SENT is raised
+        mock_ace_message_sent.assert_called_once_with(self.mock_channel, self.message)
 
     def test_fatal_error(self):
         self.mock_channel.deliver.side_effect = FatalChannelDeliveryError('testing')
         with self.assertRaises(FatalChannelDeliveryError):
             deliver(self.mock_channel, sentinel.rendered_email, self.message)
 
+    @patch('edx_ace.delivery.send_ace_message_sent_signal')
     @patch('edx_ace.delivery.get_current_time')
-    def test_custom_message_expiration(self, mock_get_current_time):
+    def test_custom_message_expiration(self, mock_get_current_time, mock_ace_message_sent):
         self.message.expiration_time = self.current_time - datetime.timedelta(seconds=10)
         mock_get_current_time.return_value = self.current_time
         deliver(self.mock_channel, sentinel.rendered_email, self.message)
         assert not self.mock_channel.deliver.called
+        mock_ace_message_sent.assert_not_called()
 
     @patch('edx_ace.delivery.time')
     @patch('edx_ace.delivery.get_current_time')
@@ -100,3 +105,16 @@ class TestDelivery(TestCase):  # pylint: disable=missing-class-docstring
         deliver(self.mock_channel, sentinel.rendered_email, self.message)
         assert mock_time.sleep.call_args_list == [call(1), call(1)]
         assert self.mock_channel.deliver.call_count == 3
+
+    @patch('edx_ace.delivery.send_ace_message_sent_signal')
+    def test_message_sent_signal_for_push_channel(self, mock_ace_message_sent):
+        """
+        Test that ACE_MESSAGE_SENT signal is sent when a message is delivered to a push channel.
+        """
+        mock_push_channel = Mock(
+            name='push_channel',
+            channel_type=ChannelType.PUSH
+        )
+        deliver(mock_push_channel, sentinel.rendered_email, self.message)
+        # check if ACE_MESSAGE_SENT is raised
+        mock_ace_message_sent.assert_called_once_with(mock_push_channel, self.message)

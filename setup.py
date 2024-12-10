@@ -141,7 +141,8 @@ setup(
     include_package_data=True,
     install_requires=load_requirements('requirements/base.in'),
     extras_require={
-        'sailthru':  ["sailthru-client>2.2,<2.3"]
+        'sailthru':  ["sailthru-client>2.2,<2.3"],
+        'push_notifications':  ["django-push-notifications[FCM]"]
     },
     license="AGPL 3.0",
     zip_safe=False,
@@ -149,13 +150,13 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
-        'Framework :: Django :: 3.2',
         'Framework :: Django :: 4.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.12',
     ],
     entry_points={
         'openedx.ace.channel': [
@@ -163,6 +164,7 @@ setup(
             'sailthru_email = edx_ace.channel.sailthru:SailthruEmailChannel',
             'file_email = edx_ace.channel.file:FileEmailChannel',
             'django_email = edx_ace.channel.django_email:DjangoEmailChannel',
+            'push_notification = edx_ace.channel.push_notification:PushNotificationChannel',
         ]
     }
 )

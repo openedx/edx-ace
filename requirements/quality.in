@@ -6,3 +6,4 @@ edx-lint                  # edX pylint rules and plugins
 isort                     # to standardize order of imports
 pycodestyle               # PEP 8 compliance validation
 pydocstyle                # PEP 257 compliance validation
+backports.zoneinfo; python_version<'3.9'  # Needed for Python 3.12 compatibility

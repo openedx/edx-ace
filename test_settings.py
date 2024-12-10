@@ -29,6 +29,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'edx_ace',
+    'push_notifications',
 )
 
 LOCALE_PATHS = [
@@ -67,3 +68,4 @@ ACE_CHANNEL_SAILTHRU_DEBUG = True
 ACE_CHANNEL_SAILTHRU_TEMPLATE_NAME = 'Automated Communication Engine Email'
 ACE_CHANNEL_SAILTHRU_API_KEY = None
 ACE_CHANNEL_SAILTHRU_API_SECRET = None
+ACE_CHANNEL_DEFAULT_PUSH = 'push_notification'

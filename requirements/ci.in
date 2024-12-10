@@ -3,4 +3,3 @@
 -c constraints.txt
 
 tox                       # Virtualenv management for tests
-tox-battery==0.2          # Makes tox aware of requirements file changes; restricted by https://github.com/signalpillar/tox-battery/issues/6
