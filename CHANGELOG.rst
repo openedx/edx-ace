@@ -14,6 +14,12 @@ Change Log
 Unreleased
 **********
 
+[2.0.0] - 2025-01-10
+~~~~~~~~~~~~~~~~~~~~
+* Added support for ``Python 3.11``
+* Removed support for ``Python 3.8``
+
+
 [1.8.0] - 2024-03-06
 --------------------
 
