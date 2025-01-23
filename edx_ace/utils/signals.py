@@ -2,6 +2,7 @@
 Utils for signals.
 """
 from django.utils import translation
+
 from edx_ace.signals import ACE_MESSAGE_SENT
 
 
