@@ -1,5 +1,5 @@
 edX Automated Communication Engine (A.C.E.)
-###########################################
+===========================================
 
 |License: AGPL v3| |Python CI| |Publish package to PyPi| |Status| |pypi-badge| |travis-badge| |codecov-badge|
 |doc-badge| |pyversions-badge|
