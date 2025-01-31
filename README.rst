@@ -17,7 +17,7 @@ notifications.
 Getting Started
 ***************
 
-For instructions on starting local development, see `Getting Started <https://github.com/openedx/edx-ace/blob/master/docs/getting_started.rst>`_.
+For instructions on starting local development, see `Getting Started page <https://github.com/openedx/edx-ace/blob/master/docs/getting_started.rst>`_.
 
 Getting Help
 ************
@@ -45,11 +45,11 @@ can provide.
 
 https://github.com/openedx/edx-ace/issues
 
-For more information about these options, see the `Getting Help`_ page.
+For more information about these options, see the `help`_ page.
 
 .. _Slack invitation: https://openedx.org/slack
 .. _community Slack workspace: https://openedx.slack.com/
-.. _Getting Help: https://openedx.org/getting-help
+.. _help: https://openedx.org/getting-help
 
 License
 *******
