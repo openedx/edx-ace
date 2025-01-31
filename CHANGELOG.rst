@@ -1,5 +1,5 @@
 Change Log
-----------
+##########
 
 ..
    All enhancements and patches to edx_ace will be documented
@@ -12,54 +12,55 @@ Change Log
 .. There should always be an "Unreleased" section for changes pending release.
 
 Unreleased
-~~~~~~~~~~
+**********
 
 [1.8.0] - 2024-03-06
-~~~~~~~~~~~~~~~~~~~~
+--------------------
+
 * Added support for ``Python 3.12``
 * Dropped support for ``Django 3.2``
 
 
 [1.7.0] - 2023-07-21
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Switch from ``edx-sphinx-theme`` to ``sphinx-book-theme`` since the former is
   deprecated
 * Added support for django 4.2
 
 [1.6.1] - 2023-02-07
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Updated code coverage target in https://github.com/openedx/edx-ace/pull/189
 * Updated Python Requirements in https://github.com/openedx/edx-ace/pull/199
 * **Full Changelog**: https://github.com/openedx/edx-ace/compare/v1.6.0...v1.6.1
 
 [1.5.0] - 2022-02-15
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Added support for Django40
 * Removed support for Django22, 30 and 31
 
 [1.4.1] - 2021-12-06
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Adds in the ability to override frequency caps for Braze emails. Can be accessed via
   Message options using the key ``override_frequency_capping``. All emails containing the
   ``transactional`` Message option will also override frequency caps.
 
 [1.4.0] - 2021-11-08
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Deprecate the action_links property
 * Add a get_action_links method and template tag to allow passing arguments to action links
 
 [1.3.1] - 2021-08-17
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Adjust name ``handles_delivery_for_message`` to ``overrides_delivery_for_message``
 
 [1.3.0] - 2021-08-16
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * New channel method ``handles_delivery_for_message`` for allowing a default channel
   to claim a message, even if it would normally be delivered to the configured
@@ -69,29 +70,29 @@ Unreleased
   needed.
 
 [1.2.0] - 2021-07-16
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Added support for django 3.2
 
 [1.1.1] - 2021-07-09
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Removed upper constraint from Django
 
 [1.1.0] - 2021-03-26
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Braze: Add ACE_CHANNEL_BRAZE_FROM_EMAIL setting to override the normal from address
 * Sailthru: Remove Braze rollout waffle flag
 
 [1.0.1] - 2021-03-15
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Braze: Add an unsubscribe action link
 * Braze: Don't ask Braze to inline css, as ACE templates already have inline css
 
 [1.0.0] - 2021-03-11
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * BREAKING: Recipient objects now take `lms_user_id` instead of `username`
 * New `braze_email` backend, needing the following new configuration:
@@ -102,57 +103,52 @@ Unreleased
   * ACE_CHANNEL_BRAZE_CAMPAIGNS (an optional dictionary of ACE message names to Braze campaign identifiers)
 
 [0.1.18] - 2020-11-19
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 * Updated he travis-badge in README.rst to point to travis-ci.com
 
 [0.1.17] - 2020-10-19
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 * Use IntEnum to avoid silent failure in value comparisons
 
 [0.1.16] - 2020-10-17
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 * Fixed Enum usage for Python 3.8 to avoid TypeError when comparing values
 
 [0.1.15] - 2020-03-11
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 * Added support for Python 3.8
 * Removed support for Django 2.0 and 2.1
 
 [0.1.14] - 2020-03-11
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 * Fix trivial warning from deprecated use of attr library.
 
 [0.1.13] - 2019-12-06
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 * Django22 Support.
 
 [0.1.12] - 2019-10-16
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 * Reply_to field added in emails.
 
 [0.1.10] - 2018-11-01
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 * Django lazy text translations are handled properly.
 
-
 [0.1.9] - 2018-07-13
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 * Updated delivery logging
 
-
 [0.1.0] - 2017-08-08
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------
 
-Added
-_____
-
-* First release on PyPI.
+* [Added] First release on PyPI.
