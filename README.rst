@@ -5,7 +5,7 @@ edX Automated Communication Engine (A.C.E.)
 |doc-badge| |pyversions-badge|
 
 Purpose
-=======
+*******
 
 The `automated communication engine <https://edx-ace.readthedocs.io/en/latest/>`_, A.C.E. for short, is a Django app
 for messaging learners on the Open edX platform. This
@@ -15,12 +15,12 @@ are the currently supported delivery channels. In the future we may add support 
 notifications.
 
 Getting Started
-===============
+***************
 
-For instructions on starting local development, see `Getting Started <https://github.com/openedx/edx-ace/blob/master/docs/getting_started.rst>`_.
+For instructions on starting local development, see `Getting Started page <https://github.com/openedx/edx-ace/blob/master/docs/getting_started.rst>`_.
 
 Getting Help
-============
+************
 
 Documentation
 -------------
@@ -45,14 +45,14 @@ can provide.
 
 https://github.com/openedx/edx-ace/issues
 
-For more information about these options, see the `Getting Help`_ page.
+For more information about these options, see the `help`_ page.
 
 .. _Slack invitation: https://openedx.org/slack
 .. _community Slack workspace: https://openedx.slack.com/
-.. _Getting Help: https://openedx.org/getting-help
+.. _help: https://openedx.org/getting-help
 
 License
-=======
+*******
 
 The code in this repository is licensed under the AGPL 3.0 unless
 otherwise noted.
@@ -60,7 +60,7 @@ otherwise noted.
 Please see ``LICENSE.txt`` for details.
 
 Contributing
-============
+************
 
 Contributions are very welcome.
 
@@ -77,14 +77,14 @@ Issue report template should be automatically applied if you are sending it from
 can find it at `ISSUE_TEMPLATE.md <https://github.com/openedx/edx-ace/blob/master/.github/ISSUE_TEMPLATE.md>`_
 
 The Open edX Code of Conduct
-============================
+****************************
 
 All community members are expected to follow the `Open edX Code of Conduct`_.
 
 .. _Open edX Code of Conduct: https://openedx.org/code-of-conduct/
 
 People
-======
+******
 
 The assigned maintainers for this component and other project details may be
 found in `Backstage`_. Backstage pulls this data from the ``catalog-info.yaml``
@@ -93,7 +93,7 @@ file in this repo.
 .. _Backstage: https://open-edx-backstage.herokuapp.com/catalog/default/component/edx-ace
 
 Reporting Security Issues
-=========================
+*************************
 
 Please do not report security issues in public. Please email security@openedx.org.
 

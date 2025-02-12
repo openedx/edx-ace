@@ -1,6 +1,8 @@
 """
 Utils for signals.
 """
+from django.utils import translation
+
 from edx_ace.signals import ACE_MESSAGE_SENT
 
 
@@ -42,5 +44,7 @@ def send_ace_message_sent_signal(channel, message):
         'options': message.options,
         'uuid': str(message.uuid),
         'send_uuid': str(message.send_uuid),
+        'message_language': message.language,
+        'translation_language': translation.get_language()
     }
     ACE_MESSAGE_SENT.send(sender=channel, message=make_serializable_object(data))
