@@ -165,6 +165,7 @@ setup(
             'file_email = edx_ace.channel.file:FileEmailChannel',
             'django_email = edx_ace.channel.django_email:DjangoEmailChannel',
             'push_notification = edx_ace.channel.push_notification:PushNotificationChannel',
+            'braze_push = edx_ace.channel.braze_push_notification:BrazePushNotificationChannel',
         ]
     }
 )
