@@ -24,12 +24,16 @@ class TestPolicy(TestCase):
         PolicyCase(deny_values=[set(ChannelType)], expected_channels=set()),
 
         # deny only email
-        PolicyCase(deny_values=[{ChannelType.EMAIL}], expected_channels={ChannelType.PUSH, ChannelType.BRAZE_PUSH}),  # single policy
-        PolicyCase(deny_values=[{ChannelType.EMAIL}, set()], expected_channels={ChannelType.PUSH, ChannelType.BRAZE_PUSH}),  # multiple policies
+        PolicyCase(deny_values=[{ChannelType.EMAIL}],
+                   expected_channels={ChannelType.PUSH, ChannelType.BRAZE_PUSH}),  # single policy
+        PolicyCase(deny_values=[{ChannelType.EMAIL}, set()],
+                   expected_channels={ChannelType.PUSH, ChannelType.BRAZE_PUSH}),  # multiple policies
 
         # deny email, push and braze_push
-        PolicyCase(deny_values=[{ChannelType.EMAIL, ChannelType.PUSH, ChannelType.BRAZE_PUSH}], expected_channels=set()),  # single policy
-        PolicyCase(deny_values=[{ChannelType.EMAIL}, {ChannelType.PUSH}, {ChannelType.BRAZE_PUSH}], expected_channels=set()),  # multiple policies
+        PolicyCase(deny_values=[{ChannelType.EMAIL, ChannelType.PUSH, ChannelType.BRAZE_PUSH}],
+                   expected_channels=set()),  # single policy
+        PolicyCase(deny_values=[{ChannelType.EMAIL}, {ChannelType.PUSH},
+                                {ChannelType.BRAZE_PUSH}], expected_channels=set()),  # multiple policies
 
         # deny all and email
         PolicyCase(deny_values=[{ChannelType.EMAIL}, set(ChannelType)], expected_channels=set()),
