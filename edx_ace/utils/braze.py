@@ -8,13 +8,14 @@ except ImportError:
     BrazeClient = None
 from django.conf import settings
 
+
 def get_braze_client():
     """ Returns a Braze client. """
     if not BrazeClient:
         return None
 
-    braze_api_key = settings.EDX_BRAZE_API_KEY
-    braze_api_url = settings.EDX_BRAZE_API_SERVER
+    braze_api_key = getattr(settings, 'EDX_BRAZE_API_KEY', None)
+    braze_api_url = getattr(settings, 'EDX_BRAZE_API_SERVER', None)
 
     if not braze_api_key or not braze_api_url:
         return None

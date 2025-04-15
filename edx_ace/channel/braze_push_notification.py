@@ -59,7 +59,6 @@ class BrazePushNotificationChannel(Channel):
                 str(exc)
             )
 
-
     @classmethod
     def _campaign_id(cls, name):
         """Returns the campaign ID for a given ACE message name or None if no match is found"""
