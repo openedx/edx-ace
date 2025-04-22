@@ -65,7 +65,7 @@ docutils==0.19
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-braze-client==1.0.1
+edx-braze-client==1.0.2
     # via -r requirements/base.in
 edx-django-utils==5.14.2
     # via
