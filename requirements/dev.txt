@@ -205,7 +205,7 @@ pbr==6.0.0
     # via stevedore
 pip-tools==7.4.1
     # via -r requirements/dev.in
-pkginfo==1.10.0
+pkginfo==1.12.1.2
     # via twine
 platformdirs==4.2.2
     # via

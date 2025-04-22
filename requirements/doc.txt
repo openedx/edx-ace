@@ -164,7 +164,7 @@ packaging==24.1
     #   twine
 pbr==6.0.0
     # via stevedore
-pkginfo==1.10.0
+pkginfo==1.12.1.2
     # via twine
 proto-plus==1.24.0
     # via
