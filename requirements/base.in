@@ -5,7 +5,7 @@ Django>=2.2                       # Web application framework
 python-dateutil                   # Python Date Utilities
 attrs>=17.2.0                     # Attributes without boilerplate
 sailthru-client==2.2.3
-edx-braze-client==1.0.1
+edx-braze-client==1.0.2
 six
 stevedore>=1.10.0
 edx-django-utils>=5.14.2
