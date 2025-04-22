@@ -161,6 +161,7 @@ packaging==24.1
     # via
     #   pydata-sphinx-theme
     #   sphinx
+    #   twine
 pbr==6.0.0
     # via stevedore
 pkginfo==1.10.0
@@ -270,7 +271,7 @@ stevedore==5.2.0
     #   edx-django-utils
 tomli==2.0.1
     # via doc8
-twine==5.1.1
+twine==6.0.1
     # via -r requirements/doc.in
 typing-extensions==4.12.2
     # via
