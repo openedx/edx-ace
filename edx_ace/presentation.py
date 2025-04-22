@@ -10,6 +10,7 @@ from edx_ace.channel import ChannelType
 RENDERERS = {
     ChannelType.EMAIL: renderers.EmailRenderer(),
     ChannelType.PUSH: renderers.PushNotificationRenderer(),
+    ChannelType.BRAZE_PUSH: renderers.BrazePushNotificationRenderer(),
 }
 
 

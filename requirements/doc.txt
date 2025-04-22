@@ -48,6 +48,7 @@ django==4.2.13
     #   django-crum
     #   django-push-notifications
     #   django-waffle
+    #   edx-braze-client
     #   edx-django-utils
 django-crum==0.7.9
     # via edx-django-utils
@@ -64,8 +65,12 @@ docutils==0.19
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-django-utils==5.14.2
+edx-braze-client==1.0.1
     # via -r requirements/base.in
+edx-django-utils==5.14.2
+    # via
+    #   -r requirements/base.in
+    #   edx-braze-client
 firebase-admin==6.5.0
     # via -r requirements/base.in
 google-api-core[grpc]==2.19.1
@@ -121,7 +126,6 @@ imagesize==1.4.1
     # via sphinx
 importlib-metadata==6.11.0
     # via
-    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   keyring
     #   sphinx
     #   twine
@@ -157,9 +161,10 @@ packaging==24.1
     # via
     #   pydata-sphinx-theme
     #   sphinx
+    #   twine
 pbr==6.0.0
     # via stevedore
-pkginfo==1.10.0
+pkginfo==1.12.1.2
     # via twine
 proto-plus==1.24.0
     # via
@@ -209,6 +214,7 @@ readme-renderer==43.0
 requests==2.32.3
     # via
     #   cachecontrol
+    #   edx-braze-client
     #   google-api-core
     #   google-cloud-storage
     #   requests-toolbelt
@@ -265,7 +271,7 @@ stevedore==5.2.0
     #   edx-django-utils
 tomli==2.0.1
     # via doc8
-twine==5.1.1
+twine==6.0.1
     # via -r requirements/doc.in
 typing-extensions==4.12.2
     # via
@@ -276,6 +282,7 @@ uritemplate==4.1.1
     # via google-api-python-client
 urllib3==2.2.2
     # via
+    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   requests
     #   twine
 zipp==3.19.2

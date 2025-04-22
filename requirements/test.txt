@@ -41,6 +41,7 @@ ddt==1.7.2
     #   django-crum
     #   django-push-notifications
     #   django-waffle
+    #   edx-braze-client
     #   edx-django-utils
 django-crum==0.7.9
     # via edx-django-utils
@@ -48,8 +49,12 @@ django-push-notifications==3.1.0
     # via -r requirements/base.in
 django-waffle==4.1.0
     # via edx-django-utils
-edx-django-utils==5.14.2
+edx-braze-client==1.0.1
     # via -r requirements/base.in
+edx-django-utils==5.14.2
+    # via
+    #   -r requirements/base.in
+    #   edx-braze-client
 exceptiongroup==1.2.1
     # via
     #   hypothesis
@@ -112,9 +117,7 @@ hypothesis-pytest==0.19.0
 idna==3.7
     # via requests
 importlib-metadata==6.11.0
-    # via
-    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
-    #   pytest-randomly
+    # via pytest-randomly
 iniconfig==2.0.0
     # via pytest
 jedi==0.19.1
@@ -185,6 +188,7 @@ pytz==2024.1
 requests==2.32.3
     # via
     #   cachecontrol
+    #   edx-braze-client
     #   google-api-core
     #   google-cloud-storage
     #   sailthru-client
@@ -217,7 +221,9 @@ typing-extensions==4.12.2
 uritemplate==4.1.1
     # via google-api-python-client
 urllib3==2.2.2
-    # via requests
+    # via
+    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
+    #   requests
 urwid==2.6.14
     # via
     #   pudb

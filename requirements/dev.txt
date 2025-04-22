@@ -68,6 +68,7 @@ django==4.2.13
     #   django-crum
     #   django-push-notifications
     #   django-waffle
+    #   edx-braze-client
     #   edx-django-utils
     #   edx-i18n-tools
 django-crum==0.7.9
@@ -78,8 +79,12 @@ django-waffle==4.1.0
     # via edx-django-utils
 docutils==0.20.1
     # via readme-renderer
-edx-django-utils==5.14.2
+edx-braze-client==1.0.1
     # via -r requirements/base.in
+edx-django-utils==5.14.2
+    # via
+    #   -r requirements/base.in
+    #   edx-braze-client
 edx-i18n-tools==1.6.0
     # via -r requirements/dev.in
 edx-lint==5.3.6
@@ -143,7 +148,6 @@ idna==3.7
     # via requests
 importlib-metadata==6.11.0
     # via
-    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   build
     #   keyring
     #   twine
@@ -194,13 +198,14 @@ packaging==24.1
     #   build
     #   pyproject-api
     #   tox
+    #   twine
 path==16.14.0
     # via edx-i18n-tools
 pbr==6.0.0
     # via stevedore
 pip-tools==7.4.1
     # via -r requirements/dev.in
-pkginfo==1.10.0
+pkginfo==1.12.1.2
     # via twine
 platformdirs==4.2.2
     # via
@@ -232,7 +237,7 @@ pyasn1==0.6.0
     #   rsa
 pyasn1-modules==0.4.0
     # via google-auth
-pycodestyle==2.12.0
+pycodestyle==2.12.1
     # via -r requirements/quality.in
 pycparser==2.22
     # via cffi
@@ -282,6 +287,7 @@ readme-renderer==43.0
 requests==2.32.3
     # via
     #   cachecontrol
+    #   edx-braze-client
     #   google-api-core
     #   google-cloud-storage
     #   requests-toolbelt
@@ -326,7 +332,7 @@ tomlkit==0.12.5
     # via pylint
 tox==4.15.1
     # via -r requirements/dev.in
-twine==5.1.1
+twine==6.0.1
     # via -r requirements/dev.in
 typing-extensions==4.12.2
     # via
@@ -338,6 +344,7 @@ uritemplate==4.1.1
     # via google-api-python-client
 urllib3==2.2.2
     # via
+    #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   requests
     #   twine
 virtualenv==20.26.3
