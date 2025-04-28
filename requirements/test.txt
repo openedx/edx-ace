@@ -14,7 +14,7 @@ cachecontrol==0.14.2
     # via firebase-admin
 cachetools==5.5.2
     # via google-auth
-certifi==2025.1.31
+certifi==2025.4.26
     # via requests
 cffi==1.17.1
     # via
@@ -89,11 +89,11 @@ googleapis-common-protos==1.70.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.72.0
+grpcio==1.71.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.72.0
+grpcio-status==1.71.0
     # via google-api-core
 httplib2==0.22.0
     # via
@@ -131,7 +131,7 @@ proto-plus==1.26.1
     # via
     #   google-api-core
     #   google-cloud-firestore
-protobuf==6.30.2
+protobuf==5.29.4
     # via
     #   google-api-core
     #   google-cloud-firestore
