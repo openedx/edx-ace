@@ -59,7 +59,7 @@ docutils==0.21.2
     #   restructuredtext-lint
     #   sphinx
 edx-braze-client==1.0.2
-    # via -r requirements/base.in
+    # via -r requirements/doc.in
 edx-django-utils==7.4.0
     # via
     #   -r requirements/base.in

@@ -72,7 +72,7 @@ django-waffle==4.2.0
 docutils==0.21.2
     # via readme-renderer
 edx-braze-client==1.0.2
-    # via -r requirements/base.in
+    # via -r requirements/dev.in
 edx-django-utils==7.4.0
     # via
     #   -r requirements/base.in

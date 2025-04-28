@@ -45,7 +45,7 @@ django-push-notifications==3.2.1
 django-waffle==4.2.0
     # via edx-django-utils
 edx-braze-client==1.0.2
-    # via -r requirements/base.in
+    # via -r requirements/test.in
 edx-django-utils==7.4.0
     # via
     #   -r requirements/base.in
