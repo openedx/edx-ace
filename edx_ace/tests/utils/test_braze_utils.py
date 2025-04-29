@@ -28,7 +28,7 @@ class TestBrazeClient(TestCase):
         self.assertEqual(result, None)
         mock_braze_client.assert_not_called()
 
-    @override_settings(ACE_CHANNEL_BRAZE_API_KEY=API_KEY)
+    @override_settings(ACE_CHANNEL_BRAZE_PUSH_API_KEY=API_KEY)
     @patch('edx_ace.utils.braze.BrazeClient')
     def test_braze_url_not_configured(self, mock_braze_client):
         """
@@ -48,7 +48,7 @@ class TestBrazeClient(TestCase):
         self.assertEqual(result, None)
         mock_braze_client.assert_not_called()
 
-    @override_settings(ACE_CHANNEL_BRAZE_REST_ENDPOINT=API_KEY, ACE_CHANNEL_BRAZE_API_KEY=API_KEY)
+    @override_settings(ACE_CHANNEL_BRAZE_REST_ENDPOINT=API_KEY, ACE_CHANNEL_BRAZE_PUSH_API_KEY=API_KEY)
     @patch('edx_ace.utils.braze.BrazeClient', return_value=True)
     def test_success(self, mock_braze_client):
         """
