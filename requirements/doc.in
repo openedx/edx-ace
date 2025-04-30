@@ -8,3 +8,4 @@ readme_renderer           # Validates README.rst for usage on PyPI
 Sphinx                    # Documentation builder
 twine
 backports.zoneinfo; python_version<'3.9'  # Needed for Python 3.12 compatibility
+edx-braze-client==1.0.2

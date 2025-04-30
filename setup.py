@@ -142,7 +142,8 @@ setup(
     install_requires=load_requirements('requirements/base.in'),
     extras_require={
         'sailthru':  ["sailthru-client>2.2,<2.3"],
-        'push_notifications':  ["django-push-notifications[FCM]"]
+        'push_notifications':  ["django-push-notifications[FCM]"],
+        'braze_push': ['edx-braze-client==1.0.2']
     },
     license="AGPL 3.0",
     zip_safe=False,
