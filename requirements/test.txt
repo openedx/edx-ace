@@ -10,23 +10,23 @@ attrs==25.3.0
     # via
     #   -r requirements/base.in
     #   hypothesis
-cachecontrol==0.14.2
+cachecontrol==0.14.3
     # via firebase-admin
 cachetools==5.5.2
     # via google-auth
-certifi==2025.1.31
+certifi==2025.4.26
     # via requests
 cffi==1.17.1
     # via
     #   cryptography
     #   pynacl
-charset-normalizer==3.4.1
+charset-normalizer==3.4.2
     # via requests
-click==8.1.8
+click==8.2.0
     # via edx-django-utils
 coverage[toml]==7.8.0
     # via pytest-cov
-cryptography==44.0.2
+cryptography==45.0.2
     # via pyjwt
 ddt==1.7.2
     # via -r requirements/test.in
@@ -59,9 +59,9 @@ google-api-core[grpc]==2.24.2
     #   google-cloud-core
     #   google-cloud-firestore
     #   google-cloud-storage
-google-api-python-client==2.168.0
+google-api-python-client==2.169.0
     # via firebase-admin
-google-auth==2.39.0
+google-auth==2.40.1
     # via
     #   google-api-core
     #   google-api-python-client
@@ -89,17 +89,17 @@ googleapis-common-protos==1.70.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio==1.72.0
+grpcio==1.71.0
     # via
     #   google-api-core
     #   grpcio-status
-grpcio-status==1.72.0
+grpcio-status==1.71.0
     # via google-api-core
 httplib2==0.22.0
     # via
     #   google-api-python-client
     #   google-auth-httplib2
-hypothesis[pytz]==6.131.9
+hypothesis[pytz]==6.131.18
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
@@ -115,7 +115,7 @@ mock==5.2.0
     # via -r requirements/test.in
 msgpack==1.1.0
     # via cachecontrol
-newrelic==10.10.0
+newrelic==10.12.0
     # via edx-django-utils
 packaging==25.0
     # via
@@ -125,13 +125,13 @@ parso==0.8.4
     # via jedi
 pbr==6.1.1
     # via stevedore
-pluggy==1.5.0
+pluggy==1.6.0
     # via pytest
 proto-plus==1.26.1
     # via
     #   google-api-core
     #   google-cloud-firestore
-protobuf==6.30.2
+protobuf==5.29.4
     # via
     #   google-api-core
     #   google-cloud-firestore
@@ -140,7 +140,7 @@ protobuf==6.30.2
     #   proto-plus
 psutil==7.0.0
     # via edx-django-utils
-pudb==2024.1.3
+pudb==2025.1
     # via -r requirements/test.in
 pyasn1==0.6.1
     # via
@@ -199,15 +199,13 @@ stevedore==5.4.1
     # via
     #   -r requirements/base.in
     #   edx-django-utils
-typing-extensions==4.13.2
-    # via urwid
 uritemplate==4.1.1
     # via google-api-python-client
 urllib3==2.2.3
     # via
     #   -c https://raw.githubusercontent.com/edx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   requests
-urwid==2.6.16
+urwid==3.0.2
     # via
     #   pudb
     #   urwid-readline
