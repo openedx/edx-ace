@@ -60,7 +60,6 @@ django==4.2.20
     #   django-crum
     #   django-push-notifications
     #   django-waffle
-    #   edx-braze-client
     #   edx-django-utils
     #   edx-i18n-tools
 django-crum==0.7.9
@@ -71,12 +70,8 @@ django-waffle==4.2.0
     # via edx-django-utils
 docutils==0.21.2
     # via readme-renderer
-edx-braze-client==1.0.2
-    # via -r requirements/dev.in
 edx-django-utils==7.4.0
-    # via
-    #   -r requirements/base.in
-    #   edx-braze-client
+    # via -r requirements/base.in
 edx-i18n-tools==1.8.0
     # via -r requirements/dev.in
 edx-lint==5.6.0
@@ -272,7 +267,6 @@ readme-renderer==44.0
 requests==2.32.3
     # via
     #   cachecontrol
-    #   edx-braze-client
     #   google-api-core
     #   google-cloud-storage
     #   id

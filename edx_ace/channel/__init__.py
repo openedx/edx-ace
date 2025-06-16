@@ -28,7 +28,6 @@ class ChannelType(Enum):
 
     EMAIL = 'email'
     PUSH = 'push'
-    BRAZE_PUSH = 'braze_push'
 
     def __str__(self):
         return str(self.value)
@@ -183,10 +182,11 @@ def get_channel_for_message(channel_type, message):
             channel_names = [settings.ACE_CHANNEL_TRANSACTIONAL_EMAIL, settings.ACE_CHANNEL_DEFAULT_EMAIL]
         else:
             channel_names = [settings.ACE_CHANNEL_DEFAULT_EMAIL]
-    elif channel_type == ChannelType.PUSH and getattr(settings, "ACE_CHANNEL_DEFAULT_PUSH", None):
-        channel_names = [settings.ACE_CHANNEL_DEFAULT_PUSH]
-    elif channel_type == ChannelType.BRAZE_PUSH and getattr(settings, "ACE_CHANNEL_BRAZE_PUSH", None):
-        channel_names = [settings.ACE_CHANNEL_BRAZE_PUSH]
+    elif channel_type == ChannelType.PUSH:
+        if getattr(settings, "ACE_CHANNEL_DEFAULT_PUSH", None):
+            channel_names = [settings.ACE_CHANNEL_DEFAULT_PUSH]
+        elif getattr(settings, "ACE_PUSH_CHANNELS", []):
+            channel_names = settings.ACE_PUSH_CHANNELS
 
     try:
         possible_channels = [
