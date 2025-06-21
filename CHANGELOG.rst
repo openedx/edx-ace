@@ -14,6 +14,12 @@ Change Log
 Unreleased
 **********
 
+[1.15.0] - 2025-04-25
+---------------------
+
+* Removed edx-braze-client from repo
+* Removed braze_push channel from repo
+
 [1.13.0] - 2025-04-25
 ---------------------
 
