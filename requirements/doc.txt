@@ -41,7 +41,6 @@ django==4.2.20
     #   django-crum
     #   django-push-notifications
     #   django-waffle
-    #   edx-braze-client
     #   edx-django-utils
 django-crum==0.7.9
     # via edx-django-utils
@@ -58,12 +57,8 @@ docutils==0.21.2
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-braze-client==1.0.2
-    # via -r requirements/doc.in
 edx-django-utils==7.4.0
-    # via
-    #   -r requirements/base.in
-    #   edx-braze-client
+    # via -r requirements/base.in
 firebase-admin==6.8.0
     # via -r requirements/base.in
 google-api-core[grpc]==2.24.2
@@ -198,7 +193,6 @@ readme-renderer==44.0
 requests==2.32.3
     # via
     #   cachecontrol
-    #   edx-braze-client
     #   google-api-core
     #   google-cloud-storage
     #   id

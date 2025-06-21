@@ -13,7 +13,7 @@ from .policy import Policy, PolicyResult
 from .recipient import Recipient
 from .recipient_resolver import RecipientResolver
 
-__version__ = '1.14.0'
+__version__ = '1.15.0'
 
 
 __all__ = [
