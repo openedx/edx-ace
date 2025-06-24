@@ -94,7 +94,7 @@ httplib2==0.22.0
     # via
     #   google-api-python-client
     #   google-auth-httplib2
-hypothesis[pytz]==6.131.9
+hypothesis[pytz]==6.104.2
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest

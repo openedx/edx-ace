@@ -92,10 +92,7 @@ class MessageAttributeSerializationMixin:
         if field_name == 'expiration_time':
             return date.deserialize(field_value)
         elif field_name in ('uuid', 'send_uuid'):
-            try:
-                return UUID(field_value)
-            except ValueError:
-                return field_value
+            return UUID(field_value)
         # TODO(later): should this be more dynamic?
         elif field_name == 'message':
             return Message(**field_value)
