@@ -99,18 +99,3 @@ class PushNotificationRenderer(AbstractRenderer):
     A renderer for :attr:`.ChannelType.PUSH` channels.
     """
     rendered_message_cls = RenderedPushNotification
-
-
-@attr.s
-class RenderedBrazePushNotification:
-    """
-    Encapsulates all values needed to send a :class:`.Message`
-    over an :attr:`.ChannelType.BRAZE_PUSH`.
-    """
-
-
-class BrazePushNotificationRenderer(AbstractRenderer):
-    """
-    A renderer for :attr:`.ChannelType.PUSH` channels.
-    """
-    rendered_message_cls = RenderedBrazePushNotification

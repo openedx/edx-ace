@@ -143,7 +143,6 @@ setup(
     extras_require={
         'sailthru':  ["sailthru-client>2.2,<2.3"],
         'push_notifications':  ["django-push-notifications[FCM]"],
-        'braze_push': ['edx-braze-client==1.0.2']
     },
     license="AGPL 3.0",
     zip_safe=False,
@@ -161,12 +160,15 @@ setup(
     ],
     entry_points={
         'openedx.ace.channel': [
+            # These should be generic, non-vendor-specific channels.
+            # If you have vendor-specific channels, you can add them using this entrypoint,
+            # but please do so in a separate plugin repository. The braze_email and sailthru_email
+            # channels listed above were added before this rule; they are not a pattern to follow.
             'braze_email = edx_ace.channel.braze:BrazeEmailChannel',
             'sailthru_email = edx_ace.channel.sailthru:SailthruEmailChannel',
             'file_email = edx_ace.channel.file:FileEmailChannel',
             'django_email = edx_ace.channel.django_email:DjangoEmailChannel',
             'push_notification = edx_ace.channel.push_notification:PushNotificationChannel',
-            'braze_push = edx_ace.channel.braze_push_notification:BrazePushNotificationChannel',
         ]
     }
 )

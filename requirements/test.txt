@@ -36,7 +36,6 @@ ddt==1.7.2
     #   django-crum
     #   django-push-notifications
     #   django-waffle
-    #   edx-braze-client
     #   edx-django-utils
 django-crum==0.7.9
     # via edx-django-utils
@@ -44,12 +43,8 @@ django-push-notifications==3.2.1
     # via -r requirements/base.in
 django-waffle==4.2.0
     # via edx-django-utils
-edx-braze-client==1.0.2
-    # via -r requirements/test.in
 edx-django-utils==7.4.0
-    # via
-    #   -r requirements/base.in
-    #   edx-braze-client
+    # via -r requirements/base.in
 firebase-admin==6.8.0
     # via -r requirements/base.in
 google-api-core[grpc]==2.24.2
@@ -99,7 +94,7 @@ httplib2==0.22.0
     # via
     #   google-api-python-client
     #   google-auth-httplib2
-hypothesis[pytz]==6.131.9
+hypothesis[pytz]==6.104.2
     # via
     #   -r requirements/test.in
     #   hypothesis-pytest
@@ -177,7 +172,6 @@ pytz==2025.2
 requests==2.32.3
     # via
     #   cachecontrol
-    #   edx-braze-client
     #   google-api-core
     #   google-cloud-storage
     #   sailthru-client
