@@ -52,9 +52,9 @@ def deliver(channel, rendered_message, message):
             channel.deliver(message, rendered_message)
         except RecoverableChannelDeliveryError as delivery_error:
             num_seconds = (delivery_error.next_attempt_time - get_current_time()).total_seconds()
-            logger.debug('Encountered a recoverable delivery error.')
+            logger.info('Encountered a recoverable delivery error.')
             if delivery_error.next_attempt_time > expiration_time:
-                logger.debug('Message will expire before delivery can be reattempted, aborting.')
+                logger.error('Message will expire before delivery can be reattempted, aborting.')
                 break
             logger.debug('Sleeping for %d seconds before reattempting delivery of message.', num_seconds)
             time.sleep(num_seconds)
@@ -65,5 +65,5 @@ def deliver(channel, rendered_message, message):
             return
 
     delivery_expired_report = f'{channel_type}_delivery_expired'
-    logger.debug(delivery_expired_report)
+    logger.info(delivery_expired_report)
     message.report(delivery_expired_report, get_current_time() - start_time)
