@@ -14,6 +14,8 @@ Change Log
 Unreleased
 **********
 
+* Dropped Django 4.2 support.
+
 [1.15.0] - 2025-04-25
 ---------------------
 
