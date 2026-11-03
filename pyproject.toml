@@ -1,0 +1,202 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm>8.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edx-ace"
+description = "Framework for Messaging"
+requires-python = ">=3.12"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE*"]
+authors = [
+    {name = "Open edX Project", email = "oscm@openedx.org"},
+]
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Framework :: Django',
+    'Framework :: Django :: 4.2',
+    'Framework :: Django :: 5.2',
+    'Intended Audience :: Developers',
+    'Natural Language :: English',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.12',
+]
+keywords = [
+    "Django",
+    "edx",
+]
+
+dynamic = ["readme", "version"]
+
+dependencies = [
+    "Django>=2.2",
+    "python-dateutil",
+    "attrs>=17.2.0",
+    "sailthru-client==2.2.3",
+    "six",
+    "stevedore>=1.10.0",
+    "edx-django-utils>=5.14.2",
+    "firebase-admin",
+    "django-push-notifications",
+]
+
+[project.optional-dependencies]
+sailthru = ["sailthru-client>2.2,<2.3"]
+push_notifications = ["django-push-notifications[FCM]"]
+
+[project.entry-points."openedx.ace.channel"]
+# These should be generic, non-vendor-specific channels.
+# If you have vendor-specific channels, you can add them using this entrypoint,
+# but please do so in a separate plugin repository. The braze_email and sailthru_email
+# channels listed above were added before this rule; they are not a pattern to follow.
+braze_email = "edx_ace.channel.braze:BrazeEmailChannel"
+sailthru_email = "edx_ace.channel.sailthru:SailthruEmailChannel"
+file_email = "edx_ace.channel.file:FileEmailChannel"
+django_email = "edx_ace.channel.django_email:DjangoEmailChannel"
+push_notification = "edx_ace.channel.push_notification:PushNotificationChannel"
+
+[project.urls]
+Homepage = "https://github.com/openedx/edx-ace"
+Repository = "https://github.com/openedx/edx-ace"
+
+[dependency-groups]
+test-base = [
+    "pytest-cov",
+    "pytest-django",
+    "pytest-randomly",
+    "ddt",
+    "mock",
+    "pudb",
+    "hypothesis[pytz]",
+    "hypothesis-pytest",
+]
+test = [
+    {include-group = "test-base"},
+    "Django>=5.2,<6.0",
+]
+django42 = [
+    {include-group = "test-base"},
+    "Django>=4.2,<5.0",
+]
+quality = [
+    {include-group = "test"},
+    "edx-lint",
+    "isort",
+    "pycodestyle",
+    "pydocstyle",
+]
+doc = [
+    {include-group = "test"},
+    "doc8",
+    "sphinx-book-theme",
+    "readme_renderer",
+    "Sphinx",
+    "twine",
+    "build",
+]
+ci = [
+    "tox",
+    "tox-uv",
+]
+dev = [
+    {include-group = "quality"},
+    {include-group = "doc"},
+    {include-group = "ci"},
+    "diff-cover",
+    "edx-i18n-tools",
+    "twine",
+    "wheel",
+]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.rst"], content-type = "text/x-rst"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = [
+    "*.html",
+    "*.png",
+    "*.gif",
+    "*js",
+    "*.css",
+    "*jpg",
+    "*jpeg",
+    "*svg",
+]
+
+[tool.setuptools.exclude-package-data]
+edx_ace = [
+    "conf/locale/config.yaml",
+    "tests/test_templates/README.md",
+    "tests/test_templates/testapp/edx_ace/testmessage/email/*.txt",
+]
+
+[tool.semantic_release]
+build_command = "pip install build && SETUPTOOLS_SCM_PRETEND_VERSION=$NEW_VERSION python -m build"
+tag_format = "v{version}"
+major_on_zero = false
+allow_zero_version = true
+
+[tool.setuptools_scm]
+version_scheme = 'only-version'
+local_scheme = 'no-local-version'
+fallback_version = "0.0.0.dev0"
+
+[tool.uv]
+conflicts = [
+    [{group = "test"}, {group = "django42"}],
+]
+constraint-dependencies = [
+    "Django<6.0",
+    "elasticsearch<7.14.0",
+    "social-auth-app-django<6.0.0",
+    "social-auth-core<5.0.0",
+    "pip<26.2.1",
+]
+
+[tool.edx_lint]
+uv_constraints = []
+
+[tool.isort]
+line_length = 120
+known_edx = []
+known_django = "django"
+known_djangoapp = "model_utils"
+known_first_party = "edx_ace"
+sections = "FUTURE,STDLIB,THIRDPARTY,DJANGO,DJANGOAPP,EDX,FIRSTPARTY,LOCALFOLDER"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "test_settings"
+addopts = "--cov --cov-report term-missing --cov-report xml --cov-report html"
+norecursedirs = [".*", "docs"]
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+testpaths = ["src/edx_ace/tests"]
+
+[tool.coverage.run]
+branch = true
+data_file = ".coverage"
+source = ["src"]
+omit = [
+    "test_settings",
+    "*migrations*",
+    "*admin.py",
+    "*static*",
+    "*templates*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+]

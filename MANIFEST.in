@@ -1,6 +1,29 @@
-include CHANGELOG.rst
-include LICENSE.txt
-include README.rst
-include requirements/base.in
-recursive-include edx_ace *.html *.png *.gif *js *.css *jpg *jpeg *svg *py
-include requirements/constraints.txt
+# Exclude development, test, and documentation folders
+prune .github
+prune .tx
+prune docs
+exclude src/edx_ace/conf/locale/config.yaml
+exclude src/edx_ace/tests/test_templates/README.md
+recursive-exclude src/edx_ace/tests/test_templates *.txt
+
+# Exclude root level configuration and build files
+exclude .dockerignore
+exclude .gitignore
+exclude Dockerfile
+exclude Makefile
+exclude catalog-info.yaml
+exclude codecov.yml
+exclude manage.py
+exclude openedx.yaml
+exclude pylintrc
+exclude pylintrc_tweaks
+exclude test_settings.py
+exclude tox.ini
+
+# Exclude test/coverage artifacts
+prune htmlcov
+global-exclude .coverage
+global-exclude coverage.xml
+
+# Exclude dev/CI lockfile (pip never reads it during sdist install)
+exclude uv.lock

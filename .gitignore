@@ -60,12 +60,8 @@ output/*/index.html
 # Sphinx
 docs/_build
 
-# Private requirements
-requirements/private.in
-requirements/private.txt
-
 # tox environment temporary artifacts
-edx_ace/tests/__init__.py
+src/edx_ace/tests/__init__.py
 
 # Development task artifacts
 default.db
@@ -73,4 +69,4 @@ default.db
 .hypothesis
 
 # Translation
-edx_ace/conf/locale/*/LC_MESSAGES/*
+src/edx_ace/conf/locale/*/LC_MESSAGES/*

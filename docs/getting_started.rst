@@ -1,10 +1,10 @@
 Getting Started
 ===============
 
-If you have not already done so, create/activate a `virtualenv`_. Unless otherwise stated, assume all terminal code
-below is executed within the virtualenv.
+If you have not already done so, install `uv`_. ``make requirements`` creates a ``.venv`` with all dependencies;
+unless otherwise stated, run the terminal code below inside it (e.g. ``uv run make test``).
 
-.. _virtualenv: https://virtualenvwrapper.readthedocs.org/en/latest/
+.. _uv: https://docs.astral.sh/uv/
 
 
 Install dependencies
@@ -25,7 +25,7 @@ before they will function correctly.
 :class:`~.SailthruEmailChannel` Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: /../edx_ace/channel/sailthru.py
+.. literalinclude:: /../src/edx_ace/channel/sailthru.py
     :start-after: .. settings_start
     :end-before: .. settings_end
     :language: python
@@ -34,7 +34,7 @@ before they will function correctly.
 :class:`~.DjangoEmailChannel` Settings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. literalinclude:: /../edx_ace/channel/django_email.py
+.. literalinclude:: /../src/edx_ace/channel/django_email.py
     :start-after: .. settings_start
     :end-before: .. settings_end
     :language: python

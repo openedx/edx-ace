@@ -37,36 +37,32 @@ coverage: clean ## generate and view HTML coverage report
 	$(BROWSER) htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	tox -e docs
+	doc8 --ignore-path docs/_build README.rst docs
+	make -C docs clean
+	make -C docs html
+	python -m build
+	twine check dist/*
 	$(BROWSER) docs/_build/html/index.html
 
-upgrade: export CUSTOM_COMPILE_COMMAND=make upgrade
-upgrade: ## update the requirements/*.txt files with the latest packages satisfying requirements/*.in
-	pip install -qr requirements/pip-tools.txt
-	pip-compile --allow-unsafe --rebuild --upgrade -o requirements/pip.txt requirements/pip.in
-	pip-compile --upgrade -o requirements/pip-tools.txt requirements/pip-tools.in
-	pip install -qr requirements/pip.txt
-	pip install -qr requirements/pip-tools.txt
-	pip-compile --rebuild --upgrade -o requirements/dev.txt requirements/base.in requirements/dev.in requirements/quality.in
-	pip-compile --rebuild --upgrade -o requirements/doc.txt requirements/base.in requirements/doc.in
-	pip-compile --rebuild --upgrade -o requirements/quality.txt requirements/quality.in
-	pip-compile --rebuild --upgrade -o requirements/test.txt requirements/base.in requirements/test.in
-	pip-compile --rebuild --upgrade -o requirements/ci.txt requirements/ci.in
-	# Let tox control the Django version for tests
-	sed '/^django==/d' requirements/test.txt > requirements/test.tmp
-	mv requirements/test.tmp requirements/test.txt
-	sed '/^django==/d' requirements/quality.txt > requirements/quality.tmp
-	mv requirements/quality.tmp requirements/quality.txt
+upgrade: ## update python dependencies
+	uv run --with edx-lint edx_lint write_uv_constraints pyproject.toml
+	uv lock --upgrade
 
+quality: export DJANGO_SETTINGS_MODULE=test_settings
+quality: export PYTHONPATH=.:src/edx_ace
 quality: ## check coding style with pycodestyle and pylint
-	tox -e quality
+	touch src/edx_ace/tests/__init__.py
+	pylint src/edx_ace
+	rm src/edx_ace/tests/__init__.py
+	pycodestyle src/edx_ace
+	isort --check-only --diff src/edx_ace manage.py test_settings.py
+	make selfcheck
 
 requirements: ## install development environment requirements
-	pip install -qr requirements/dev.txt --exists-action w
-	pip-sync requirements/dev.txt requirements/private.* requirements/test.txt
+	uv sync --locked --group dev
 
 test: clean ## run tests in the current virtualenv
-	py.test
+	python -Wd -m pytest $(PYTEST_ARGS)
 
 diff_cover: test
 	diff-cover coverage.xml
@@ -81,21 +77,20 @@ selfcheck: ## check that the Makefile is well-formed
 	@echo "The Makefile is well-formed."
 
 write-pylintrc:
-	pip install edx-lint
-	edx_lint write pylintrc
+	uv run --with edx-lint edx_lint write pylintrc
 
 ## Localization targets
 
 extract_translations: ## extract strings to be translated, outputting .mo files
 	rm -rf docs/_build
-	cd edx_ace && django-admin makemessages -l en -v1 -d django
-	cd edx_ace && django-admin makemessages -l en -v1 -d djangojs
+	cd src/edx_ace && django-admin makemessages -l en -v1 -d django
+	cd src/edx_ace && django-admin makemessages -l en -v1 -d djangojs
 
 compile_translations: ## compile translation files, outputting .po files for each supported language
-	cd edx_ace && django-admin compilemessages
+	cd src/edx_ace && django-admin compilemessages
 
 detect_changed_source_translations:
-	cd edx_ace && i18n_tool changed
+	cd src/edx_ace && i18n_tool changed
 
 pull_translations: ## pull translations from Transifex
 	tx pull -t -a -f --mode reviewed
@@ -104,7 +99,7 @@ push_translations: ## push source translation files (.po) from Transifex
 	tx push -s
 
 dummy_translations: ## generate dummy translation (.po) files
-	cd edx_ace && i18n_tool dummy
+	cd src/edx_ace && i18n_tool dummy
 
 build_dummy_translations: extract_translations dummy_translations compile_translations ## generate and compile dummy translation files
 
