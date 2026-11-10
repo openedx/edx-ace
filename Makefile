@@ -77,7 +77,7 @@ selfcheck: ## check that the Makefile is well-formed
 	@echo "The Makefile is well-formed."
 
 write-pylintrc:
-	uv run --with edx-lint edx_lint write pylintrc
+	edx_lint write pylintrc
 
 ## Localization targets
 
