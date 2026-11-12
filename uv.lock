@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.12"
 resolution-markers = [
     "python_full_version >= '3.14'",
@@ -226,7 +226,7 @@ name = "click"
 version = "8.1.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz", hash = "sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a", size = 226593, upload-time = "2024-12-21T18:38:44.339Z" }
 wheels = [
@@ -314,7 +314,7 @@ name = "cryptography"
 version = "44.0.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy' or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cd/25/4ce80c78963834b8a9fd1cc1266be5ed8d1840785c0f2e1b73b8d128d505/cryptography-44.0.2.tar.gz", hash = "sha256:c63454aa261a0cf0c5b4718349629793e9e634993538db841165b3df74f37ec0", size = 710807, upload-time = "2025-03-02T00:01:37.692Z" }
 wheels = [
@@ -379,11 +379,11 @@ wheels = [
 
 [[package]]
 name = "distlib"
-version = "0.3.9"
+version = "0.4.4"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0d/dd/1bec4c5ddb504ca60fc29472f3d27e8d4da1257a854e1d96742f15c1d02d/distlib-0.3.9.tar.gz", hash = "sha256:a60f20dea646b8a33f3e7772f74dc0b2d0772d2837ee1342a00645c81edf9403", size = 613923, upload-time = "2024-10-09T18:35:47.551Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/68/bc/d36966de7304047a1001a7559fbf266c464bb5d8cc85464536ef8c9bcc32/distlib-0.4.4.tar.gz", hash = "sha256:ca4175b4ac7f71223cc30ed7248c45d2b38c2439d8ee6e498ab67ed63cf3508d", size = 621304, upload-time = "2026-10-16T13:56:34.203Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/91/a1/cf2472db20f7ce4a6be1253a81cfdf85ad9c7885ffbed7047fb72c24cf87/distlib-0.3.9-py2.py3-none-any.whl", hash = "sha256:47f8c22fd27c27e25a65601af709b38e4f0a45ea4fc2e710f65755fa8caaaf87", size = 468973, upload-time = "2024-10-09T18:35:44.272Z" },
+    { url = "https://files.pythonhosted.org/packages/c1/2b/238f02a4927fa2e27aa995371d240a468b52e42eae44a678434aff736b38/distlib-0.4.4-py2.py3-none-any.whl", hash = "sha256:cf09d55b1e85a89576b036aeb71550bfd68320f3f21761ca329eadadad918638", size = 472099, upload-time = "2026-10-16T13:56:32.053Z" },
 ]
 
 [[package]]
@@ -415,9 +415,9 @@ resolution-markers = [
     "python_full_version < '3.13'",
 ]
 dependencies = [
-    { name = "asgiref", marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
-    { name = "sqlparse", marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
-    { name = "tzdata", marker = "(sys_platform == 'win32' and extra == 'group-7-edx-ace-dev') or (sys_platform == 'win32' and extra != 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "asgiref", marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
+    { name = "sqlparse", marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra != 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/85/fe/79e692b430c7721bf4b812c328bfe687e73e3f28f56611a6a18a97e887cc/django-5.2.18.tar.gz", hash = "sha256:461c5dd06d2ea16bd5ca37d3f46e4def1d6b0fe7588c6f4e2119517bb0af8b2d", size = 10910238, upload-time = "2026-10-06T13:01:09.371Z" }
 wheels = [
@@ -430,7 +430,7 @@ version = "0.7.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django", version = "4.2.30", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-django42'" },
-    { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/34/1d/c56588f67130aeef8828e47535e8551337d2ae02f91f1414da61bc5e49fb/django-crum-0.7.9.tar.gz", hash = "sha256:65e9bc0f070a663fafc4d9e357f45fd4e6f01838b20a9e2fb7670f5706754288", size = 5168, upload-time = "2020-11-10T17:15:35.124Z" }
 wheels = [
@@ -443,7 +443,7 @@ version = "3.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django", version = "4.2.30", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-django42'" },
-    { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/46/94/1644ce3a39d1d319c88e2b45378551a2440b8beb42d0174f27eed2441eef/django_push_notifications-3.2.1-py3-none-any.whl", hash = "sha256:4aebf5c500bd32334e8c8ab4c7fc441a3ef1b8e54977f07b2af590661ec72fb1", size = 44786, upload-time = "2025-03-07T23:13:34.994Z" },
@@ -460,7 +460,7 @@ version = "4.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django", version = "4.2.30", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-django42'" },
-    { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e9/4b/3189241d51f582f1447ad528ed11fffad138d7d9ca3f931220a0da387e3e/django_waffle-4.2.0.tar.gz", hash = "sha256:97709550f4e75ce2a20b13e29f39777e1439a968569f2ee89398ca368afd586c", size = 36538, upload-time = "2024-11-15T17:33:31.816Z" }
 wheels = [
@@ -497,7 +497,7 @@ source = { editable = "." }
 dependencies = [
     { name = "attrs" },
     { name = "django", version = "4.2.30", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-django42'" },
-    { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
     { name = "django-push-notifications" },
     { name = "edx-django-utils" },
     { name = "firebase-admin" },
@@ -528,7 +528,7 @@ dev = [
     { name = "doc8" },
     { name = "edx-i18n-tools" },
     { name = "edx-lint" },
-    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
     { name = "hypothesis-pytest" },
     { name = "isort" },
     { name = "mock" },
@@ -562,7 +562,7 @@ doc = [
     { name = "ddt" },
     { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" } },
     { name = "doc8" },
-    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
     { name = "hypothesis-pytest" },
     { name = "mock" },
     { name = "pudb" },
@@ -578,7 +578,7 @@ quality = [
     { name = "ddt" },
     { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" } },
     { name = "edx-lint" },
-    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
     { name = "hypothesis-pytest" },
     { name = "isort" },
     { name = "mock" },
@@ -592,7 +592,7 @@ quality = [
 test = [
     { name = "ddt" },
     { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" } },
-    { name = "hypothesis", extra = ["pytz"], marker = "(extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra != 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test') or (extra != 'group-7-edx-ace-doc' and extra != 'group-7-edx-ace-quality' and extra == 'group-7-edx-ace-test')" },
+    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-test' or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality')" },
     { name = "hypothesis-pytest" },
     { name = "mock" },
     { name = "pudb" },
@@ -730,7 +730,7 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "django", version = "4.2.30", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-django42'" },
-    { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
     { name = "django-crum" },
     { name = "django-waffle" },
     { name = "newrelic" },
@@ -749,7 +749,7 @@ version = "1.8.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" } },
-    { name = "lxml", extra = ["html-clean"], marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "lxml", extra = ["html-clean"], marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
     { name = "path" },
     { name = "polib" },
     { name = "pyyaml" },
@@ -779,11 +779,11 @@ wheels = [
 
 [[package]]
 name = "filelock"
-version = "3.18.0"
+version = "4.2.10"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0a/10/c23352565a6544bdc5353e0b15fc1c563352101f30e24bf500207a54df9a/filelock-3.18.0.tar.gz", hash = "sha256:adbc88eabb99d2fec8c9c1b229b171f18afa655400173ddc653d5d01501fb9f2", size = 18075, upload-time = "2025-03-14T07:11:40.47Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a1/cf/05bcdacabdc0aec7dc8e19d76281bd82325df62dae3b6430e9ba57397689/filelock-4.2.10.tar.gz", hash = "sha256:fcc3c0cb8bfe7f4b3bb0e231c04b15dbad068cb3c2515f343d8fde4dce93bd5d", size = 670595, upload-time = "2026-11-09T18:58:00.54Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4d/36/2a115987e2d8c300a974597416d9de88f2444426de9571f4b59b2cca3acc/filelock-3.18.0-py3-none-any.whl", hash = "sha256:c401f4f8377c4464e6db25fff06205fd89bdd83b65eb0488ed1b160f780e21de", size = 16215, upload-time = "2025-03-14T07:11:39.145Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/90/5d0096a325aa0f83ba7a3968bfb485b67e32c947bdf9cd0fcb4b485be718/filelock-4.2.10-py3-none-any.whl", hash = "sha256:9479aaeb4db20b5a53e3da28493edd24720b66b8a0b84030aa56ccdf243d6857", size = 218040, upload-time = "2026-11-09T18:57:59.088Z" },
 ]
 
 [[package]]
@@ -792,9 +792,9 @@ version = "6.8.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cachecontrol" },
-    { name = "google-api-core", extra = ["grpc"], marker = "platform_python_implementation != 'PyPy' or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "google-api-core", extra = ["grpc"], marker = "platform_python_implementation != 'PyPy'" },
     { name = "google-api-python-client" },
-    { name = "google-cloud-firestore", marker = "platform_python_implementation != 'PyPy' or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "google-cloud-firestore", marker = "platform_python_implementation != 'PyPy'" },
     { name = "google-cloud-storage" },
     { name = "pyjwt", extra = ["crypto"] },
 ]
@@ -1395,11 +1395,11 @@ wheels = [
 
 [[package]]
 name = "packaging"
-version = "25.0"
+version = "26.3"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz", hash = "sha256:d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f", size = 165727, upload-time = "2025-04-19T11:48:59.673Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7d/fa/3944b40b07da9ce895c0e6303a5ab7d53da063554f534556b134a54d6093/packaging-26.3.tar.gz", hash = "sha256:94edc256424af38762eb31306eed28beb9f0efc50a8837492c9d6fd6004aed79", size = 313412, upload-time = "2026-08-04T18:15:28.737Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl", hash = "sha256:29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484", size = 66469, upload-time = "2025-04-19T11:48:57.875Z" },
+    { url = "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl", hash = "sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c", size = 129956, upload-time = "2026-08-04T18:15:27.159Z" },
 ]
 
 [[package]]
@@ -1434,11 +1434,11 @@ wheels = [
 
 [[package]]
 name = "platformdirs"
-version = "4.3.7"
+version = "4.14.5"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b6/2d/7d512a3913d60623e7eb945c6d1b4f0bddf1d0b7ada5225274c87e5b53d1/platformdirs-4.3.7.tar.gz", hash = "sha256:eb437d586b6a0986388f0d6f74aa0cde27b48d0e3d66843640bfb6bdcdb6e351", size = 21291, upload-time = "2025-03-19T20:36:10.989Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d7/9a/8475be631fb33ca1466915e70fd594c42a4e84b512db650eaa14f90fe75d/platformdirs-4.14.5.tar.gz", hash = "sha256:32e9921db7385aa8169bee4fe9501923e5715ba9fb7ea3b9c69b0d8e0639f7a1", size = 71464, upload-time = "2026-11-04T16:54:50.358Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/45/59578566b3275b8fd9157885918fcd0c4d74162928a5310926887b856a51/platformdirs-4.3.7-py3-none-any.whl", hash = "sha256:a03875334331946f13c549dbd8f4bac7a13a50a895a0eb1e8c6a8ace80d40a94", size = 18499, upload-time = "2025-03-19T20:36:09.038Z" },
+    { url = "https://files.pythonhosted.org/packages/7c/ae/ecbbbfd0e4343a6a521d49b3c8656fb4643dee2a4f6eaf941cf3280391a8/platformdirs-4.14.5-py3-none-any.whl", hash = "sha256:8e778c6fa421516f4d3369449f8df3b0e1b72c0e0005fe88e3ec772d0a14e750", size = 35402, upload-time = "2026-11-04T16:54:48.875Z" },
 ]
 
 [[package]]
@@ -1718,7 +1718,7 @@ name = "pytest"
 version = "8.3.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32' or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
     { name = "iniconfig" },
     { name = "packaging" },
     { name = "pluggy" },
@@ -1775,6 +1775,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/66/c0/0c8b6ad9f17a802ee498c46e004a0eb49bc148f2fd230864601a86dcf6db/python-dateutil-2.9.0.post0.tar.gz", hash = "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3", size = 342432, upload-time = "2024-03-01T18:36:20.211Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl", hash = "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427", size = 229892, upload-time = "2024-03-01T18:36:18.57Z" },
+]
+
+[[package]]
+name = "python-discovery"
+version = "1.9.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "filelock" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/68/55/70b46fae646bc6f5cb5e82569949d925cff1c7b5ce20ec4a11e0d977f8c6/python_discovery-1.9.5.tar.gz", hash = "sha256:86279f5d2728bc067de28b7ddc571be2eacc2ae0e7048f8629d2481a0f8848a2", size = 141121, upload-time = "2026-11-06T15:32:11.331Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ac/35/25bd092ca8a7e71192afdca67fbff4f797da74408e74ac3626e13b409ec0/python_discovery-1.9.5-py3-none-any.whl", hash = "sha256:a1fae8fca11e4bc61e38491c2aafff29e430b3c5e272d51ae52fb895bc4c0fac", size = 44377, upload-time = "2026-11-06T15:32:09.821Z" },
 ]
 
 [[package]]
@@ -2303,16 +2315,18 @@ wheels = [
 
 [[package]]
 name = "virtualenv"
-version = "20.30.0"
+version = "21.14.13"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "distlib" },
     { name = "filelock" },
+    { name = "packaging" },
     { name = "platformdirs" },
+    { name = "python-discovery" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/38/e0/633e369b91bbc664df47dcb5454b6c7cf441e8f5b9d0c250ce9f0546401e/virtualenv-20.30.0.tar.gz", hash = "sha256:800863162bcaa5450a6e4d721049730e7f2dae07720e0902b0e4040bd6f9ada8", size = 4346945, upload-time = "2025-03-31T16:33:29.185Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/70/aa/bff50daee0488e16d611258a9b6c5a1d0c9e128f8ca424e9f4e1c0444ef2/virtualenv-21.14.13.tar.gz", hash = "sha256:de5307ba4b9a0001d9c8ea02832d38f63ca432880f416c1bface61c4323fd905", size = 5570301, upload-time = "2026-10-22T20:10:16.952Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4c/ed/3cfeb48175f0671ec430ede81f628f9fb2b1084c9064ca67ebe8c0ed6a05/virtualenv-20.30.0-py3-none-any.whl", hash = "sha256:e34302959180fca3af42d1800df014b35019490b119eba981af27f2fa486e5d6", size = 4329461, upload-time = "2025-03-31T16:33:26.758Z" },
+    { url = "https://files.pythonhosted.org/packages/bb/a9/c10d8a44a29fb94a18b43fdf11f38caca53ae7c9406f11a72b1cb8f624f1/virtualenv-21.14.13-py3-none-any.whl", hash = "sha256:5fbb04138a4861580b78ba9110d529a26bc48fcc93c8ec36bc0202eeed96a788", size = 5557094, upload-time = "2026-10-22T20:10:15.096Z" },
 ]
 
 [[package]]
