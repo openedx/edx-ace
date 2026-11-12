@@ -33,7 +33,7 @@ INSTALLED_APPS = (
 )
 
 LOCALE_PATHS = [
-    root('edx_ace', 'conf', 'locale'),
+    root('src', 'edx_ace', 'conf', 'locale'),
 ]
 
 ROOT_URLCONF = 'edx_ace.urls'
@@ -53,7 +53,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            root('edx_ace', 'tests', 'test_templates'),
+            root('src', 'edx_ace', 'tests', 'test_templates'),
         ],
     },
 ]

@@ -1,7 +1,7 @@
 edX Automated Communication Engine (A.C.E.)
 ###########################################
 
-|License: AGPL v3| |Python CI| |Publish package to PyPi| |Status| |pypi-badge| |travis-badge| |codecov-badge|
+|License: AGPL v3| |Python CI| |Status| |pypi-badge| |travis-badge| |codecov-badge|
 |doc-badge| |pyversions-badge|
 
 Purpose
@@ -124,10 +124,7 @@ Please do not report security issues in public. Please email security@openedx.or
 .. |License: AGPL v3| image:: https://img.shields.io/badge/License-AGPL_v3-blue.svg
   :target: https://www.gnu.org/licenses/agpl-3.0
 
-.. |Python CI| image:: https://github.com/openedx/edx-ace/actions/workflows/ci.yml/badge.svg
-  :target: https://github.com/openedx/edx-ace/actions/workflows/ci.yml
-
-.. |Publish package to PyPi| image:: https://github.com/openedx/edx-ace/actions/workflows/pypi-publish.yml/badge.svg
-  :target: https://github.com/openedx/edx-ace/actions/workflows/pypi-release.yml
+.. |Python CI| image:: https://github.com/openedx/edx-ace/actions/workflows/release.yml/badge.svg?branch=master
+  :target: https://github.com/openedx/edx-ace/actions/workflows/release.yml
 
 .. |Status| image:: https://img.shields.io/badge/Status-Maintained-brightgreen

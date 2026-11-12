@@ -1,0 +1,24 @@
+# .readthedocs.yaml
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+# Required
+version: 2
+
+# Build documentation in the docs/ directory with Sphinx
+sphinx:
+  configuration: docs/conf.py
+
+# Set the version of python needed to build these docs.
+build:
+  os: "ubuntu-lts-latest"
+  tools:
+    python: "3.12"
+
+# Install doc dependencies from uv.lock using the doc dependency group
+python:
+  install:
+    - method: uv
+      command: sync
+      groups:
+        - doc
