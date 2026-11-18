@@ -61,11 +61,11 @@ wheels = [
 
 [[package]]
 name = "astroid"
-version = "3.3.9"
+version = "4.0.4"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/39/33/536530122a22a7504b159bccaf30a1f76aa19d23028bd8b5009eb9b2efea/astroid-3.3.9.tar.gz", hash = "sha256:622cc8e3048684aa42c820d9d218978021c3c3d174fb03a9f0d615921744f550", size = 398731, upload-time = "2025-03-09T11:54:36.388Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/07/63/0adf26577da5eff6eb7a177876c1cfa213856be9926a000f65c4add9692b/astroid-4.0.4.tar.gz", hash = "sha256:986fed8bcf79fb82c78b18a53352a0b287a73817d6dbcfba3162da36667c49a0", size = 406358, upload-time = "2026-02-07T23:35:07.509Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/de/80/c749efbd8eef5ea77c7d6f1956e8fbfb51963b7f93ef79647afd4d9886e3/astroid-3.3.9-py3-none-any.whl", hash = "sha256:d05bfd0acba96a7bd43e222828b7d9bc1e138aaeb0649707908d3702a9831248", size = 275339, upload-time = "2025-03-09T11:54:34.489Z" },
+    { url = "https://files.pythonhosted.org/packages/b0/cf/1c5f42b110e57bc5502eb80dbc3b03d256926062519224835ef08134f1f9/astroid-4.0.4-py3-none-any.whl", hash = "sha256:52f39653876c7dec3e3afd4c2696920e05c83832b9737afc21928f2d2eb7a753", size = 276445, upload-time = "2026-02-07T23:35:05.344Z" },
 ]
 
 [[package]]
@@ -398,7 +398,7 @@ resolution-markers = [
 dependencies = [
     { name = "asgiref", marker = "extra == 'group-7-edx-ace-django42'" },
     { name = "sqlparse", marker = "extra == 'group-7-edx-ace-django42'" },
-    { name = "tzdata", marker = "(sys_platform == 'win32' or extra == 'group-7-edx-ace-dev') and extra == 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-django42' and (extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test')" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/11/b5/f1a53dc68da6429d6e0345bb848161e2381a2e9f02700148911e8582c2b3/django-4.2.30.tar.gz", hash = "sha256:4ebc7a434e3819db6cf4b399fb5b3f536310a30e8486f08b66886840be84b37c", size = 10468707, upload-time = "2026-04-07T14:05:45.57Z" }
 wheels = [
@@ -417,7 +417,7 @@ resolution-markers = [
 dependencies = [
     { name = "asgiref", marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
     { name = "sqlparse", marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
-    { name = "tzdata", marker = "sys_platform == 'win32' and extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-django42' and (extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test')" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra != 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/85/fe/79e692b430c7721bf4b812c328bfe687e73e3f28f56611a6a18a97e887cc/django-5.2.18.tar.gz", hash = "sha256:461c5dd06d2ea16bd5ca37d3f46e4def1d6b0fe7588c6f4e2119517bb0af8b2d", size = 10910238, upload-time = "2026-10-06T13:01:09.371Z" }
 wheels = [
@@ -592,7 +592,7 @@ quality = [
 test = [
     { name = "ddt" },
     { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" } },
-    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-test' or extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-django42' and (extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality')" },
+    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-test' or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality')" },
     { name = "hypothesis-pytest" },
     { name = "mock" },
     { name = "pudb" },
@@ -1612,7 +1612,7 @@ crypto = [
 
 [[package]]
 name = "pylint"
-version = "3.3.6"
+version = "4.0.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "astroid" },
@@ -1623,9 +1623,9 @@ dependencies = [
     { name = "platformdirs" },
     { name = "tomlkit" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/69/a7/113d02340afb9dcbb0c8b25454e9538cd08f0ebf3e510df4ed916caa1a89/pylint-3.3.6.tar.gz", hash = "sha256:b634a041aac33706d56a0d217e6587228c66427e20ec21a019bc4cdee48c040a", size = 1519586, upload-time = "2025-03-20T11:25:38.207Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e0/5e/d5ec2c861010cf8577a3e5baaf2405fdf1004f1657d9245c4efb006c1dfd/pylint-4.0.9.tar.gz", hash = "sha256:6f1305780229ae720e89b8aff2b3ff857cbb268fbab98c8b586960267667ad34", size = 1604187, upload-time = "2026-09-23T15:26:43.144Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/31/21/9537fc94aee9ec7316a230a49895266cf02d78aa29b0a2efbc39566e0935/pylint-3.3.6-py3-none-any.whl", hash = "sha256:8b7c2d3e86ae3f94fb27703d521dd0b9b6b378775991f504d7c3a6275aa0a6a6", size = 522462, upload-time = "2025-03-20T11:25:36.13Z" },
+    { url = "https://files.pythonhosted.org/packages/66/46/12e94ae1f9db89152223bdb17920b12c79e94ac51e19dce1da9fb63627b0/pylint-4.0.9-py3-none-any.whl", hash = "sha256:c4ba5bbaf1e70ecf05f08cd7d6091ea04824b79a2b2d9f5b10dc25fc34cb1124", size = 542068, upload-time = "2026-09-23T15:26:41.626Z" },
 ]
 
 [[package]]
@@ -1641,15 +1641,15 @@ sdist = { url = "https://files.pythonhosted.org/packages/d7/11/7241fec486839a853
 
 [[package]]
 name = "pylint-django"
-version = "2.6.1"
+version = "2.8.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pylint" },
     { name = "pylint-plugin-utils" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/40/d3/42f88e7549c6d69d9642e7f2de7a1a4a3d45fd352a8ca049c554a3feaba0/pylint-django-2.6.1.tar.gz", hash = "sha256:19e8c85a8573a04e3de7be2ba91e9a7c818ebf05e1b617be2bbae67a906b725f", size = 31970, upload-time = "2024-10-10T14:46:37.931Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/71/a1/b92e5d5cf320b603c9bcc5174da7e9ba4c6ce71087354322a2b83536df13/pylint_django-2.8.0.tar.gz", hash = "sha256:42accea9098e4a3298b4bfbae0e4da81f909f8bff0deda9485efbd6035a86d6a", size = 32038, upload-time = "2026-07-11T10:19:14.844Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1b/82/88b58feecce482e76e4ec4a45e44ed28075fddd82530d071d89466e83529/pylint_django-2.6.1-py3-none-any.whl", hash = "sha256:359f68fe8c810ee6bc8e1ab4c83c19b15a43b234a24b08978f47a23462b5ce28", size = 42858, upload-time = "2024-10-10T14:46:36.236Z" },
+    { url = "https://files.pythonhosted.org/packages/d1/4a/3dae8a09e12a28ccf3d7204cc4fb69f28dfb30d2b19567eb5ff094fe1265/pylint_django-2.8.0-py3-none-any.whl", hash = "sha256:706eb2cc8d7692236be9fd033a341042afe3bbbf99df9234a659db931016ef5d", size = 44672, upload-time = "2026-07-11T10:05:29.281Z" },
 ]
 
 [[package]]
