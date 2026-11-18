@@ -83,6 +83,20 @@ class TestMessage(TestCase):
         lazy_text = gettext_lazy(unicode_text)
         self.assertEqual(self.encoder.default(lazy_text), unicode_text)
 
+    @ddt.data(
+        {'message': ''},
+        {'recipient': 'someone'},
+        {'uuid': 'not-a-uuid', 'send_uuid': 'not-a-uuid'},
+        {'expiration_time': 'not-a-date'},
+        {'nested': {'message': {'recipient': 1}}},
+    )
+    def test_serialization_context_keys_matching_field_names(self, context):
+        self.msg_kwargs['context'] = context
+        message = Message(**self.msg_kwargs)
+        resurrected_msg = Message.from_string(str(message))
+        self.assertEqual(message, resurrected_msg)
+        self.assertEqual(resurrected_msg.context, context)
+
     @given(msg)
     def test_serialization_round_trip(self, message):
         serialized = str(message)
