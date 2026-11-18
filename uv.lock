@@ -398,7 +398,7 @@ resolution-markers = [
 dependencies = [
     { name = "asgiref", marker = "extra == 'group-7-edx-ace-django42'" },
     { name = "sqlparse", marker = "extra == 'group-7-edx-ace-django42'" },
-    { name = "tzdata", marker = "(sys_platform == 'win32' or extra == 'group-7-edx-ace-dev') and extra == 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-django42' and (extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test')" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/11/b5/f1a53dc68da6429d6e0345bb848161e2381a2e9f02700148911e8582c2b3/django-4.2.30.tar.gz", hash = "sha256:4ebc7a434e3819db6cf4b399fb5b3f536310a30e8486f08b66886840be84b37c", size = 10468707, upload-time = "2026-04-07T14:05:45.57Z" }
 wheels = [
@@ -417,7 +417,7 @@ resolution-markers = [
 dependencies = [
     { name = "asgiref", marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
     { name = "sqlparse", marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
-    { name = "tzdata", marker = "sys_platform == 'win32' and extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-django42' and (extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test')" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra != 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/85/fe/79e692b430c7721bf4b812c328bfe687e73e3f28f56611a6a18a97e887cc/django-5.2.18.tar.gz", hash = "sha256:461c5dd06d2ea16bd5ca37d3f46e4def1d6b0fe7588c6f4e2119517bb0af8b2d", size = 10910238, upload-time = "2026-10-06T13:01:09.371Z" }
 wheels = [
@@ -592,7 +592,7 @@ quality = [
 test = [
     { name = "ddt" },
     { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" } },
-    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-test' or extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-django42' and (extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality')" },
+    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-test' or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality')" },
     { name = "hypothesis-pytest" },
     { name = "mock" },
     { name = "pudb" },
@@ -1519,11 +1519,11 @@ wheels = [
 
 [[package]]
 name = "pyasn1"
-version = "0.6.1"
+version = "0.6.5"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/ba/e9/01f1a64245b89f039897cb0130016d79f77d52669aae6ee7b159a6c4c018/pyasn1-0.6.1.tar.gz", hash = "sha256:6f580d2bdd84365380830acf45550f2511469f673cb4a5ae3857a3170128b034", size = 145322, upload-time = "2024-09-10T22:41:42.55Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/88/7e/3c0da41061a2021cac7cd524fd57092adbe5b515e8bf9005702e366802e2/pyasn1-0.6.5.tar.gz", hash = "sha256:6b11616a6bcf3a40e635f082bb232fa57b5e0dd7f517bd7ddd69ec3794508a47", size = 155152, upload-time = "2026-10-27T06:32:49.125Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c8/f1/d6a797abb14f6283c0ddff96bbdd46937f64122b8c925cab503dd37f8214/pyasn1-0.6.1-py3-none-any.whl", hash = "sha256:0d632f46f2ba09143da3a8afe9e33fb6f92fa2320ab7e886e2d0f7672af84629", size = 83135, upload-time = "2024-09-11T16:00:36.122Z" },
+    { url = "https://files.pythonhosted.org/packages/19/1f/3eefd5c84c35cae44549ce1c7f7e58f7945b34f5a6bce07a135438522073/pyasn1-0.6.5-py3-none-any.whl", hash = "sha256:4017b0fce125096b8573b39c989fdb1a4b19cf761e683398184550fea0e66587", size = 84807, upload-time = "2026-10-27T06:32:48.045Z" },
 ]
 
 [[package]]
