@@ -398,7 +398,7 @@ resolution-markers = [
 dependencies = [
     { name = "asgiref", marker = "extra == 'group-7-edx-ace-django42'" },
     { name = "sqlparse", marker = "extra == 'group-7-edx-ace-django42'" },
-    { name = "tzdata", marker = "(sys_platform == 'win32' or extra == 'group-7-edx-ace-dev') and extra == 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-django42' and (extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test')" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/11/b5/f1a53dc68da6429d6e0345bb848161e2381a2e9f02700148911e8582c2b3/django-4.2.30.tar.gz", hash = "sha256:4ebc7a434e3819db6cf4b399fb5b3f536310a30e8486f08b66886840be84b37c", size = 10468707, upload-time = "2026-04-07T14:05:45.57Z" }
 wheels = [
@@ -417,7 +417,7 @@ resolution-markers = [
 dependencies = [
     { name = "asgiref", marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
     { name = "sqlparse", marker = "extra == 'group-7-edx-ace-dev' or extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test'" },
-    { name = "tzdata", marker = "sys_platform == 'win32' and extra != 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-django42' and (extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality' or extra == 'group-7-edx-ace-test')" },
+    { name = "tzdata", marker = "(sys_platform == 'win32' and extra != 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-test')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/85/fe/79e692b430c7721bf4b812c328bfe687e73e3f28f56611a6a18a97e887cc/django-5.2.18.tar.gz", hash = "sha256:461c5dd06d2ea16bd5ca37d3f46e4def1d6b0fe7588c6f4e2119517bb0af8b2d", size = 10910238, upload-time = "2026-10-06T13:01:09.371Z" }
 wheels = [
@@ -592,7 +592,7 @@ quality = [
 test = [
     { name = "ddt" },
     { name = "django", version = "5.2.18", source = { registry = "https://pypi.org/simple" } },
-    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-test' or extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42' or extra == 'group-7-edx-ace-django42' and (extra == 'group-7-edx-ace-doc' or extra == 'group-7-edx-ace-quality')" },
+    { name = "hypothesis", extra = ["pytz"], marker = "extra == 'group-7-edx-ace-test' or (extra == 'group-7-edx-ace-dev' and extra == 'group-7-edx-ace-django42') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-doc') or (extra == 'group-7-edx-ace-django42' and extra == 'group-7-edx-ace-quality')" },
     { name = "hypothesis-pytest" },
     { name = "mock" },
     { name = "pudb" },
@@ -2023,11 +2023,11 @@ wheels = [
 
 [[package]]
 name = "soupsieve"
-version = "2.7"
+version = "4.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/3f/f4/4a80cd6ef364b2e8b65b15816a843c0980f7a5a2b4dc701fc574952aa19f/soupsieve-2.7.tar.gz", hash = "sha256:ad282f9b6926286d2ead4750552c8a6142bc4c783fd66b0293547c8fe6ae126a", size = 103418, upload-time = "2025-04-20T18:50:08.518Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7d/5e/19b7c5d20bc2f226c44f33a9d9aab9740efed7555b96e656231fd564e514/soupsieve-4.0.tar.gz", hash = "sha256:ccd6470b256394ac44b08b86fd94b30a17d335a5335c8a3d15565f7b03d3c8cf", size = 151929, upload-time = "2026-11-03T14:28:55.388Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e7/9c/0e6afc12c269578be5c0c1c9f4b49a8d32770a080260c333ac04cc1c832d/soupsieve-2.7-py3-none-any.whl", hash = "sha256:6e60cc5c1ffaf1cebcc12e8188320b72071e922c2e897f737cadce79ad5d30c4", size = 36677, upload-time = "2025-04-20T18:50:07.196Z" },
+    { url = "https://files.pythonhosted.org/packages/4f/18/d24df2f733ee0655c58717d51add4118a70e64692d0e47d403b9aac4cf98/soupsieve-4.0-py3-none-any.whl", hash = "sha256:5e7494bfce90e06676cfb4c5c2cf22243e98e5cf24646bb1ecdda46d318550a0", size = 50158, upload-time = "2026-11-03T14:28:53.988Z" },
 ]
 
 [[package]]
