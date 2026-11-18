@@ -45,7 +45,7 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	$(BROWSER) docs/_build/html/index.html
 
 upgrade: ## update python dependencies
-	uv run --with edx-lint edx_lint write_uv_constraints pyproject.toml
+	uv run --with 'edx-lint>=6.2' edx_lint write_uv_constraints pyproject.toml
 	uv lock --upgrade
 
 quality: export DJANGO_SETTINGS_MODULE=test_settings
