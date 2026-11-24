@@ -39,10 +39,10 @@ class MessageAttributeSerializationMixin:
         Returns:
             An instance of this class.
         """
-        fields = json.loads(
-            string_value,
-            object_hook=cls._deserialize,
-        )
+        # Decode only the top-level fields. An object_hook would also run on
+        # nested dicts, so a context key like 'message' or 'uuid' would be
+        # decoded as if it were a field.
+        fields = cls._deserialize(json.loads(string_value))
         uuid = fields.pop('uuid')
         instance = cls(**fields)
         instance.uuid = uuid

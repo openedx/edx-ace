@@ -90,6 +90,29 @@ class TestMessage(TestCase):
         self.assertEqual(message, parsed)
 
     @ddt.data(
+        ('message', ''),
+        ('message', {'app_label': 'a', 'name': 'b'}),
+        ('recipient', {'lms_user_id': 1}),
+        ('uuid', 'not-a-uuid'),
+        ('uuid', '6f1c2d6e-7f6a-4a53-9a8f-3c4b9a0e8d21'),
+        ('send_uuid', '6f1c2d6e-7f6a-4a53-9a8f-3c4b9a0e8d21'),
+        ('expiration_time', '2000-01-01T00:00:00'),
+    )
+    @ddt.unpack
+    def test_serialization_nested_field_names(self, key, value):
+        """
+        Nested dicts whose keys match field names come back unchanged.
+        """
+        message = Message(
+            options={key: value},
+            **{**self.msg_kwargs, 'context': {key: value}},
+        )
+        parsed = Message.from_string(str(message))
+        self.assertEqual(parsed.context, {key: value})
+        self.assertEqual(parsed.options, {key: value})
+        self.assertEqual(message, parsed)
+
+    @ddt.data(
         (None, True, False),
         (logging.WARNING, True, False),
         (logging.DEBUG, True, True),
